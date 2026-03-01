@@ -1,72 +1,78 @@
 import axios from 'axios';
 
+const API = 'https://api.qasimdev.dpdns.org/api/spotify/download';
+const API_KEY = 'qasim-dev';
+
+const formatDuration = (ms: number): string => {
+    const m = Math.floor(ms / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+};
+
 export default {
-  command: 'spotify',
-  aliases: ['sp', 'spotifydl'],
-  category: 'download',
-  description: 'Download music from Spotify',
-  usage: '.spotify <song/artist/keywords>',
-  
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, channelInfo } = context;
-    
-    try {
-      const query = args.join(' ');
+    command: 'spotify',
+    aliases: ['sptfdl', 'spotifydl'],
+    category: 'download',
+    description: 'Download music from Spotify',
+    usage: '.spotify <spotify-url>',
 
-      if (!query) {
-        await sock.sendMessage(chatId, { 
-          text: 'Usage: .spotify <song/artist/keywords>\nExample: .spotify con calma',
-          ...channelInfo
-        }, { quoted: message });
-        return;
-      }
+    async handler(sock: any, message: any, args: string[], context: any = {}) {
+        const chatId = context.chatId || message.key.remoteJid;
+        const url = args.join(' ').trim();
 
-      const apiUrl = `https://okatsu-rolezapiiz.vercel.app/search/spotify?q=${encodeURIComponent(query)}`;
-      const { data } = await axios.get(apiUrl, { timeout: 20000, headers: { 'user-agent': 'Mozilla/5.0' } });
+        if (!url || !url.includes('spotify.com')) {
+            return sock.sendMessage(chatId, {
+                text: '🎵 *Spotify Downloader*\n\nUsage: `.spotify <spotify track url>`\nExample: `.spotify https://open.spotify.com/track/4LMlVCXHJtCE9abhmn0mYo`'
+            }, { quoted: message });
+        }
 
-      if (!data?.status || !data?.result) {
-        throw new Error('No result from Spotify API');
-      }
+        try {
+            await sock.sendMessage(chatId, { react: { text: '🎵', key: message.key } });
 
-      const r = data.result;
-      const audioUrl = r.audio;
-      
-      if (!audioUrl) {
-        await sock.sendMessage(chatId, { 
-          text: 'No downloadable audio found for this query.',
-          ...channelInfo
-        }, { quoted: message });
-        return;
-      }
+            const { data } = await axios.get(API, {
+                params: { apiKey: API_KEY, url },
+                timeout: 30000
+            });
 
-      const caption = `🎵 ${r.title || r.name || 'Unknown Title'}\n👤 ${r.artist || ''}\n⏱ ${r.duration || ''}\n🔗 ${r.url || ''}`.trim();
+            if (!data?.success || !data?.data) {
+                throw new Error('Invalid API response');
+            }
 
-      if (r.thumbnails) {
-        await sock.sendMessage(chatId, { 
-          image: { url: r.thumbnails }, 
-          caption,
-          ...channelInfo
-        }, { quoted: message });
-      } else if (caption) {
-        await sock.sendMessage(chatId, { 
-          text: caption,
-          ...channelInfo
-        }, { quoted: message });
-      }
-      
-      await sock.sendMessage(chatId, {
-        audio: { url: audioUrl },
-        mimetype: 'audio/mpeg',
-        fileName: `${(r.title || r.name || 'track').replace(/[\\/:*?"<>|]/g, '')}.mp3`,
-        ...channelInfo
-      }, { quoted: message });
+            const track = data.data;
 
-    } catch(error: any) {
-      console.error('[SPOTIFY] error:', error?.message || error);
-      await sock.sendMessage(chatId, { 
-        text: 'Failed to fetch Spotify audio. Try another query later.',
-        ...channelInfo
-      }, { quoted: message });
+            if (!track.download) {
+                return sock.sendMessage(chatId, {
+                    text: '❌ No downloadable audio found for this track.'
+                }, { quoted: message });
+            }
+
+            const caption = [
+                `🎵 *${track.title || 'Unknown Title'}*`,
+                track.artist ? `👤 ${track.artist}` : '',
+                track.duration ? `⏱ ${formatDuration(track.duration)}` : '',
+                track.format ? `🎧 Format: ${track.format.toUpperCase()}` : ''
+            ].filter(Boolean).join('\n');
+
+            if (track.cover) {
+                await sock.sendMessage(chatId, {
+                    image: { url: track.cover },
+                    caption
+                }, { quoted: message });
+            } else if (caption) {
+                await sock.sendMessage(chatId, { text: caption }, { quoted: message });
+            }
+
+            await sock.sendMessage(chatId, {
+                audio: { url: track.download },
+                mimetype: 'audio/mpeg',
+                fileName: `${(track.title || 'track').replace(/[\\/:*?"<>|]/g, '')}.mp3`
+            }, { quoted: message });
+
+        } catch (error: any) {
+            console.error('[SPOTIFY] error:', error.message);
+            await sock.sendMessage(chatId, {
+                text: '❌ Failed to download track. Please check the URL and try again.'
+            }, { quoted: message });
+        }
     }
-  }
 };
