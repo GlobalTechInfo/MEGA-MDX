@@ -15,7 +15,7 @@
     "dev": "tsc --watch & nodemon --watch dist dist/index.js",
     "setup": "npm run build && npm run reset-data",
     "start:optimized": "node --max-old-space-size=512 --optimize-for-size --gc-interval=100 dist/index.js",
-    "reset-session": "node -e \"require('fs').rmSync('./session', {recursive:true, force:true}); console.log('Session cleared!')\"",
+    "reset-session": "node --input-type=module -e \"import fs from 'fs'; fs.rmSync('./session', {recursive:true, force:true}); console.log('Session cleared!')\"",
     "clean": "rm -rf dist/",
     "rebuild": "npm run clean && npm run build",
     "lint": "npx eslint . --ext .ts",
