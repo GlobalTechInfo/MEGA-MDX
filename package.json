@@ -80,9 +80,7 @@
     "simple-git": "^3.30.0",
     "stickers-formatter": "^0.0.1",
     "syntax-error": "^1.4.0",
-    "yt-search": "^2.12.1",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.56.1"
+    "yt-search": "^2.12.1"
   },
   "overrides": {
     "minimatch": "^10.2.1",
@@ -106,7 +104,9 @@
     "madge": "^8.0.0",
     "mocha": "^11.7.5",
     "ts-mocha": "^11.1.0",
-    "ts-unused-exports": "^11.0.1"
+    "ts-unused-exports": "^11.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1"
   },
   "engines": {
     "node": ">=20.0.0",
