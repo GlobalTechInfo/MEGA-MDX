@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Convert text to handwritten-style image',
   usage: '.handwrite <text>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const textInput = args?.join(' ')?.trim();
 
@@ -27,7 +26,7 @@ export default {
       const caption = `✍️ Handwritten Text:\n${textInput}`;
       await sock.sendMessage(chatId, { image: { buffer: data }, caption }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Handwrite plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

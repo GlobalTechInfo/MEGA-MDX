@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 
 async function getAntibadwordSettings(chatId) {
@@ -133,7 +132,7 @@ async function handleAntiBadwordCommand(sock, chatId, message, match) {
     }, { quoted: message });
 }
 
-async function checkAntiBadword(sock, message) {
+async function checkAntiBadword(sock: any, message: any) {
     const chatId = message.key.remoteJid;
     if (!chatId.endsWith('@g.us')) return false;
 
@@ -160,7 +159,7 @@ async function checkAntiBadword(sock, message) {
                 });
                 
                 return true;
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Error deleting badword message:', error);
             }
             break;
@@ -179,13 +178,13 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const match = args.join(' ');
 
         try {
             await handleAntiBadwordCommand(sock, chatId, message, match);
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in antibadword command:', error);
             await sock.sendMessage(chatId, {
                 text: '❌ *Error processing antibadword command*\n\nPlease try again later.'

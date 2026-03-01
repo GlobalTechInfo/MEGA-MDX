@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -78,7 +77,7 @@ async function handleMessages(sock, messageUpdate) {
             } else {
                 printLog('info', '👻 Stealth mode active');
             }
-        } catch (err) {
+        } catch(err: any) {
             await handleAutoread(sock, message);
         }
 
@@ -149,7 +148,7 @@ async function handleMessages(sock, messageUpdate) {
                         if (userBanned) return;
 
                         if (foundCommand.strictOwnerOnly) {
-                            const { isOwnerOnly } = require('./isOwner');
+                            const { isOwnerOnly } = await import('./isOwner.js');
                             if (!message.key.fromMe && !isOwnerOnly(senderId)) {
                                 return await sock.sendMessage(chatId, { 
                                     text: '❌ This command is only available for the bot owner!',
@@ -227,7 +226,7 @@ async function handleMessages(sock, messageUpdate) {
                             await addCommandReaction(sock, message);
                             await showTypingAfterCommand(sock, chatId);
                             printLog('success', `✅ Sticker command executed: ${commandText}`);
-                        } catch (error) {
+                        } catch(error: any) {
                             printLog('error', `❌ Sticker command error [${commandText}]: ${error.message}`);
                             console.error(error.stack);
                             await sock.sendMessage(chatId, {
@@ -273,8 +272,8 @@ async function handleMessages(sock, messageUpdate) {
                 }, { quoted: message });
                 return;
             } else if (buttonId === 'owner') {
-                const ownerCommand = require('../plugins/owner');
-                await ownerCommand(sock, chatId);
+                const ownerCommand = (await import('../plugins/owner.js')).default;
+                await (ownerCommand as any).handler?.(sock, chatId, "", {});
                 return;
             } else if (buttonId === 'support') {
                 await sock.sendMessage(chatId, { 
@@ -314,7 +313,8 @@ async function handleMessages(sock, messageUpdate) {
 
         if (!isGroup && !message.key.fromMe && !senderIsSudo) {
             try {
-                const { readState: readPmBlockerState } = await import('../plugins/pmblocker.js');
+                const _pmblocker = (await import('../plugins/pmblocker.js')).default;
+                const readPmBlockerState = _pmblocker?.readState;
                 const pmState = await readPmBlockerState();
                 if (pmState.enabled) {
                     printLog('warning', `PM blocked from: ${senderId.split('@')[0]}`);
@@ -325,12 +325,12 @@ async function handleMessages(sock, messageUpdate) {
                     try { 
                         await sock.updateBlockStatus(chatId, 'block');
                         printLog('success', `Blocked user: ${senderId.split('@')[0]}`);
-                    } catch (e) {
+                    } catch(e: any) {
                         printLog('error', `Failed to block user: ${e.message}`);
                     }
                     return;
                 }
-            } catch (e) {
+            } catch(e: any) {
                 printLog('error', `PM blocker error: ${e.message}`);
             }
         }
@@ -408,7 +408,7 @@ async function handleMessages(sock, messageUpdate) {
         }
 
         if (command.strictOwnerOnly) {
-            const { isOwnerOnly } = require('./isOwner');
+            const { isOwnerOnly } = await import('./isOwner.js');
             if (!message.key.fromMe && !isOwnerOnly(senderId)) {
                 return await sock.sendMessage(chatId, { 
                     text: '❌ This command is only available for the bot owner!\n\n_Sudo users cannot manage other sudo users._',
@@ -472,7 +472,7 @@ async function handleMessages(sock, messageUpdate) {
             await command.handler(sock, message, args, context);
             await addCommandReaction(sock, message);
             await showTypingAfterCommand(sock, chatId);
-        } catch (error) {
+        } catch(error: any) {
             printLog('error', `Command error [${command.command}]: ${error.message}`);
             console.error(error.stack);
             
@@ -493,12 +493,12 @@ async function handleMessages(sock, messageUpdate) {
             try {
                 fs.appendFileSync('./error.log', JSON.stringify(errorLog) + '\n');
                 printLog('info', 'Error logged to file');
-            } catch (e) {
+            } catch(e: any) {
                 printLog('error', `Failed to write error log: ${e.message}`);
             }
         }
 
-    } catch (error) {
+    } catch(error: any) {
         printLog('error', `Message handler error: ${error.message}`);
         console.error(error.stack);
         
@@ -509,7 +509,7 @@ async function handleMessages(sock, messageUpdate) {
                     text: '❌ Failed to process message!',
                     ...channelInfo
                 });
-            } catch (e) {
+            } catch(e: any) {
                 printLog('error', `Failed to send error message: ${e.message}`);
             }
         }
@@ -534,7 +534,7 @@ async function handleGroupParticipantUpdate(sock, update) {
                     const participant = Array.isArray(participants) ? participants[0] : participants;
                     printLog('success', `User promoted: ${typeof participant === 'string' ? participant.split('@')[0] : 'unknown'}`);
                 }
-                const { handlePromotionEvent } = require('../plugins/promote');
+                const handlePromotionEvent = (await import('../plugins/promote.js')).default?.handlePromotionEvent;
                 await handlePromotionEvent(sock, id, participants, author);
                 break;
 
@@ -544,7 +544,7 @@ async function handleGroupParticipantUpdate(sock, update) {
                     const participant = Array.isArray(participants) ? participants[0] : participants;
                     printLog('warning', `User demoted: ${typeof participant === 'string' ? participant.split('@')[0] : 'unknown'}`);
                 }
-                const { handleDemotionEvent } = require('../plugins/demote');
+                const handleDemotionEvent = (await import('../plugins/demote.js')).default?.handleDemotionEvent;
                 await handleDemotionEvent(sock, id, participants, author);
                 break;
 
@@ -553,7 +553,7 @@ async function handleGroupParticipantUpdate(sock, update) {
                     const participant = Array.isArray(participants) ? participants[0] : participants;
                     printLog('success', `User joined: ${typeof participant === 'string' ? participant.split('@')[0] : 'unknown'}`);
                 }
-                const { handleJoinEvent } = require('../plugins/welcome');
+                const { handleJoinEvent } = await import('../plugins/welcome.js');
                 await handleJoinEvent(sock, id, participants);
                 break;
 
@@ -562,14 +562,14 @@ async function handleGroupParticipantUpdate(sock, update) {
                     const participant = Array.isArray(participants) ? participants[0] : participants;
                     printLog('info', `User left: ${typeof participant === 'string' ? participant.split('@')[0] : 'unknown'}`);
                 }
-                const { handleLeaveEvent } = require('../plugins/goodbye');
+                const handleLeaveEvent = (await import('../plugins/goodbye.js')).default?.handleLeaveEvent;
                 await handleLeaveEvent(sock, id, participants);
                 break;
 
             default:
                 printLog('warning', `Unhandled group action: ${action}`);
         }
-    } catch (error) {
+    } catch(error: any) {
         printLog('error', `Group update error: ${error.message}`);
         console.error(error.stack);
     }
@@ -577,9 +577,10 @@ async function handleGroupParticipantUpdate(sock, update) {
 
 async function handleStatus(sock, status) {
     try {
-        const { handleStatusUpdate } = require('../plugins/autostatus');
+        const { default: _autostatus } = await import('../plugins/autostatus.js');
+        const handleStatusUpdate = _autostatus.handleStatusUpdate;
         await handleStatusUpdate(sock, status);
-    } catch (error) {
+    } catch(error: any) {
         printLog('error', `Status handler error: ${error.message}`);
         console.error(error.stack);
     }
@@ -587,7 +588,7 @@ async function handleStatus(sock, status) {
 
 async function handleCall(sock, calls) {
     try {
-        const anticallPlugin = require('../plugins/anticall');
+        const anticallPlugin = (await import('../plugins/anticall.js')).default;
         const state = anticallPlugin.readState ? await anticallPlugin.readState() : { enabled: false };
         if (!state.enabled) return;
 
@@ -608,7 +609,7 @@ async function handleCall(sock, calls) {
                         await sock.sendCallOfferAck(call.id, callerJid, 'reject');
                         printLog('success', `Call rejected: ${callerJid.split('@')[0]}`);
                     }
-                } catch (e) {
+                } catch(e: any) {
                     printLog('error', `Error rejecting call: ${e.message}`);
                 }
 
@@ -626,16 +627,16 @@ async function handleCall(sock, calls) {
                     try { 
                         await sock.updateBlockStatus(callerJid, 'block');
                         printLog('success', `Blocked caller: ${callerJid.split('@')[0]}`);
-                    } catch (e) {
+                    } catch(e: any) {
                         printLog('error', `Error blocking caller: ${e.message}`);
                     }
                 }, 800);
 
-            } catch (error) {
+            } catch(error: any) {
                 printLog('error', `Error handling call from ${callerJid.split('@')[0]}: ${error.message}`);
             }
         }
-    } catch (error) {
+    } catch(error: any) {
         printLog('error', `Call handler error: ${error.message}`);
         console.error(error.stack);
     }

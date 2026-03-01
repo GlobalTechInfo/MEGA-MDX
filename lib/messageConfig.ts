@@ -1,4 +1,3 @@
-// @ts-nocheck
 const channelInfo = {
     contextInfo: {
         forwardingScore: 1,

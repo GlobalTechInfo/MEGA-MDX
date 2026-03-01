@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -10,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload to Pomf.lain.la (1GB, permanent)',
     usage: '.pomf (reply to media)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {
@@ -31,7 +30,7 @@ export default {
             await sock.sendMessage(chatId, { text: 'Uploading to Pomf...' }, { quoted: message });
 
             const mediaType = type === 'stickerMessage' ? 'sticker' : type.replace('Message', '');
-            const stream = await downloadContentFromMessage(quotedMsg[type], mediaType);
+            const stream = await downloadContentFromMessage(quotedMsg[type], mediaType as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -59,7 +58,7 @@ export default {
 
             fs.unlinkSync(tempPath);
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Pomf Error:', error);
             await sock.sendMessage(chatId, { text: `❌ Error: ${error.message}` }, { quoted: message });
         }

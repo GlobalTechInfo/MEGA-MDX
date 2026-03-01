@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'echo',
   aliases: [],

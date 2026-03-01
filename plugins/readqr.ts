@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -17,7 +16,7 @@ export default {
   description: 'Read QR code from an image',
   usage: 'Reply to an image with .readqr',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -80,7 +79,7 @@ ${res.data.result}
         { quoted: message }
       );
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('QR Reader Error:', err);
       await sock.sendMessage(
         chatId,

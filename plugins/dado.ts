@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'dado',
   aliases: ['dados', 'dice'],
@@ -6,7 +5,7 @@ export default {
   description: 'Roll a random dice sticker',
   usage: '.dado',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = message.key.remoteJid;
 
     const diceLinks = [
@@ -25,7 +24,7 @@ export default {
         sticker: { url: randomDice } 
       }, { quoted: message });
 
-    } catch (e) {
+    } catch(e: any) {
       console.error('Dice Plugin Error:', e);
       await sock.sendMessage(chatId, { 
         image: { url: randomDice }, 

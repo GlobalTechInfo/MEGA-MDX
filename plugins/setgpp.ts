@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -12,7 +11,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -44,13 +43,13 @@ export default {
 
             try {
                 fs.unlinkSync(imgPath);
-            } catch (e) {}
+            } catch(e: any) {}
 
             await sock.sendMessage(chatId, {
                 text: '✅ *Group profile picture updated successfully!*'
             }, { quoted: message });
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error updating group photo:', error);
             await sock.sendMessage(chatId, {
                 text: '❌ *Failed to update group profile picture*\n\nMake sure the bot is an admin and the image is valid.'

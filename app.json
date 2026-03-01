@@ -1,0 +1,91 @@
+{
+  "name": "mega-md",
+  "description": " Whatsapp automation",
+  "keywords": [
+    "whatsapp Bot"
+  ],
+  "repository": "https://github.com/GlobalTechInfo/MEGA-MD",
+  "stack": "container",
+  "env": {
+    "SESSION_ID": {
+      "description": "Put your session id",
+      "required": true,
+      "value": ""
+    },
+    "MONGO_URL": {
+      "description": "Put if you have mongodb database url",
+      "required": false,
+      "value": ""
+    },
+    "MYSQL_URL": {
+      "description": "Put if you have mysql database url",
+      "required": false,
+      "value": ""
+    },
+    "POSTGRES_URL": {
+      "description": "Put if you have postgres database url",
+      "required": false,
+      "value": ""
+    },
+     "PREFIXES=": {
+      "description": "One or more prefixes splited by comma",
+      "required": false,
+      "value": "."
+    },
+     "PACKNAME": {
+      "description": "Your sticker pack name",
+      "required": false,
+      "value": "Mega-Bot"
+    },
+    "BOT_NAME": {
+      "description": "Your bot name",
+      "required": false,
+      "value": "MEGA-MD"
+    },
+    "OWNER_NUMBER": {
+      "description": "Your WhatsApp number",
+      "required": false,
+      "value": "923000000000"
+    },
+    "COMMAND_MODE": {
+      "description": "Bot mode",
+      "required": false,
+      "value": "public"
+    },
+    "BOT_OWNER": {
+      "description": "Owner name",
+      "required": false,
+      "value": "GlobalTech"
+    },
+    "TIMEZONE": {
+      "description": "Your time zone",
+      "required": false,
+      "value": "Asia/Karachi"
+    },
+    "REMOVEBG_KEY": {
+      "description": "Put your Remove background api key",
+      "required": false,
+      "value": ""
+    }
+    },
+    "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
+}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import CommandHandler from '../lib/commandHandler.js';
 import settings from '../settings.js';
 
@@ -10,7 +9,7 @@ export default {
   usage: '.manage [toggle/alias] [command_name] [new_alias]',
   ownerOnly: 'true',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const action = args[0]?.toLowerCase();
@@ -46,7 +45,7 @@ export default {
       
       await sock.sendMessage(chatId, { text: helpText }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in manage plugin:', error);
       await sock.sendMessage(chatId, { text: '❌ Management action failed.' }, { quoted: message });
     }

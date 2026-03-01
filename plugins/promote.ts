@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { isAdmin } from '../lib/isAdmin.js';
+import isAdmin from '../lib/isAdmin.js';
 
 async function handlePromotionEvent(sock, groupId, participants, author) {
   try {
@@ -35,7 +34,7 @@ async function handlePromotionEvent(sock, groupId, participants, author) {
       text: promotionMessage,
       mentions: mentionList
     });
-  } catch (error) {
+  } catch(error: any) {
     console.error('Error handling promotion event:', error);
   }
 }
@@ -49,7 +48,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     let userToPromote = [];
@@ -90,7 +89,7 @@ export default {
         mentions: [...userToPromote, promoterJid],
         ...channelInfo
       });
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in promote command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to promote user(s)!',

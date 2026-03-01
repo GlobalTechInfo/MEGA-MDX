@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import isOwnerOrSudo from '../lib/isOwner.js';
@@ -29,7 +28,7 @@ function clearDirectory(dirPath) {
       message: `Cleared ${deletedCount} items in ${path.basename(dirPath)}`,
       count: deletedCount
     };
-  } catch (err) {
+  } catch(err: any) {
     console.error('clearDirectory error:', err);
     return {
       success: false,
@@ -61,7 +60,7 @@ export default {
   description: 'Clear tmp and temp directories',
   usage: '.cleartmp',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const senderId = message.key.participant || message.key.remoteJid;
 
@@ -85,7 +84,7 @@ export default {
         text
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in cleartmp command:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to clear temporary files!'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
@@ -12,7 +11,7 @@ export default {
   description: 'Change sticker pack name',
   usage: '.take <packname> (reply to sticker)',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -33,12 +32,12 @@ export default {
           {
             key: message.message.extendedTextMessage.contextInfo.stanzaId,
             message: quotedMessage,
-            messageType: 'stickerMessage'
+            // messageType: 'stickerMessage'
           },
           'buffer',
           {},
           {
-            logger: console,
+            logger: (console as any),
             reuploadRequest: sock.updateMediaMessage
           }
         );
@@ -76,7 +75,7 @@ export default {
           quoted: message
         });
 
-      } catch (error) {
+      } catch(error: any) {
         console.error('Sticker processing error:', error);
         await sock.sendMessage(chatId, { 
           text: '❌ Error processing sticker',
@@ -84,7 +83,7 @@ export default {
         }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in take command:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Error processing command',

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 async function fetchWithRetries(url, retries = 3, delay = 2000) {
@@ -8,7 +7,7 @@ async function fetchWithRetries(url, retries = 3, delay = 2000) {
     try {
       const { data } = await axios.get(url);
       return data;
-    } catch (err) {
+    } catch(err: any) {
       attempt++;
       console.error(`[WHY] Attempt ${attempt} failed:`, err.message);
       if (attempt >= retries) throw new Error('Max retries reached');
@@ -24,7 +23,7 @@ export default {
   description: 'Get a random “why” question from the API',
   usage: '.why',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -44,7 +43,7 @@ export default {
         { quoted: message }
       );
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Why plugin error:', error);
       await sock.sendMessage(
         chatId,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import sharp from 'sharp';
 import fs from 'fs';
 import fsPromises from 'fs/promises';
@@ -14,7 +13,7 @@ const scheduleFileDeletion = (filePath) => {
         try {
             await fse.remove(filePath);
             console.log(`File deleted: ${filePath}`);
-        } catch (error) {
+        } catch(error: any) {
             console.error(`Failed to delete file:`, error);
         }
     }, 10000); // 10 seconds
@@ -26,7 +25,7 @@ export default {
     category: 'stickers',
     description: 'Convert a sticker to an image',
     usage: '.s2img (reply to a sticker)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {
@@ -52,7 +51,7 @@ export default {
             scheduleFileDeletion(stickerFilePath);
             scheduleFileDeletion(outputImagePath);
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('SImage Command Error:', error);
             await sock.sendMessage(chatId, { text: '❌ An error occurred while converting the sticker.' }, { quoted: message });
         }

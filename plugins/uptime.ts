@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -25,7 +24,7 @@ export default {
 
   async handler(sock, message) {
     const chatId = message.key.remoteJid;
-    const commandHandler = require('../lib/commandHandler');
+    const commandHandler = (await import('../lib/commandHandler.js')).default;
     const uptimeMs = process.uptime() * 1000;
 
     const formatUptime = (ms) => {

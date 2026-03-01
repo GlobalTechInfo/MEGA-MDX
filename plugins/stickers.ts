@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search for stickers using Tenor',
   usage: '.stickers <search term>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args?.join(' ')?.trim();
 
@@ -29,7 +28,7 @@ export default {
         if (!media) continue;
         await sock.sendMessage(chatId, { video: { url: media }, caption: `Sticker ${i + 1}`, mimetype: 'video/mp4' }, { quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('StickerSearch plugin error:', error);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch stickers.' }, { quoted: message });
     }}

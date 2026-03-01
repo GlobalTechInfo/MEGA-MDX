@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 const BASE = 'https://shizoapi.onrender.com/api/pies';
@@ -19,7 +18,7 @@ export default {
   category: 'images',
   description: 'Get a pies image from a specific country',
   usage: `.pies <country>\nAvailable countries: ${VALID_COUNTRIES.join(', ')}`,
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const sub = (args[0] || '').toLowerCase();
 
@@ -41,7 +40,7 @@ export default {
         image: imageBuffer,
         caption: `🍰 pies: ${sub}`
       }, { quoted: message });
-    } catch (err) {
+    } catch(err: any) {
       console.error('Pies Command Error:', err);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to fetch image. Please try again.'

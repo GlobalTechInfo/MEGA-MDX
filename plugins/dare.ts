@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get a random dare',
   usage: '.dare',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -21,14 +20,14 @@ export default {
         throw new Error(await res.text());
       }
 
-      const json = await res.json();
+      const json = await res.json() as any as any;
       const dareMessage = json.result;
 
       await sock.sendMessage(chatId, {
         text: dareMessage
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in dare command:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to get dare. Please try again later!'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import fs from 'fs';
 import store from './lightweight_store.js';
@@ -22,7 +21,7 @@ async function isBanned(userId) {
             const bannedUsers = JSON.parse(fs.readFileSync(bannedFilePath, 'utf8'));
             return bannedUsers.includes(userId);
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error checking banned status:', error);
         return false;
     }

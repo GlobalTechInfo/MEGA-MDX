@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -21,7 +20,7 @@ export default {
    * @param {Array} args - command arguments
    * @param {object} context - additional context
    */
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const text = args?.[0];
@@ -50,14 +49,14 @@ export default {
       const pluginDir = path.join(__dirname, '..', 'plugins');
 
       for (const file of Object.values(gistData.files)) {
-        const pluginName = file.filename;
+        const pluginName = (file as any).filename;
         const pluginPath = path.join(pluginDir, pluginName);
 
-        await fs.promises.writeFile(pluginPath, file.content);
+        await fs.promises.writeFile(pluginPath, (file as any).content);
       }
 
       await sock.sendMessage(chatId, { text: '*✅ Successfully installed plugin from Gist.*' }, { quoted: message });
-    } catch (error) {
+    } catch(error: any) {
       console.error('install plugin error:', error);
       await sock.sendMessage(chatId, { text: `❌ Error fetching or saving the plugin: ${error.message}` }, { quoted: message });
     }

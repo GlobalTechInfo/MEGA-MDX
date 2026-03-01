@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -92,7 +91,7 @@ export default {
     usage: '.rentbot 92305xxxxxxx',
     ownerOnly: 'true',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId } = context;
         
         if (!args[0]) {
@@ -147,7 +146,7 @@ export default {
                                        `*Tip:* If no popup appears, go to 'Link with phone number' on your phone and enter the code manually.`;
                     
                     await sock.sendMessage(chatId, { text: pairingText }, { quoted: message });
-                } catch (err) {
+                } catch(err: any) {
                     console.error("Pairing Error:", err);
                     await sock.sendMessage(chatId, { text: "❌ Failed to request code. Try again in 1 minute." });
                 }
@@ -163,7 +162,7 @@ export default {
                             createdAt: Date.now(),
                             status: 'active'
                         });
-                    } catch (e) {
+                    } catch(e: any) {
                         console.error("DB save error:", e.message);
                     }
                 }
@@ -192,7 +191,7 @@ export default {
                 }
 
                 if (connection === 'close') {
-                    const code = lastDisconnect?.error?.output?.statusCode;
+                    const code = (lastDisconnect?.error as any)?.output?.statusCode;
                     if (code !== DisconnectReason.loggedOut) {
                         startClone(); 
                     } else {
@@ -204,11 +203,11 @@ export default {
             });
 
             try {
-                const { handleMessages } = require('../lib/messageHandler');
+                const { handleMessages } = await import('../lib/messageHandler.js');
                 conn.ev.on('messages.upsert', async (chatUpdate) => {
-                    await handleMessages(conn, chatUpdate, true);
+                    await handleMessages(conn, chatUpdate);
                 });
-            } catch (e) {
+            } catch(e: any) {
                 console.error("Handler linkage failed:", e.message);
             }
 

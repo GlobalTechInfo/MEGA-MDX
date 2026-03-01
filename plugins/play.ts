@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search and download a song as MP3 from Spotify',
   usage: '.play <song name>',
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const searchQuery = args.join(' ').trim();
 
@@ -30,7 +29,7 @@ export default {
           });
           
           return response;
-        } catch (error) {
+        } catch(error: any) {
           const isRateLimited = error.response?.status === 429 || 
                                error.code === 'ECONNABORTED' ||
                                error.code === 'ETIMEDOUT';
@@ -117,7 +116,7 @@ export default {
             timeout: 30000 
           });
           thumbnailBuffer = Buffer.from(imgResponse.data);
-        } catch (imgError) {
+        } catch(imgError: any) {
           console.error('Failed to fetch cover image:', imgError.message);
         }
       }
@@ -140,7 +139,7 @@ export default {
       }, { quoted: message });
 
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Play Command Error:', error);
       
       let errorMsg = "❌ *Download failed!*\n\n";

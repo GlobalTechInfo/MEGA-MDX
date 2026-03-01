@@ -1,5 +1,5 @@
-// @ts-nocheck
 import Qasim from 'api-qasim';
+const QasimAny = Qasim as any;
 import axios from 'axios';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   description: 'Search APKs and download by reply',
   usage: '.android <apk_name>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').trim();
 
@@ -20,7 +20,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: '🔎 Searching for APKs...' }, { quoted: message });
 
-      const res = await Qasim.apksearch(query);
+      const res = await QasimAny.apksearch(query);
 
       if (!res?.data || !Array.isArray(res.data) || res.data.length === 0) {
         return await sock.sendMessage(chatId, { text: '❌ No APKs found.' }, { quoted: message });
@@ -97,7 +97,7 @@ export default {
 
       sock.ev.on('messages.upsert', listener);
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('❌ Android Plugin Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to process APK request.' }, { quoted: message });
     }

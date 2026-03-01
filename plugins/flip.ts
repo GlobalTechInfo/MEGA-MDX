@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -22,7 +21,7 @@ export default {
   description: 'Flip text upside down (supports Uppercase)',
   usage: '.flip <text> OR reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     
     let txt = args?.join(' ') || "";

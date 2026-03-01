@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,7 +6,7 @@ export default {
     category: 'group',
     description: 'Generate a simp card for a user',
     usage: '.simp (reply to user or mention someone)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 
@@ -23,7 +22,7 @@ export default {
             let avatarUrl;
             try {
                 avatarUrl = await sock.profilePictureUrl(who, 'image');
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Error fetching profile picture:', error);
                 avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png'; // Default avatar
             }
@@ -51,7 +50,7 @@ export default {
                 }
             }, { quoted: message });
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Simp Command Error:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ Sorry, I couldn\'t generate the simp card. Please try again later!',

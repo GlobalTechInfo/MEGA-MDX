@@ -1,9 +1,8 @@
-// @ts-nocheck
 import axios from 'axios';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import { uploadImage } from '../lib/uploadImage.js';
 
-async function getQuotedOrOwnImageUrl(sock, message) {
+async function getQuotedOrOwnImageUrl(sock: any, message: any) {
   const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
   if (quoted?.imageMessage) {
     const stream = await downloadContentFromMessage(quoted.imageMessage, 'image');
@@ -27,7 +26,7 @@ function isValidUrl(string) {
   try {
     new URL(string);
     return true;
-  } catch (_) {
+  } catch(_: any) {
     return false;
   }
 }
@@ -38,7 +37,7 @@ export default {
   category: 'tools',
   description: 'Enhance an image using Remini AI',
   usage: '.remini <image_url> or reply to an image with .remini',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -82,7 +81,7 @@ export default {
         } else throw new Error('Failed to download enhanced image');
       } else throw new Error(response.data.result?.message || 'Failed to enhance image');
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Remini Error:', error.message);
       let errorMessage = '❌ Failed to enhance image.';
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -27,7 +26,7 @@ export default {
   description: 'Clear session files',
   usage: '.clearsession',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const senderId = message.key.participant || message.key.remoteJid;
@@ -62,7 +61,7 @@ export default {
         try {
           fs.unlinkSync(path.join(sessionDir, file));
           filesCleared++;
-        } catch (err) {
+        } catch(err: any) {
           errors++;
           errorDetails.push(`Failed to delete ${file}: ${err.message}`);
         }

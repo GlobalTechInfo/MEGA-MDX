@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import store from '../lib/lightweight_store.js';
@@ -31,7 +30,7 @@ async function getWarnings() {
   } else {
     try {
       return JSON.parse(fs.readFileSync(warningsPath, 'utf8'));
-    } catch (error) {
+    } catch(error: any) {
       return {};
     }
   }
@@ -54,7 +53,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, senderId, channelInfo } = context;
     
     try {
@@ -118,14 +117,14 @@ export default {
             ...channelInfo
           });
         }
-      } catch (error) {
+      } catch(error: any) {
         console.error('Error in warn command:', error);
         await sock.sendMessage(chatId, { 
           text: '❌ Failed to warn user!',
           ...channelInfo
         }, { quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in warn command:', error);
       if (error.data === 429) {
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -134,7 +133,7 @@ export default {
             text: '❌ Rate limit reached. Please try again in a few seconds.',
             ...channelInfo
           }, { quoted: message });
-        } catch (retryError) {
+        } catch(retryError: any) {
           console.error('Error sending retry message:', retryError);
         }
       } else {
@@ -143,7 +142,7 @@ export default {
             text: '❌ Failed to warn user. Make sure the bot is admin and has sufficient permissions.',
             ...channelInfo
           }, { quoted: message });
-        } catch (sendError) {
+        } catch(sendError: any) {
           console.error('Error sending error message:', sendError);
         }
       }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get session id for MEGA-MD',
   usage: '.pair 92305395XXXX',
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const { chatId } = context;
 
     const forwardInfo = {
@@ -73,7 +72,7 @@ export default {
         throw new Error("Invalid response format");
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Pairing Plugin Error:', error.message);
       
       let errorMsg = "❌ *Pairing Failed*\nReason: ";

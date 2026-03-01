@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +23,7 @@ export default {
   description: 'Get the raw HTML source of a website',
   usage: '.getpage <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args[0];
 
@@ -46,7 +45,7 @@ export default {
         caption: `*Source code for:* ${url}`
       }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch source. The site might be protected.' });
     }
   }

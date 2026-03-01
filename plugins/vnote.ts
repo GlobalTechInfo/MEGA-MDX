@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +23,7 @@ export default {
     description: 'Convert any audio message into a live-looking voice note',
     usage: 'Reply to an audio file with .vnote',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = message.key.remoteJid;
         const senderId = message.key.participant || chatId;
 
@@ -46,7 +45,7 @@ export default {
                 mimetype: 'audio/ogg; codecs=opus' 
             }, { quoted: message });
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('PTT Conversion Error:', error);
             await sock.sendMessage(chatId, { text: "❌ Failed to convert audio to voice note." });
         }

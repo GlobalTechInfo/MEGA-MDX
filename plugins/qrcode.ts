@@ -1,4 +1,3 @@
-// @ts-nocheck
 import QRCode from 'qrcode';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Generate a QR code from text',
   usage: '.qrcode <text>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args?.join(' ')?.trim();
 
@@ -23,7 +22,7 @@ export default {
       });
 
       await sock.sendMessage(chatId, { image: { url: qr }, caption: '✅ QR Code Generated' }, { quoted: message });
-    } catch (err) {
+    } catch(err: any) {
       console.error('QR plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to generate QR code.' }, { quoted: message });
     }}

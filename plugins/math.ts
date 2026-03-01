@@ -1,4 +1,3 @@
-// @ts-nocheck
 const mathGames = {};
 
 const modes = {

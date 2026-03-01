@@ -1,4 +1,3 @@
-// @ts-nocheck
 import settings from '../settings.js';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get the contact of the bot owner',
   usage: '.owner',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const vcard = `
@@ -20,7 +19,7 @@ END:VCARD
       await sock.sendMessage(chatId, {
         contacts: { displayName: settings.botOwner, contacts: [{ vcard }] },
       }, { quoted: message });
-    } catch (error) {
+    } catch(error: any) {
       console.error('Owner Command Error:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to fetch owner contact.'

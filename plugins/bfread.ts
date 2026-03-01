@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'bfdecode',
   aliases: ['brun', 'bfread'],
@@ -6,7 +5,7 @@ export default {
   description: 'Decode/Run Brainfuck code',
   usage: 'Reply to BF code with .bfdecode',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -65,7 +64,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: `*🔓 Decoded Result:* \n\n${output || "_No output generated_"}` }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('BF Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Error reading quoted message.' });
     }

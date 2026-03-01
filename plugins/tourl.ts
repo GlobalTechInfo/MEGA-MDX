@@ -1,8 +1,7 @@
-// @ts-nocheck
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import axios from 'axios';
 import FormData from 'form-data';
-import FileType from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 
 async function getMediaBuffer(msg, sock) {
   return await downloadMediaMessage(
@@ -76,7 +75,7 @@ export default {
         )
       }
 
-      const type = await FileType.fromBuffer(buffer)
+      const type = await fileTypeFromBuffer(buffer)
       if (!type) throw new Error('Could not detect file type')
 
       const form = new FormData()
@@ -102,7 +101,7 @@ export default {
         { quoted: message }
       )
 
-    } catch (e) {
+    } catch(e: any) {
       console.error('Catbox upload error:', e)
       await sock.sendMessage(
         chatId,

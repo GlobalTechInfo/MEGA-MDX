@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
@@ -17,7 +16,7 @@ async function mediafireDl(url) {
         const ext = name.split('.').pop();
         
         return { name, size, link, ext };
-    } catch (e) {
+    } catch(e: any) {
         return null;
     }
 }
@@ -29,7 +28,7 @@ export default {
   description: 'Download files from MediaFire',
   usage: '.mediafire <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const { chatId } = context;
     const text = args.join(' ');
 
@@ -85,7 +84,7 @@ export default {
         caption: `✅ *Download Complete:* ${data.name}`
       }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('MF Download Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Error: ' + err.message }, { quoted: message });
     }

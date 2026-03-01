@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -32,7 +31,7 @@ async function SaveCreds(txt) {
         const credsPath = path.join(sessionDir, 'creds.json');
         fs.writeFileSync(credsPath, data);
 
-    } catch (error) {
+    } catch(error: any) {
         console.error('❌ Error downloading or saving credentials:', error.message);
         if (error.response) {
             console.error('❌ Status:', error.response.status);

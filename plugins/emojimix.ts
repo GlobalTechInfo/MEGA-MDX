@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 import fs from 'fs';
 import { exec } from 'child_process';
@@ -11,7 +10,7 @@ export default {
   description: 'Mix two emojis into a sticker',
   usage: '.emojimix 😎+🥰',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -39,7 +38,7 @@ export default {
         `&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`;
 
       const response = await fetch(url);
-      const data = await response.json();
+      const data = await response.json() as any as any;
 
       if (!data.results || data.results.length === 0) {
         await sock.sendMessage(chatId, {
@@ -68,13 +67,13 @@ export default {
         `pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" ` +
         `"${outputFile}"`;
 
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         exec(ffmpegCommand, (error) => {
           if (error) {
             console.error('FFmpeg error:', error);
             reject(error);
           } else {
-            resolve();
+            resolve(undefined);
           }
         });
       });
@@ -93,11 +92,11 @@ export default {
       try {
         fs.unlinkSync(tempFile);
         fs.unlinkSync(outputFile);
-      } catch (err) {
+      } catch(err: any) {
         console.error('Temp cleanup error:', err);
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in emojimix command:', error);
       await sock.sendMessage(chatId, {
         text:

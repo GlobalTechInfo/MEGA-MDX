@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'staff',
   aliases: ['admins', 'adminlist'],
@@ -7,7 +6,7 @@ export default {
   usage: '.staff',
   groupOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -41,7 +40,7 @@ export default {
         ...channelInfo
       });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in staff command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to get admin list!',

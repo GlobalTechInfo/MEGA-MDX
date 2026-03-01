@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
@@ -14,7 +13,7 @@ export default {
   description: 'Convert image/video to sticker',
   usage: '.sticker2 (reply to image/video or send with caption)',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     const messageToQuote = message;
     let targetMessage = message;
@@ -73,12 +72,12 @@ export default {
         ? `ffmpeg -i "${tempInput}" -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=15,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`
         : `ffmpeg -i "${tempInput}" -vf "scale=512:512:force_original_aspect_ratio=decrease,format=rgba,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
 
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         exec(ffmpegCommand, (error) => {
           if (error) {
             console.error('FFmpeg error:', error);
             reject(error);
-          } else resolve();
+          } else resolve(undefined);
         });
       });
 
@@ -92,8 +91,8 @@ export default {
           const fallbackCmd = isLargeFile
             ? `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=8,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`
             : `ffmpeg -y -i "${tempInput}" -t 3 -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=12,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 45 -compression_level 6 -b:v 150k -max_muxing_queue_size 1024 "${tempOutput2}"`;
-          await new Promise((resolve, reject) => {
-            exec(fallbackCmd, (error) => error ? reject(error) : resolve());
+          await new Promise<void>((resolve, reject) => {
+            exec(fallbackCmd, (error) => error ? reject(error) : resolve(undefined));
           });
           if (fs.existsSync(tempOutput2)) {
             webpBuffer = fs.readFileSync(tempOutput2);
@@ -124,8 +123,8 @@ export default {
         try {
           const tempOutput3 = path.join(tmpDir, `sticker_small_${Date.now()}.webp`);
           const smallCmd = `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=320:320:force_original_aspect_ratio=decrease,fps=8,pad=320:320:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 80k -max_muxing_queue_size 1024 "${tempOutput3}"`;
-          await new Promise((resolve, reject) => {
-            exec(smallCmd, (error) => error ? reject(error) : resolve());
+          await new Promise<void>((resolve, reject) => {
+            exec(smallCmd, (error) => error ? reject(error) : resolve(undefined));
           });
           if (fs.existsSync(tempOutput3)) {
             const smallWebp = fs.readFileSync(tempOutput3);
@@ -155,11 +154,11 @@ export default {
       try {
         fs.unlinkSync(tempInput);
         fs.unlinkSync(tempOutput);
-      } catch (err) {
+      } catch(err: any) {
         console.error('Error cleaning up temp files:', err);
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in sticker command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to create sticker! Try again later.',

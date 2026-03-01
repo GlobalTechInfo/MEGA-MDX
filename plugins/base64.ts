@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'base64',
   aliases: ['b64', 'encode'],
@@ -6,7 +5,7 @@ export default {
   description: 'Encode text to Base64',
   usage: '.base64 <text> OR reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       let txt = args?.join(' ') || "";
@@ -31,7 +30,7 @@ export default {
       const response = `*🔗 Base64 Encoded:*\n\n${encoded}`;
       await sock.sendMessage(chatId, { text: response }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Base64 plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to encode text.' }, { quoted: message });
     }

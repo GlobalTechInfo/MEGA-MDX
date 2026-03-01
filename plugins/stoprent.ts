@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -40,7 +39,7 @@ async function getAllCloneAuthIds() {
     if (HAS_DB) {
         const settings = await store.getAllSettings('clones') || {};
         return Object.entries(settings)
-            .filter(([key, value]) => value && value.status)
+            .filter(([key, value]) => value && (value as any).status)
             .map(([authId]) => authId);
     } else {
         const clonesDir = path.join(process.cwd(), 'session', 'clones');
@@ -64,7 +63,7 @@ export default {
     usage: '.stoprent [number/all]',
     ownerOnly: 'true',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId } = context;
 
         if (!global.conns || global.conns.length === 0) {
@@ -87,7 +86,7 @@ export default {
                     await conn.logout();
                     conn.end();
                     stoppedCount++;
-                } catch (e) {
+                } catch(e: any) {
                     console.error('Error stopping clone:', e.message);
                 }
             }
@@ -97,7 +96,7 @@ export default {
             if (HAS_DB) {
                 try {
                     await deleteAllCloneSessions();
-                } catch (e) {
+                } catch(e: any) {
                     console.error('Error deleting clone sessions:', e.message);
                 }
             } else {
@@ -133,7 +132,7 @@ export default {
             if (HAS_DB) {
                 const allSettings = await store.getAllSettings('clones') || {};
                 for (const [authId, data] of Object.entries(allSettings)) {
-                    if (data && data.userNumber === targetNumber) {
+                    if (data && (data as any).userNumber === targetNumber) {
                         await deleteCloneSession(authId);
                         break;
                     }
@@ -147,11 +146,11 @@ export default {
                         if (fs.existsSync(sessionPath)) {
                             try {
                                 const data = JSON.parse(fs.readFileSync(sessionPath, 'utf-8'));
-                                if (data.userNumber === targetNumber) {
+                                if ((data as any).userNumber === targetNumber) {
                                     fs.rmSync(path.join(clonesDir, dir), { recursive: true, force: true });
                                     break;
                                 }
-                            } catch (e) {
+                            } catch(e: any) {
                                 continue;
                             }
                         }
@@ -164,7 +163,7 @@ export default {
                       `Storage: ${HAS_DB ? 'Database cleared' : 'Files deleted'}`, 
                 mentions: [targetJid] 
             }, { quoted: message });
-        } catch (err) {
+        } catch(err: any) {
             console.error(err);
             await sock.sendMessage(chatId, { 
                 text: "❌ Error while stopping the sub-bot." 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 import axios from 'axios';
 
@@ -29,7 +28,7 @@ async function fetchQuotes() {
           .filter(line => line.length > 10);
         
         allQuotes.push(...lines);
-      } catch (error) {
+      } catch(error: any) {
       }
     }
 
@@ -51,7 +50,7 @@ async function fetchQuotes() {
     lastFetchTime = Date.now();
     
     return allQuotes;
-  } catch (error) {
+  } catch(error: any) {
     return cachedQuotes.length > 0 ? cachedQuotes : ['💎 By MEGA-MD - Your WhatsApp Bot'];
   }
 }
@@ -80,7 +79,7 @@ async function updateAutoBio(sock) {
     }
 
     await sock.updateProfileStatus(bio);
-  } catch (error) {
+  } catch(error: any) {
   }
 }
 
@@ -110,7 +109,7 @@ export default {
   usage: '.setbio <on|off|set|reset>',
   ownerOnly: true,
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const action = args[0]?.toLowerCase();
 
@@ -225,7 +224,7 @@ export default {
         text: '❌ *Invalid command!*\n\nUse `.setbio` to see available options.'
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('SetBio Error:', error);
       await sock.sendMessage(chatId, {
         text: `❌ *Error:* ${error.message}`

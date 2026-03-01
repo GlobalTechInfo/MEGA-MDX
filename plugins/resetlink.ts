@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'resetlink',
   aliases: ['revoke', 'newlink'],
@@ -8,7 +7,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -19,7 +18,7 @@ export default {
         ...channelInfo
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in resetlink command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to reset group link!',

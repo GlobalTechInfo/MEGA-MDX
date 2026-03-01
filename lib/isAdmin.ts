@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 async function isAdmin(sock, chatId, senderId) {
     try {
@@ -62,7 +61,7 @@ async function isAdmin(sock, chatId, senderId) {
         });
 
         return { isSenderAdmin, isBotAdmin };
-    } catch (err) {
+    } catch(err: any) {
         console.error('❌ Error in isAdmin:', err);
         return { isSenderAdmin: false, isBotAdmin: false };
     }

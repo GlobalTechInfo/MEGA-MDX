@@ -1,4 +1,3 @@
-// @ts-nocheck
 const compliments = [
     "You're amazing just the way you are!",
     "You have a great sense of humor!",
@@ -39,7 +38,7 @@ export default {
   description: 'Send a random compliment to a user',
   usage: '.compliment @user',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -75,7 +74,7 @@ export default {
         mentions: [userToCompliment]
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in compliment command:', error);
 
       if (error?.data === 429) {
@@ -84,7 +83,7 @@ export default {
           await sock.sendMessage(chatId, {
             text: 'Please try again in a few seconds.'
           }, { quoted: message });
-        } catch (retryError) {
+        } catch(retryError: any) {
           console.error('Error sending retry message:', retryError);
         }
       } else {
@@ -92,7 +91,7 @@ export default {
           await sock.sendMessage(chatId, {
             text: 'An error occurred while sending the compliment.'
           }, { quoted: message });
-        } catch (sendError) {
+        } catch(sendError: any) {
           console.error('Error sending error message:', sendError);
         }
       }

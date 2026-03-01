@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'getpp',
   aliases: ['dlpp', 'profilepic', 'getdp'],
@@ -6,7 +5,7 @@ export default {
   description: 'Get user profile picture',
   usage: '.getpp @user or reply or number',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = message.key.remoteJid;
     const isGroup = chatId.endsWith('@g.us');
 
@@ -52,13 +51,13 @@ export default {
         try {
           const name = await sock.getName(realJid);
           if (name && !name.startsWith('+')) displayName = name;
-        } catch (e) {}
+        } catch(e: any) {}
       }
 
       let ppUrl = null;
       try {
         ppUrl = await sock.profilePictureUrl(realJid, 'image');
-      } catch (e) {
+      } catch(e: any) {
         return await sock.sendMessage(chatId, { 
           text: `❌ No profile picture found for *${displayName}* (${displayNumber})` 
         }, { quoted: message });
@@ -71,7 +70,7 @@ export default {
         }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('GetPP Error:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to fetch profile picture.' 

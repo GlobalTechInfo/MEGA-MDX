@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -29,7 +28,7 @@ async function initConfig() {
             }
             fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
         }
-        return JSON.parse(fs.readFileSync(configPath));
+        return JSON.parse(fs.readFileSync(configPath, "utf-8"));
     }
 }
 
@@ -45,7 +44,7 @@ async function isAutoreadEnabled() {
     try {
         const config = await initConfig();
         return config.enabled;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error checking autoread status:', error);
         return false;
     }
@@ -90,14 +89,14 @@ function isBotMentionedInMessage(message, botNumber) {
     return false;
 }
 
-export async function handleAutoread(sock, message) {
+export async function handleAutoread(sock: any, message: any) {
     try {
         const ghostMode = await store.getSetting('global', 'stealthMode');
         if (ghostMode && ghostMode.enabled) {
             console.log('👻 Stealth mode active - skipping read receipt');
             return false;
         }
-    } catch (err) {
+    } catch(err: any) {
     }
 
     const enabled = await isAutoreadEnabled();
@@ -116,7 +115,7 @@ export async function handleAutoread(sock, message) {
                 };
                 await sock.readMessages([key]);
                 return true;
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Error marking message as read:', error);
                 return false;
             }
@@ -133,7 +132,7 @@ export default {
     usage: '.autoread <on|off>',
     ownerOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         
@@ -203,7 +202,7 @@ export default {
                 }, { quoted: message });
             }
             
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in autoread command:', error);
             await sock.sendMessage(chatId, {
                 text: '❌ *Error processing command!*',

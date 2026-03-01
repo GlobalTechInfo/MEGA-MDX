@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Lookup Threads user profile',
   usage: '.thrstalk <username>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     if (!args.length) {
@@ -50,7 +49,7 @@ export default {
         await sock.sendMessage(chatId, { text: caption }, { quoted: message });
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Threads plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch Threads profile.' }, { quoted: message });
     }

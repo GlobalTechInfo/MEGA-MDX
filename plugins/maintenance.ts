@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -27,7 +26,7 @@ export default {
   usage: '.maintenance [minutes / stop]',
   ownerOnly: 'true',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const input = args[0]?.toLowerCase();
@@ -86,7 +85,7 @@ export default {
         await sock.sendMessage(chatId, { text: '✅ *MAINTENANCE FINISHED*\nCommands re-enabled automatically.' });
       }, minutes * 60000);
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Maintenance Error:', error);
       await sock.sendMessage(chatId, { text: '❌ Action failed.' }, { quoted: message });
     }

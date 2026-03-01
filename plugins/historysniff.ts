@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'chhistory',
   aliases: ['oldposts', 'chlist'],
@@ -40,7 +39,7 @@ export default {
         try {
           const msgData = node.content?.[0]?.content?.[0];
           txt = msgData?.content?.[0]?.content || "Post " + srvId;
-        } catch(e) {}
+        } catch(e: any) {}
 
         list += `${index + 1}. *Text:* ${txt.slice(0, 30)}...\n   *ID:* \`${srvId}\`\n\n`;
       });
@@ -49,7 +48,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: list });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error(err);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch history. Check JID.' });
     }

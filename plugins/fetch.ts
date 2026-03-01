@@ -1,7 +1,5 @@
-// @ts-nocheck
 import axios from 'axios';
-import fileType from 'file-type';
-const { fromBuffer } = fileType;
+import { fileTypeFromBuffer } from 'file-type';
 
 export default {
   command: 'fetch',
@@ -10,7 +8,7 @@ export default {
   description: 'Download a file directly from a URL',
   usage: '.fetch <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args[0];
 
@@ -23,7 +21,7 @@ export default {
       
       const res = await axios.get(url, { responseType: 'arraybuffer' });
       const buffer = Buffer.from(res.data, 'binary');
-      const type = await fromBuffer(buffer);
+      const type = await fileTypeFromBuffer(buffer);
 
       if (!type) {
         return await sock.sendMessage(chatId, { text: buffer.toString().slice(0, 1000) });
@@ -39,7 +37,7 @@ export default {
         await sock.sendMessage(chatId, { document: buffer, mimetype: type.mime, fileName: `file.${type.ext}` });
       }
 
-    } catch (err) {
+    } catch(err: any) {
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch. URL might be private or invalid.' });
     }
   }

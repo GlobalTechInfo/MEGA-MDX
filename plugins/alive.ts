@@ -1,4 +1,3 @@
-// @ts-nocheck
 import os from 'os';
 import process from 'process';
 import settings from '../settings.js';
@@ -11,7 +10,7 @@ export default {
   usage: '.alive',
   isPrefixless: true,
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -22,7 +21,7 @@ export default {
       const hours = Math.floor(uptime / 3600);
       uptime %= 3600;
       const minutes = Math.floor(uptime / 60);
-      const seconds = uptime % 60;
+      const seconds = (Number(uptime) % Number(60));
 
       const uptimeParts = [];
       if (days) uptimeParts.push(`${days}d`);
@@ -33,7 +32,7 @@ export default {
       const uptimeText = uptimeParts.join(' ');
       const totalMem = (os.totalmem() / 1024 / 1024).toFixed(2);
       const freeMem = (os.freemem() / 1024 / 1024).toFixed(2);
-      const usedMem = (totalMem - freeMem).toFixed(2);
+      const usedMem = (Number(totalMem) - Number(freeMem)).toFixed(2);
       const cpuLoad = os.loadavg()[0].toFixed(2);
       const platform = os.platform();
       const arch = os.arch();
@@ -61,7 +60,7 @@ export default {
         }
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in alive command:', error);
       await sock.sendMessage(chatId, { text: '✅ Bot is alive and running!' }, { quoted: message });
     }

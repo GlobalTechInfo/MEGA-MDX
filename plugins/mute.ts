@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'mute',
   aliases: ['silence'],
@@ -8,7 +7,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     const durationInMinutes = args[0] ? parseInt(args[0]) : undefined;
@@ -30,7 +29,7 @@ export default {
               text: 'The group has been unmuted.',
               ...channelInfo 
             });
-          } catch (unmuteError) {
+          } catch(unmuteError: any) {
             console.error('Error unmuting group:', unmuteError);
           }
         }, durationInMilliseconds);
@@ -40,7 +39,7 @@ export default {
           ...channelInfo 
         }, { quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error muting/unmuting the group:', error);
       await sock.sendMessage(chatId, { 
         text: 'An error occurred while muting/unmuting the group. Please try again.',

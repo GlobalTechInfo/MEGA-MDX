@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 const AXIOS_DEFAULTS = {
@@ -51,7 +50,7 @@ export default {
         react: { text: '🧩', key: message.key }
       });
 
-      const res = await axios.get(apiUrl, AXIOS_DEFAULTS);
+      const res = await axios.get(apiUrl, AXIOS_DEFAULTS as any);
 
       await sock.sendMessage(
         chatId,
@@ -69,7 +68,7 @@ export default {
         { quoted: message }
       );
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Custom QR Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to generate QR code.' }, { quoted: message });
     }

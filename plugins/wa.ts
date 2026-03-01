@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'walink',
   aliases: ['wa', 'waid'],
@@ -6,7 +5,7 @@ export default {
   description: 'Generate a WhatsApp link from a phone number.',
   usage: '.walink <number> or reply to a user with .wa',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -41,7 +40,7 @@ export default {
         { text: `*WhatsApp Link:*\n${waLink}` },
         { quoted: message }
       );
-    } catch (error) {
+    } catch(error: any) {
       console.error('WA COMMAND ERROR:', error);
       await sock.sendMessage(
         chatId,

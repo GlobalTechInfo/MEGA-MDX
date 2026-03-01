@@ -1,4 +1,3 @@
-// @ts-nocheck
 import simpleGit from 'simple-git';
 
 export default {
@@ -11,7 +10,7 @@ export default {
 
   async handler(sock, message) {
     const chatId = message.key.remoteJid;
-    const git = simpleGit();
+    const git: any = (simpleGit as any)();
 
     try {
       const isRepo = await git.checkIsRepo();
@@ -49,7 +48,7 @@ export default {
 
       await sock.sendMessage(chatId, { text });
 
-    } catch (err) {
+    } catch(err: any) {
       await sock.sendMessage(chatId, { text: `❌ Git error: ${err.message}` });
     }
   }

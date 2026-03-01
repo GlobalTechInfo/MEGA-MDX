@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search APKs from HappyMod',
   usage: '.hmod <query>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     if (!args.length) {
@@ -42,7 +41,7 @@ export default {
         await sock.sendMessage(chatId, { text: menuText }, { quoted: message });
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('HappyMod plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch APKs.' }, { quoted: message });
     }

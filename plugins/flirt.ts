@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 export default {
   command: 'flirt',
@@ -6,15 +5,15 @@ export default {
   category: 'fun',
   description: 'Get a random flirt message',
   usage: '.flirt',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const shizokeys = 'shizo';
       const res = await fetch(`https://shizoapi.onrender.com/api/texts/flirt?apikey=${shizokeys}`);
       if (!res.ok) throw await res.text();
-      const r = await res.json();
+      const r = await res.json() as any as any;
       await sock.sendMessage(chatId, { text: r.result }, { quoted: message });
-    } catch (e) {
+    } catch(e: any) {
       console.error('Error in flirt command:', e);
       await sock.sendMessage(chatId, { text: '❌ Failed to get flirt message. Please try again later!' }, { quoted: message });
     }

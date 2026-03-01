@@ -1,4 +1,3 @@
-// @ts-nocheck
 import settings from '../settings.js';
 import { isSudo } from './index.js';
 
@@ -37,7 +36,7 @@ async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
                     return true;
                 }
             }
-        } catch (e) {
+        } catch(e: any) {
         }
     }
     
@@ -68,7 +67,7 @@ async function getCleanName(jid, sock) {
                 return cleanNumber;
             }
         }
-    } catch (e) {}
+    } catch(e: any) {}
 
     return cleanNumber;
 }

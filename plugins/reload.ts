@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'reload',
   aliases: ['refresh', 'reloadplugins'],
@@ -9,7 +8,7 @@ export default {
   
   async handler(sock, message, args) {
     const chatId = message.key.remoteJid;
-    const commandHandler = require('../lib/commandHandler');
+    const commandHandler = (await import('../lib/commandHandler.js')).default;
     
     try {
       const start = Date.now();
@@ -19,7 +18,7 @@ export default {
       await sock.sendMessage(chatId, {
         text: `✅ Reloaded ${commandHandler.commands.size} commands in ${end - start}ms`
       });
-    } catch (error) {
+    } catch(error: any) {
       await sock.sendMessage(chatId, {
         text: `❌ Reload failed: ${error.message}`
       });

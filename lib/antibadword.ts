@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -23,10 +22,10 @@ async function loadAntibadwordConfig(groupId) {
             if (!fs.existsSync(configPath)) {
                 return {};
             }
-            const data = JSON.parse(fs.readFileSync(configPath));
+            const data = JSON.parse(fs.readFileSync(configPath, "utf-8").toString());
             return data.antibadword?.[groupId] || {};
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('❌ Error loading antibadword config:', error.message);
         return {};
     }
@@ -40,7 +39,7 @@ async function setAntiBadword(chatId, type, action) {
             type: type
         });
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting antibadword:', error);
         return false;
     }
@@ -50,7 +49,7 @@ async function getAntiBadword(chatId, type) {
     try {
         const settings = await store.getSetting(chatId, 'antibadword');
         return settings || null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting antibadword:', error);
         return null;
     }
@@ -64,7 +63,7 @@ async function removeAntiBadword(chatId) {
             type: null
         });
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing antibadword:', error);
         return false;
     }
@@ -82,7 +81,7 @@ async function incrementWarningCount(chatId, userId) {
         
         await store.saveSetting(chatId, warningsKey, warnings);
         return warnings[userId];
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error incrementing warning count:', error);
         return 0;
     }
@@ -98,7 +97,7 @@ async function resetWarningCount(chatId, userId) {
             await store.saveSetting(chatId, warningsKey, warnings);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error resetting warning count:', error);
         return false;
     }
@@ -224,7 +223,7 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
         await sock.sendMessage(chatId, { 
             delete: message.key
         });
-    } catch (err) {
+    } catch(err: any) {
         console.error('Error deleting message:', err);
         return;
     }
@@ -244,7 +243,7 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
                     text: `*@${senderId.split('@')[0]} has been kicked for using bad words*`,
                     mentions: [senderId]
                 });
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Error kicking user:', error);
             }
             break;
@@ -259,7 +258,7 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
                         text: `*@${senderId.split('@')[0]} has been kicked after 3 warnings*`,
                         mentions: [senderId]
                     });
-                } catch (error) {
+                } catch(error: any) {
                     console.error('Error kicking user after warnings:', error);
                 }
             } else {

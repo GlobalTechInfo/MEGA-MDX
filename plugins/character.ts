@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { channelInfo } from '../lib/messageConfig.js';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Analyze someone\'s character traits',
   usage: '.character @user',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let userToAnalyze;
 

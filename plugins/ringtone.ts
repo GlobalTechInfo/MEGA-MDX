@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +23,7 @@ export default {
   description: 'Search and download ringtones',
   usage: '.ringtone <search term>',
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const searchQuery = args.join(' ').trim();
 
@@ -76,7 +75,7 @@ export default {
           if (i < limit - 1) {
             await new Promise(resolve => setTimeout(resolve, 2000));
           }
-        } catch (sendError) {
+        } catch(sendError: any) {
           console.error(`Failed to send ringtone ${i + 1}:`, sendError.message);
           continue;
         }
@@ -86,7 +85,7 @@ export default {
         text: `✅ *Sent ${limit} ringtones!*\n\n${totalFound > limit ? `📊 *${totalFound - limit} more available*\nUse the same command again for different results.` : ''}`
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Ringtone Command Error:', error);
       
       let errorMsg = "❌ *Search failed!*\n\n";

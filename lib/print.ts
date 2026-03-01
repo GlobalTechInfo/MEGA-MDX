@@ -1,7 +1,6 @@
-// @ts-nocheck
 import { WAMessageStubType } from '@whiskeysockets/baileys';
 import chalk from 'chalk';
-import PhoneNumber from 'awesome-phonenumber';
+import PhoneNumber, { parsePhoneNumber } from 'awesome-phonenumber';
 import settings from '../settings.js';
 
 /**
@@ -41,14 +40,14 @@ async function getNameWithFallback(jid, sock, pushName) {
 
         const phone = extractPhoneNumber(jid)
         if (phone && phone.length >= 10) {
-            const pn = PhoneNumber('+' + phone)
+            const pn = (PhoneNumber as any)('+' + phone)
             if (pn.isValid()) {
                 return null
             }
         }
         return jid.split('@')[0].split(':')[0]
         
-    } catch (e) {
+    } catch(e: any) {
         return jid.split('@')[0].split(':')[0]
     }
 }
@@ -75,21 +74,21 @@ async function printMessage(message, sock) {
                 senderName = sock.user?.name || 'Bot'
                 const botNumber = extractPhoneNumber(sock.user?.id || sock.user?.jid)
                 if (botNumber) {
-                    const pn = PhoneNumber('+' + botNumber)
-                    senderPhone = pn.isValid() ? pn.getNumber('international') : botNumber
+                    const pn: any = parsePhoneNumber('+' + botNumber)
+                    senderPhone = pn.valid ? pn.number?.international || botNumber : botNumber
                 }
             } else {
                 senderName = await getNameWithFallback(senderId, sock, m.pushName)
                 
                 const phone = extractPhoneNumber(senderId)
                 if (phone && phone.length >= 10) {
-                    const pn = PhoneNumber('+' + phone)
+                    const pn = (PhoneNumber as any)('+' + phone)
                     senderPhone = pn.isValid() ? pn.getNumber('international') : phone
                 } else {
                     senderPhone = senderId.split('@')[0].split(':')[0]
                 }
             }
-        } catch (e) {
+        } catch(e: any) {
             senderName = m.pushName || senderId.split('@')[0]
             senderPhone = senderId.split('@')[0].split(':')[0]
         }
@@ -100,7 +99,7 @@ async function printMessage(message, sock) {
                 const metadata = await sock.groupMetadata(chatId).catch(() => null)
                 chatName = metadata?.subject || null
             }
-        } catch (e) {
+        } catch(e: any) {
             chatName = null
         }
 
@@ -185,14 +184,14 @@ async function printMessage(message, sock) {
 
         const displayType = messageTypeLabels[messageType] || messageType.replace('Message', '').toUpperCase()
 
-        console.log(chalk.hex('#00D9FF').bold('╭─────────────────────────────────'))
+        console.log((chalk as any).hex('#00D9FF').bold('╭─────────────────────────────────'))
         
         console.log(
-            chalk.hex('#00D9FF')('│') + ' ' +
-            chalk.cyan('🤖 Bot') + ' ' +
-            chalk.black(chalk.bgCyan(` ${timeStr} `)) + ' ' +
-            chalk.magenta(displayType) +
-            chalk.gray(fileSizeStr)
+            (chalk as any).hex('#00D9FF')('│') + ' ' +
+            (chalk as any).cyan('🤖 Bot') + ' ' +
+            (chalk as any).black((chalk as any).bgCyan(` ${timeStr} `)) + ' ' +
+            (chalk as any).magenta(displayType) +
+            (chalk as any).gray(fileSizeStr)
         )
         
         const senderDisplay = senderName && senderName !== senderPhone
@@ -200,22 +199,22 @@ async function printMessage(message, sock) {
             : senderPhone
         
         console.log(
-            chalk.hex('#00D9FF')('│') + ' ' +
-            (fromMe ? chalk.green('📤 ME') : chalk.yellow('📨 FROM')) + ' ' +
-            chalk.white(senderDisplay)
+            (chalk as any).hex('#00D9FF')('│') + ' ' +
+            (fromMe ? (chalk as any).green('📤 ME') : (chalk as any).yellow('📨 FROM')) + ' ' +
+            (chalk as any).white(senderDisplay)
         )
 
         if (isGroup && chatName) {
             console.log(
-                chalk.hex('#00D9FF')('│') + ' ' +
-                chalk.blue('👥 GROUP') + ' ' +
-                chalk.white(chatName)
+                (chalk as any).hex('#00D9FF')('│') + ' ' +
+                (chalk as any).blue('👥 GROUP') + ' ' +
+                (chalk as any).white(chatName)
             )
         } else if (!isGroup) {
             console.log(
-                chalk.hex('#00D9FF')('│') + ' ' +
-                chalk.magenta('💬 PRIVATE') + ' ' +
-                chalk.white('Private Chat')
+                (chalk as any).hex('#00D9FF')('│') + ' ' +
+                (chalk as any).magenta('💬 PRIVATE') + ' ' +
+                (chalk as any).white('Private Chat')
             )
         }
 
@@ -231,25 +230,25 @@ async function printMessage(message, sock) {
                                   (fromMe && messageText.includes('*'))
             
             console.log(
-                chalk.hex('#00D9FF')('│') + ' ' +
-                chalk.hex('#FFD700')('💭 MSG') + ' ' +
+                (chalk as any).hex('#00D9FF')('│') + ' ' +
+                (chalk as any).hex('#FFD700')('💭 MSG') + ' ' +
                 (isCommand 
-                    ? chalk.greenBright(displayText) 
+                    ? (chalk as any).greenBright(displayText) 
                     : isBotResponse
-                        ? chalk.cyan(displayText)
+                        ? (chalk as any).cyan(displayText)
                         : fromMe 
-                            ? chalk.blueBright(displayText)
-                            : chalk.white(displayText)
+                            ? (chalk as any).blueBright(displayText)
+                            : (chalk as any).white(displayText)
                 )
             )
         }
 
-        console.log(chalk.hex('#00D9FF').bold('╰─────────────────────────────────'))
+        console.log((chalk as any).hex('#00D9FF').bold('╰─────────────────────────────────'))
         console.log()
 
-    } catch (error) {
-        console.log(chalk.red('❌ Error logging message:'), error.message)
-        console.log(chalk.gray(`[${message.key?.fromMe ? 'ME' : 'MSG'}] ${message.key?.remoteJid}`))
+    } catch(error: any) {
+        console.log((chalk as any).red('❌ Error logging message:'), error.message)
+        console.log((chalk as any).gray(`[${message.key?.fromMe ? 'ME' : 'MSG'}] ${message.key?.remoteJid}`))
     }
 }
 
@@ -287,7 +286,7 @@ function printLog(type, message) {
     const icon = icons[type] || '•'
 
     console.log(
-        chalk.gray(`[${timestamp}]`) + ' ' +
+        (chalk as any).gray(`[${timestamp}]`) + ' ' +
         color(icon) + ' ' +
         color(message)
     )

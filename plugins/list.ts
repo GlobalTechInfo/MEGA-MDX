@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -32,7 +31,7 @@ function formatTime() {
         hour12: false,
         timeZone: settings.timeZone || 'UTC'
     };
-    return now.toLocaleTimeString('en-US', options);
+    return now.toLocaleTimeString('en-US', options as any);
 }
 
 const menuStyles = [
@@ -177,7 +176,7 @@ export default {
   description: 'Show all commands',
   usage: '.menu [command]',
 
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     const prefix = settings.prefixes[0];
     const imagePath = path.join(__dirname, '../assets/bot_image.jpg');
@@ -193,7 +192,7 @@ export default {
       }
       
       if (!cmd) {
-        return sock.sendMessage(chatId, { 
+        return (sock as any).sendMessage(chatId, { 
           text: `❌ Command "${args[0]}" not found.\n\nUse ${prefix}menu to see all commands.`,
           ...channelInfo
         }, { quoted: message });
@@ -212,14 +211,14 @@ export default {
 ╰━━━━━━━━━━━━━━⬣`;
 
       if (fs.existsSync(imagePath)) {
-        return sock.sendMessage(chatId, {
+        return (sock as any).sendMessage(chatId, {
           image: { url: imagePath },
           caption: text,
           ...channelInfo
         }, { quoted: message });
       }
 
-      return sock.sendMessage(chatId, { text, ...channelInfo }, { quoted: message });
+      return (sock as any).sendMessage(chatId, { text, ...channelInfo } as any, { quoted: message });
     }
 
     const style = pick(menuStyles);
@@ -238,13 +237,13 @@ export default {
     });
 
     if (fs.existsSync(imagePath)) {
-      await sock.sendMessage(chatId, {
+      await (sock as any).sendMessage(chatId, {
         image: { url: imagePath },
         caption: text,
         ...channelInfo
       }, { quoted: message });
     } else {
-      await sock.sendMessage(chatId, { text, ...channelInfo }, { quoted: message });
+      await (sock as any).sendMessage(chatId, { text, ...channelInfo } as any, { quoted: message });
     }
   }
 };

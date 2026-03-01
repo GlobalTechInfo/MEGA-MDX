@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 let triviaGames = {};
@@ -10,7 +9,7 @@ export default {
   description: 'Start a trivia game or answer the question',
   usage: '.trivia [answer]',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     if (args.length === 0) {
@@ -36,7 +35,7 @@ export default {
           text: `🎯 *Trivia Time!*\n\n*Question:* ${triviaGames[chatId].question}\n\n*Options:*\n${triviaGames[chatId].options.join('\n')}\n\nUse .trivia <answer> to answer!`,
           ...channelInfo
         }, { quoted: message });
-      } catch (error) {
+      } catch(error: any) {
         await sock.sendMessage(chatId, { 
           text: 'Error fetching trivia question. Try again later.',
           ...channelInfo

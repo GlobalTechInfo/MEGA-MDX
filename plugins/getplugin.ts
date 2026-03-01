@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -31,7 +30,7 @@ export default {
   usage: '.inspect [plugin_name]',
   ownerOnly: 'true',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = message.key.remoteJid;
 
     const pluginName = args[0];
@@ -64,7 +63,7 @@ export default {
         await sock.sendMessage(chatId, { text: formattedCode }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Inspect Error:', error);
       await sock.sendMessage(chatId, { text: '❌ Failed to read the plugin file.' });
     }

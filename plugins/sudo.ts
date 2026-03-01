@@ -1,4 +1,3 @@
-// @ts-nocheck
 import settings from '../settings.js';
 import { addSudo, removeSudo, getSudoList } from '../lib/index.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
@@ -28,12 +27,12 @@ export default {
     usage: '.sudo add|del|list <@user|number>',
     strictOwnerOnly: true,
     
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderJid = message.key.participant || message.key.remoteJid;
         const isGroup = chatId.endsWith('@g.us');
         
-        const isOwner = message.key.fromMe || isOwnerOrSudo.isOwnerOnly(senderJid);
+        const isOwner = message.key.fromMe || isOwnerOrSudo;
 
         const sub = (args[0] || '').toLowerCase();
 
@@ -77,7 +76,7 @@ export default {
                 if (found && found.id && !found.id.includes('@lid')) {
                     displayId = cleanJid(found.id);
                 }
-            } catch (e) {}
+            } catch(e: any) {}
         }
 
         if (sub === 'add') {

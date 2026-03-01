@@ -1,4 +1,3 @@
-// @ts-nocheck
 import simpleGit from 'simple-git';
 
 export default {
@@ -11,8 +10,8 @@ export default {
 
   async handler(sock, message) {
     const chatId = message.key.remoteJid;
-    const commandHandler = require('../lib/commandHandler');
-    const git = simpleGit();
+    const commandHandler = (await import('../lib/commandHandler.js')).default;
+    const git: any = (simpleGit as any)();
 
     const start = Date.now();
     let gitStatus = 'Local reload only';
@@ -28,7 +27,7 @@ export default {
           gitStatus = 'Pulled from git remote';
         }
       }
-    } catch (err) {
+    } catch(err: any) {
       gitStatus = 'Git unavailable, used local files';
     }
 
@@ -44,7 +43,7 @@ export default {
           `📦 Plugins: ${commandHandler.commands.size}\n` +
           `⏱ Time: ${end - start}ms`
       });
-    } catch (error) {
+    } catch(error: any) {
       await sock.sendMessage(chatId, {
         text: `❌ Reload failed: ${error.message}`
       });

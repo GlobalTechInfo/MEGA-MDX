@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -6,7 +5,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import fs from 'fs';
 import path from 'path';
-import acrcloud from 'acrcloud';
+const acrcloud = createRequire(import.meta.url)('acrcloud');
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
 const acr = new acrcloud({
@@ -47,7 +46,7 @@ export default {
     category: 'info',
     description: 'Identify a song from audio or video',
     usage: '.shazam (reply to audio or video)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {
@@ -84,7 +83,7 @@ export default {
 • 📆 *RELEASE DATE*: ${music.release_date || 'NOT FOUND'}
 `.trim();
             await sock.sendMessage(chatId, { text }, { quoted: message });
-        } catch (err) {
+        } catch(err: any) {
             console.error('[SHZ]', err);
             await sock.sendMessage(
                 chatId,

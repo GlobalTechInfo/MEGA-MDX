@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import { Sticker, StickerTypes } from 'wa-sticker-formatter';
 import fs from 'fs';
@@ -12,7 +11,7 @@ export default {
   description: 'Generate a quote sticker from text',
   usage: '.quote <text> or reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let text = args.join(' ').trim();
 
@@ -59,7 +58,7 @@ export default {
       let userPfp;
       try {
         userPfp = await sock.profilePictureUrl(who, 'image');
-      } catch (err) {
+      } catch(err: any) {
         userPfp = 'https://i.ibb.co/9HY4wjz/a4c0b1af253197d4837ff6760d5b81c0.jpg';
       }
 
@@ -70,7 +69,7 @@ export default {
         if (contactInfo?.[0]?.notify) {
           userName = contactInfo[0].notify;
         }
-      } catch (err) {
+      } catch(err: any) {
         // Use default name
       }
 
@@ -121,7 +120,7 @@ export default {
         pack: 'WhatsApp Bot',
         author: userName,
         type: StickerTypes.FULL,
-        categories: ['🤩', '🎉'],
+        categories: ['🤩' as any, '🎉'],
         id: Math.floor(100000 + Math.random() * 900000).toString(),
         quality: 100,
         background: '#00000000',
@@ -141,7 +140,7 @@ export default {
             key: message.key
           }
         });
-      } catch (stickerError) {
+      } catch(stickerError: any) {
         console.error('Error sending sticker:', stickerError);
         
         // Fallback: send as image
@@ -161,11 +160,11 @@ export default {
       // Clean up temporary file
       try {
         fs.unlinkSync(tempImagePath);
-      } catch (err) {
+      } catch(err: any) {
         console.error('Error cleaning up temp file:', err);
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Quote plugin error:', err);
 
       // React with error emoji

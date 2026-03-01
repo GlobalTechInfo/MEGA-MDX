@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -65,12 +64,12 @@ async function ensureDefaultSticker(state) {
                 fs.writeFileSync(assetPath.replace('.webp', '.txt'), 'Default mention sticker not available');
             }
         }
-    } catch (e) {
+    } catch(e: any) {
         console.warn('ensureDefaultSticker failed:', e?.message || e);
     }
 }
 
-export async function handleMentionDetection(sock, chatId, message) {
+export async function handleMentionDetection(sock: any, chatId: any, message: any) {
     try {
         if (message.key?.fromMe) return;
 
@@ -142,7 +141,7 @@ export async function handleMentionDetection(sock, chatId, message) {
                 await sock.sendMessage(chatId, { sticker: fs.readFileSync(assetPath) }, { quoted: message });
                 return;
             }
-            const payload = {};
+            const payload: Record<string, any> = {};
             if (state.type === 'image') payload.image = fs.readFileSync(assetPath);
             else if (state.type === 'video') {
                 payload.video = fs.readFileSync(assetPath);
@@ -156,10 +155,10 @@ export async function handleMentionDetection(sock, chatId, message) {
             else if (state.type === 'text') payload.text = fs.readFileSync(assetPath, 'utf8');
             else payload.text = 'Hi';
             await sock.sendMessage(chatId, payload, { quoted: message });
-        } catch (e) {
+        } catch(e: any) {
             await sock.sendMessage(chatId, { text: 'Hi' }, { quoted: message });
         }
-    } catch (err) {
+    } catch(err: any) {
         console.error('handleMentionDetection error:', err);
     }
 }
@@ -187,11 +186,11 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
             const media = qMsg[dataType];
             if (!media) throw new Error('No media');
             const kind = type === 'sticker' ? 'sticker' : type;
-            const stream = await downloadContentFromMessage(media, kind);
+            const stream = await downloadContentFromMessage(media, kind as any);
             const chunks = [];
             for await (const chunk of stream) chunks.push(chunk);
             buf = Buffer.concat(chunks);
-        } catch (e) {
+        } catch(e: any) {
             console.error('download error', e);
             return sock.sendMessage(chatId, { text: '❌ *Failed to download media*' }, { quoted: message });
         }
@@ -234,7 +233,7 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
                 try { fs.unlinkSync(prevPath); } catch {}
             }
         }
-    } catch (e) {
+    } catch(e: any) {
         console.warn('cleanup previous assets failed:', e?.message || e);
     }
     const outName = `mention_custom.${ext}`;
@@ -243,7 +242,7 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
         fs.mkdirSync(assetsDir, { recursive: true });
     }
     const outPath = path.join(assetsDir, outName);
-    try { fs.writeFileSync(outPath, buf); } catch (e) {
+    try { fs.writeFileSync(outPath, buf); } catch(e: any) {
         console.error('write error', e);
         return sock.sendMessage(chatId, { text: '❌ *Failed to save file*' }, { quoted: message });
     }
@@ -268,7 +267,7 @@ export default {
     usage: '.mention <on|off> or .setmention (reply to media)',
     ownerOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const onoff = args[0]?.toLowerCase();
         

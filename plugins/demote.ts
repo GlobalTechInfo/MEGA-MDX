@@ -1,4 +1,3 @@
-// @ts-nocheck
 async function handleDemotionEvent(sock, groupId, participants, author) {
     try {
         if (!Array.isArray(participants) || participants.length === 0) {
@@ -35,7 +34,7 @@ async function handleDemotionEvent(sock, groupId, participants, author) {
             text: demotionMessage,
             mentions: mentionList
         });
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error handling demotion event:', error);
         if (error.data === 429) {
             await new Promise(resolve => setTimeout(resolve, 2000));
@@ -52,7 +51,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const isBotAdmin = context.isBotAdmin;
 
@@ -100,7 +99,7 @@ export default {
                 text: demotionMessage,
                 mentions: [...userToDemote, message.key.participant || message.key.remoteJid]
             }, { quoted: message });
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in demote command:', error);
             if (error.data === 429) {
                 await new Promise(resolve => setTimeout(resolve, 2000));
@@ -108,7 +107,7 @@ export default {
                     await sock.sendMessage(chatId, { 
                         text: '❌ *Rate limit reached*\n\nPlease try again in a few seconds.'
                     }, { quoted: message });
-                } catch (retryError) {
+                } catch(retryError: any) {
                     console.error('Error sending retry message:', retryError);
                 }
             } else {
@@ -116,7 +115,7 @@ export default {
                     await sock.sendMessage(chatId, { 
                         text: '❌ *Failed to demote user(s)*\n\nMake sure the bot has sufficient permissions.'
                     }, { quoted: message });
-                } catch (sendError) {
+                } catch(sendError: any) {
                     console.error('Error sending error message:', sendError);
                 }
             }

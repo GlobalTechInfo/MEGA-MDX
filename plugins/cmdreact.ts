@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import { setCommandReactState } from '../lib/reactions.js';
 import store from '../lib/lightweight_store.js';
@@ -18,7 +17,7 @@ export default {
   usage: '.creact on/off',
   ownerOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     if (!args[0] || !['on', 'off'].includes(args[0])) {

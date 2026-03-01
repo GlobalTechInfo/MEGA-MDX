@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'hack',
   aliases: ['fakehack', 'prankhack'],
@@ -12,7 +11,7 @@ export default {
    * @param {Array} args - command arguments
    * @param {object} context - additional context
    */
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const target = args?.[0] || 'target';
 
@@ -43,7 +42,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: '*🤖 Mission accomplished. Logging off...*' }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in hack sequence:', error);
       await sock.sendMessage(chatId, { text: '*⚠️ An error occurred during the hack sequence. Please try again later.*' }, { quoted: message });
     }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'clear',
   aliases: ['clr', 'clean'],
@@ -7,7 +6,7 @@ export default {
   usage: '.clear',
   ownerOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -19,7 +18,7 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 1000));
       await sock.sendMessage(chatId, { delete: sent.key });
       
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error clearing messages:', error);
       await sock.sendMessage(chatId, { 
         text: 'An error occurred while clearing messages.',

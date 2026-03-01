@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -10,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload to Tmpfiles.org (temporary)',
     usage: '.tmpfiles (reply to media or caption on media)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {
@@ -39,7 +38,7 @@ export default {
             await sock.sendMessage(chatId, { text: 'Uploading to Tmpfiles...' }, { quoted: message });
 
             const mediaType = type === 'stickerMessage' ? 'sticker' : type.replace('Message', '');
-            const stream = await downloadContentFromMessage(mediaSource[type], mediaType);
+            const stream = await downloadContentFromMessage(mediaSource[type], mediaType as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -67,7 +66,7 @@ export default {
 
             fs.unlinkSync(tempPath);
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Tmpfiles Error:', error);
             await sock.sendMessage(chatId, { text: `❌ Error: ${error.message}` }, { quoted: message });
         }

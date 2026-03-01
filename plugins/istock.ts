@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download image or video from iStock URL',
   usage: '.istock <iStock URL>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0]?.trim();
 
@@ -34,7 +33,7 @@ export default {
         await sock.sendMessage(chatId, { image: { url: item.image }, caption: '🖼️ *iStock Image*' }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('iStock download plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

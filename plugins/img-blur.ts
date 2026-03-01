@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import sharp from 'sharp';
 
@@ -8,16 +7,16 @@ export default {
   category: 'tools',
   description: 'Apply a blur effect to an image',
   usage: '.blur (reply to an image or send image with caption)',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const quotedMessage = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     try {
       let imageBuffer;
       if (quotedMessage?.imageMessage) {
         const quoted = { message: { imageMessage: quotedMessage.imageMessage } };
-        imageBuffer = await downloadMediaMessage(quoted, 'buffer', {}, {});
+        imageBuffer = await downloadMediaMessage(quoted as any, 'buffer', {} as any);
       } else if (message.message?.imageMessage) {
-        imageBuffer = await downloadMediaMessage(message, 'buffer', {}, {});
+        imageBuffer = await downloadMediaMessage(message, 'buffer', {}, {} as any);
       } else {
         await sock.sendMessage(chatId, { 
           text: 'Please reply to an image or send an image with caption `.blur`' 
@@ -49,7 +48,7 @@ export default {
         }
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in blur command:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to blur image. Please try again later.' 

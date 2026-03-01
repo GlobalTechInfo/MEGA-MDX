@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -22,7 +21,7 @@ export default {
   description: 'Send text with a fake "Frequently Forwarded" tag',
   usage: '.viral <text> OR reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     
     try {
@@ -55,7 +54,7 @@ export default {
         } 
       });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Forwarding Spoof Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to spoof forwarding.' });
     }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const insults = [
     "You're like a cloud. When you disappear, it's a beautiful day!",
     "You bring everyone so much joy when you leave the room!",
@@ -37,7 +36,7 @@ export default {
   category: 'group',
   description: 'Send a playful insult to someone by mentioning them or replying to their message',
   usage: '.insult @username or reply to their message with .insult',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -63,7 +62,7 @@ export default {
         mentions: [userToInsult],
         quoted: message
       });
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in insult command:', error);
 
       if (error.data === 429) {
@@ -73,7 +72,7 @@ export default {
             text: '⚠️ Too many requests. Please try again in a few seconds.',
             quoted: message
           });
-        } catch (retryError) {
+        } catch(retryError: any) {
           console.error('Error sending retry message:', retryError);
         }
       } else {
@@ -82,7 +81,7 @@ export default {
             text: '❌ An error occurred while sending the insult.',
             quoted: message
           });
-        } catch (sendError) {
+        } catch(sendError: any) {
           console.error('Error sending error message:', sendError);
         }
       }

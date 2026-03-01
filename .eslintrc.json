@@ -1,0 +1,12 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-undef": "off",
+    "@typescript-eslint/no-require-imports": "error"
+  },
+  "env": {
+    "node": true,
+    "es2020": true
+  }
+}

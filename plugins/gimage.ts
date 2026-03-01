@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search and send first 4 Google images',
   usage: '.gimage <search query>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ').trim();
 
@@ -32,7 +31,7 @@ export default {
         await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('GImage plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

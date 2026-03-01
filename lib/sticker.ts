@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -48,13 +47,13 @@ function sticker2(img, url) {
       let bufs = []
       const [_spawnprocess, ..._spawnargs] = [...(module.exports.support.gm ? ['gm'] : module.exports.magick ? ['magick'] : []), 'convert', 'png:-', 'webp:-']
       let im = spawn(_spawnprocess, _spawnargs)
-      im.on('error', e => conn.reply(m.chat, util.format(e), m))
+      im.on('error', (e: any) => console.error('sticker error:', e))
       im.stdout.on('data', chunk => bufs.push(chunk))
       ff.stdout.pipe(im.stdin)
       im.on('exit', () => {
         resolve(Buffer.concat(bufs))
       })
-    } catch (e) {
+    } catch(e: any) {
       reject(e)
     }
   })
@@ -68,7 +67,7 @@ function sticker2(img, url) {
  * @param {String} author EXIF Author
  */
 async function sticker3(img, url, packname, author) {
-  url = url ? url : await uploadFile(img)
+  url = url ? url : img
   let res = await fetch('https://api.xteam.xyz/sticker/wm?' + new URLSearchParams(Object.entries({
     url,
     packname,
@@ -102,7 +101,7 @@ async function sticker5(img, url, packname, author, categories = [''], extra = {
     categories,
     ...extra
   }
-  return (new Sticker(img ? img : url, stickerMetadata)).toBuffer()
+  return (new Sticker(img ? img : url, stickerMetadata as any)).toBuffer()
 }
 
 /**
@@ -126,7 +125,8 @@ function sticker6(img, url) {
     const out = path.join(tmp + '.webp')
     await fs.promises.writeFile(tmp, img)
     // https://github.com/MhankBarBar/termux-wabot/blob/main/index.js#L313#L368
-    let Fffmpeg = /video/i.test(type.mime) ? fluent_ffmpeg(tmp).inputFormat(type.ext) : fluent_ffmpeg(tmp).input(tmp)
+    const ffmpegLib = (await import('fluent-ffmpeg')).default;
+    let Fffmpeg = /video/i.test(type.mime) ? ffmpegLib(tmp).inputFormat(type.ext) : ffmpegLib(tmp).input(tmp)
     Fffmpeg
       .on('error', function (err) {
         console.error(err)
@@ -187,7 +187,7 @@ async function sticker(isImage, url, packname, author) {
         });
         
         return stickerBuffer;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in sticker creation:', error);
         return null;
     }

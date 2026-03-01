@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Check bot response time and ping a website',
   usage: '.pingweb [website URL]',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo, rawText } = context;
     
     const prefix = rawText.match(/^[.!#]/)?.[0] || '.';
@@ -51,7 +50,7 @@ export default {
         responseText += `\n📡 *Status:* ${response.status} ${response.statusText}`;
         responseText += `\n✅ *Reachable:* Yes`;
         
-      } catch (error) {
+      } catch(error: any) {
         if (error.code === 'ENOTFOUND') {
           responseText += `\n\n🌐 *Website:* ${url}`;
           responseText += `\n❌ *Error:* Domain not found`;

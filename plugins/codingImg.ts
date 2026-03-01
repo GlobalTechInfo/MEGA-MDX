@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get a random programming image',
   usage: '.coding',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -22,7 +21,7 @@ export default {
 
       await sock.sendMessage(chatId, { image: { url: randomImage }, caption: '💻 Programming Image' }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Programming image plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Error while fetching image.' }, { quoted: message });
     }

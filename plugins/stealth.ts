@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 
 export default {
@@ -9,7 +8,7 @@ export default {
     usage: '.stealth <on|off>',
     ownerOnly: 'true',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId } = context;
         
         const action = args[0]?.toLowerCase();
@@ -24,7 +23,7 @@ export default {
                 if (autotypingState?.enabled && currentState?.enabled) {
                     autotypingWarning = '\n\n⚠️ *Autotyping is enabled* but will be blocked by stealth mode.';
                 }
-            } catch (e) {}
+            } catch(e: any) {}
 
             let autoreadWarning = '';
             try {
@@ -32,7 +31,7 @@ export default {
                 if (autoreadState?.enabled && currentState?.enabled) {
                     autoreadWarning = '\n⚠️ *Autoread is enabled* but will be blocked by stealth mode.';
                 }
-            } catch (e) {}
+            } catch(e: any) {}
             
             return await sock.sendMessage(chatId, { 
                 text: `👻 *Stealth Mode Status:* ${status}\n\n*Usage:* .stealth <on|off>\n\n*What it does:*\n• Blocks all presence updates (typing, online, last seen)\n• Makes the bot completely invisible\n\n*When enabled:*\n✓ No "typing..." indicator\n✓ No "online" status\n✓ Complete stealth mode${autotypingWarning}${autoreadWarning}` 
@@ -53,7 +52,7 @@ export default {
                     if (autotypingState?.enabled) warnings += '• Autotyping is enabled but will be blocked\n';
                     if (autoreadState?.enabled) warnings += '• Autoread is enabled but will be blocked\n';
                 }
-            } catch (e) {}
+            } catch(e: any) {}
         }
 
         await sock.sendMessage(chatId, { 

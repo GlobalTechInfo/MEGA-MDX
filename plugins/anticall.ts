@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 import fs from 'fs';
 
@@ -34,7 +33,7 @@ async function writeState(enabled) {
       if (!fs.existsSync('./data')) fs.mkdirSync('./data', { recursive: true });
       fs.writeFileSync(ANTICALL_PATH, JSON.stringify({ enabled: !!enabled }, null, 2));
     }
-  } catch (e) {
+  } catch(e: any) {
     console.error('Error writing anticall state:', e);
   }
 }
@@ -47,7 +46,7 @@ export default {
   usage: '.anticall <on|off|status>',
   ownerOnly: true,
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const state = await readState();
     const sub = args.join(' ').trim().toLowerCase();

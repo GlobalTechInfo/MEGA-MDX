@@ -1,5 +1,5 @@
-// @ts-nocheck
 import Qasim from 'api-qasim';
+const QasimAny = Qasim as any;
 import { channelInfo } from '../lib/messageConfig.js';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   description: 'Search for stories on Wattpad!',
   usage: '.wattpad <query>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').trim();
 
@@ -22,7 +22,7 @@ export default {
     }
 
     try {
-      const results = await Qasim.wattpad(query);
+      const results = await QasimAny.wattpad(query);
 
       if (!Array.isArray(results) || results.length === 0) {
         throw new Error('No results found for your query.');
@@ -43,7 +43,7 @@ export default {
         ...channelInfo
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       await sock.sendMessage(chatId, {
         text: `❌ An error occurred: ${error.message || error}`,
         ...channelInfo

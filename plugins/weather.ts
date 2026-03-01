@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import { channelInfo } from '../lib/messageConfig.js';
 
@@ -9,7 +8,7 @@ export default {
   description: 'Get the current weather for a specific city!',
   usage: '.weather <city>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const city = args.join(' ').trim();
 
@@ -41,7 +40,7 @@ export default {
         ...channelInfo
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Weather plugin error:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Sorry, I could not fetch the weather. Make sure the place name is correct.',

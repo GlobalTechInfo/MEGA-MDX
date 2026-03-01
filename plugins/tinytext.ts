@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -22,7 +21,7 @@ export default {
   description: 'Convert text to small-capital style',
   usage: '.smallcaps <text> OR reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     
     try {
@@ -53,7 +52,7 @@ export default {
     const result = txt.split('').map(char => capsMap[char] || char).join('');
       await sock.sendMessage(chatId, { text: result }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('SmallCaps Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to process text.' });
     }

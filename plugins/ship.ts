@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'ship',
   aliases: ['couple'],
@@ -7,7 +6,7 @@ export default {
   usage: '.ship',
   groupOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -29,7 +28,7 @@ export default {
         ...channelInfo
       });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in ship command:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to ship! Make sure this is a group.',

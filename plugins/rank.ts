@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -13,7 +12,7 @@ import store from '../lib/lightweight_store.js';
 async function incrementMessageCount(chatId, userId) {
     try {
         await store.incrementMessageCount(chatId, userId)
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error incrementing message count:', error)
     }
 }
@@ -26,7 +25,7 @@ async function loadMessageCounts() {
     try {
         const data = await store.getAllMessageCounts()
         return data.messageCount || {}
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error loading message counts:', error)
         return {}
     }
@@ -48,7 +47,7 @@ export default {
     usage: '.rank',
     groupOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid
         
         try {
@@ -56,7 +55,7 @@ export default {
             const groupCounts = messageCounts[chatId] || {}
 
             const sortedMembers = Object.entries(groupCounts)
-                .sort(([, a], [, b]) => b - a)
+                .sort(([, a], [, b]) => (b as number) - (a as number))
                 .slice(0, 5)
 
             if (sortedMembers.length === 0) {
@@ -81,7 +80,7 @@ export default {
                 mentions: sortedMembers.map(([userId]) => userId)
             }, { quoted: message })
             
-        } catch (error) {
+        } catch(error: any) {
             console.error('Rank Command Error:', error)
             await sock.sendMessage(chatId, {
                 text: '❌ Failed to load leaderboard. Please try again later.'
@@ -137,14 +136,14 @@ export default {
     usage: '.rank',
     groupOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         
         const messageCounts = loadMessageCounts();
         const groupCounts = messageCounts[chatId] || {};
 
         const sortedMembers = Object.entries(groupCounts)
-            .sort(([, a], [, b]) => b - a)
+            .sort(([, a], [, b]) => (b as number) - (a as number))
             .slice(0, 5);
 
         if (sortedMembers.length === 0) {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -10,7 +9,7 @@ export default {
   category: 'owner',
   description: 'Set or update the bot profile picture (owner only)',
   usage: '.setpp (reply to an image)',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -54,7 +53,7 @@ export default {
         text: '✅ Successfully updated bot profile picture!' 
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('SetPP Command Error:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to update profile picture!' 

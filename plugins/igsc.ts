@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { igdl } from 'ruhend-scraper';
 import axios from 'axios';
 import { exec } from 'child_process';
@@ -45,8 +44,8 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
     ffmpegCommand = `ffmpeg -y -i "${tempInput}" -vf "${vf}" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
   }
 
-  await new Promise((resolve, reject) => {
-    exec(ffmpegCommand, (error) => error ? reject(error) : resolve());
+  await new Promise<void>((resolve, reject) => {
+    exec(ffmpegCommand, (error) => error ? reject(error) : resolve(undefined));
   });
   
   let webpBuffer = fs.readFileSync(tempOutput);
@@ -83,7 +82,7 @@ async function fetchBufferFromUrl(url) {
       maxBodyLength: Infinity
     });
     return Buffer.from(res.data);
-  } catch (e) {
+  } catch(e: any) {
     throw e;
   }
 }
@@ -95,7 +94,7 @@ export default {
   description: 'Convert Instagram post/reel to cropped sticker',
   usage: '.igsc <instagram URL>',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -149,7 +148,8 @@ export default {
           const isVideo = (media?.type === 'video') || /\.(mp4|mov|avi|mkv|webm)$/i.test(mediaUrl);
 
           const buffer = await fetchBufferFromUrl(mediaUrl);
-          const hash = require('crypto').createHash('sha1').update(buffer).digest('hex');
+          const { createHash } = await import('crypto');
+          const hash = createHash('sha1').update(buffer).digest('hex');
           if (seenHashes.has(hash)) continue;
           seenHashes.add(hash);
 
@@ -163,12 +163,12 @@ export default {
           if (i < maxItems - 1) {
             await new Promise(r => setTimeout(r, 800));
           }
-        } catch (perItemErr) {
+        } catch(perItemErr: any) {
           console.error('IGSC item error:', perItemErr);
         }
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Error in igsc command:', err);
       await sock.sendMessage(chatId, { 
         text: 'Failed to create cropped sticker from Instagram link.',

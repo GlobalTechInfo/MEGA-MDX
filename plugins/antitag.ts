@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { setAntitag, getAntitag, removeAntitag } from '../lib/index.js';
 
 export async function handleTagDetection(sock, chatId, message, senderId) {
@@ -72,7 +71,7 @@ export async function handleTagDetection(sock, chatId, message, senderId) {
                             text: `🚫 *Antitag Action!*\n\n@${senderId.split('@')[0]} has been removed for tagging all members.`,
                             mentions: [senderId]
                         });
-                    } catch (error) {
+                    } catch(error: any) {
                         await sock.sendMessage(chatId, {
                             text: `⚠️ Failed to remove user. Make sure the bot is an admin.`
                         });
@@ -80,7 +79,7 @@ export async function handleTagDetection(sock, chatId, message, senderId) {
                 }
             }
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in tag detection:', error);
     }
 }
@@ -94,7 +93,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const action = args[0]?.toLowerCase();
 

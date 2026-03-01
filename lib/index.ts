@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -48,7 +47,7 @@ async function loadUserGroupData() {
             const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
             return data;
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error loading user group data:', error);
         return {
             antibadword: {},
@@ -75,7 +74,7 @@ async function saveUserGroupData(data) {
             fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error saving user group data:', error);
         return false;
     }
@@ -94,7 +93,7 @@ async function setAntilink(groupId, type, action) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting antilink:', error);
         return false;
     }
@@ -106,7 +105,7 @@ async function getAntilink(groupId, type) {
         if (!data.antilink || !data.antilink[groupId]) return null;
         
         return type === 'on' ? data.antilink[groupId] : null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting antilink:', error);
         return null;
     }
@@ -120,7 +119,7 @@ async function removeAntilink(groupId, type) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing antilink:', error);
         return false;
     }
@@ -139,7 +138,7 @@ async function setAntitag(groupId, type, action) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting antitag:', error);
         return false;
     }
@@ -151,7 +150,7 @@ async function getAntitag(groupId, type) {
         if (!data.antitag || !data.antitag[groupId]) return null;
         
         return type === 'on' ? data.antitag[groupId] : null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting antitag:', error);
         return null;
     }
@@ -165,7 +164,7 @@ async function removeAntitag(groupId, type) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing antitag:', error);
         return false;
     }
@@ -181,7 +180,7 @@ async function incrementWarningCount(groupId, userId) {
         data.warnings[groupId][userId]++;
         await saveUserGroupData(data);
         return data.warnings[groupId][userId];
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error incrementing warning count:', error);
         return 0;
     }
@@ -195,7 +194,7 @@ async function resetWarningCount(groupId, userId) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error resetting warning count:', error);
         return false;
     }
@@ -205,7 +204,7 @@ async function isSudo(userId) {
     try {
         const data = await loadUserGroupData();
         return data.sudo && data.sudo.includes(userId);
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error checking sudo:', error);
         return false;
     }
@@ -220,7 +219,7 @@ async function addSudo(userJid) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error adding sudo:', error);
         return false;
     }
@@ -236,7 +235,7 @@ async function removeSudo(userJid) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing sudo:', error);
         return false;
     }
@@ -246,7 +245,7 @@ async function getSudoList() {
     try {
         const data = await loadUserGroupData();
         return Array.isArray(data.sudo) ? data.sudo : [];
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting sudo list:', error);
         return [];
     }
@@ -265,7 +264,7 @@ async function addWelcome(jid, enabled, message) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in addWelcome:', error);
         return false;
     }
@@ -279,7 +278,7 @@ async function delWelcome(jid) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in delWelcome:', error);
         return false;
     }
@@ -289,7 +288,7 @@ async function isWelcomeOn(jid) {
     try {
         const data = await loadUserGroupData();
         return data.welcome && data.welcome[jid] && data.welcome[jid].enabled;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in isWelcomeOn:', error);
         return false;
     }
@@ -308,7 +307,7 @@ async function addGoodbye(jid, enabled, message) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in addGoodbye:', error);
         return false;
     }
@@ -322,7 +321,7 @@ async function delGoodBye(jid) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in delGoodBye:', error);
         return false;
     }
@@ -332,7 +331,7 @@ async function isGoodByeOn(jid) {
     try {
         const data = await loadUserGroupData();
         return data.goodbye && data.goodbye[jid] && data.goodbye[jid].enabled;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in isGoodByeOn:', error);
         return false;
     }
@@ -342,7 +341,7 @@ async function getWelcome(jid) {
     try {
         const data = await loadUserGroupData();
         return data.welcome && data.welcome[jid] ? data.welcome[jid].message : null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in getWelcome:', error);
         return null;
     }
@@ -352,7 +351,7 @@ async function getGoodbye(jid) {
     try {
         const data = await loadUserGroupData();
         return data.goodbye && data.goodbye[jid] ? data.goodbye[jid].message : null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in getGoodbye:', error);
         return null;
     }
@@ -371,7 +370,7 @@ async function setAntiBadword(groupId, type, action) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting antibadword:', error);
         return false;
     }
@@ -388,7 +387,7 @@ async function getAntiBadword(groupId, type) {
         const config = data.antibadword[groupId];
         
         return type === 'on' ? config : null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting antibadword:', error);
         return null;
     }
@@ -402,7 +401,7 @@ async function removeAntiBadword(groupId, type) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing antibadword:', error);
         return false;
     }
@@ -419,7 +418,7 @@ async function setChatbot(groupId, enabled) {
         
         await saveUserGroupData(data);
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting chatbot:', error);
         return false;
     }
@@ -429,7 +428,7 @@ async function getChatbot(groupId) {
     try {
         const data = await loadUserGroupData();
         return data.chatbot?.[groupId] || null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting chatbot:', error);
         return null;
     }
@@ -443,7 +442,7 @@ async function removeChatbot(groupId) {
             await saveUserGroupData(data);
         }
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing chatbot:', error);
         return false;
     }

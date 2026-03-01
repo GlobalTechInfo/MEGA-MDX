@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import store from '../lib/lightweight_store.js';
 
@@ -17,7 +16,7 @@ async function getBannedUsers() {
         return banned || [];
     } else {
         if (fs.existsSync(bannedFilePath)) {
-            return JSON.parse(fs.readFileSync(bannedFilePath));
+            return JSON.parse(fs.readFileSync(bannedFilePath, "utf-8"));
         }
         return [];
     }
@@ -46,7 +45,7 @@ export default {
     description: 'Ban a user from using the bot',
     usage: '.ban @user or reply to message',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const isGroup = context.isGroup;
@@ -76,7 +75,7 @@ export default {
                 }, { quoted: message });
                 return;
             }
-        } catch (e) {}
+        } catch(e: any) {}
 
         try {
             let bannedUsers = await getBannedUsers();
@@ -98,7 +97,7 @@ export default {
                     ...channelInfo 
                 }, { quoted: message });
             }
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in ban command:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ *Failed to ban user!*\n\nPlease try again.',

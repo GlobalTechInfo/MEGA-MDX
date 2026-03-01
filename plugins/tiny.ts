@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Shorten a URL using TinyURL',
   usage: '.tinyurl <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ')?.trim();
 
@@ -31,7 +30,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: output }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('TinyURL plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to shorten URL.' }, { quoted: message });
     }}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { uploadImage } from '../lib/uploadImage.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
@@ -16,7 +15,7 @@ export default {
   description: 'Send an image or video with a custom file length',
   usage: '.length <size> (reply to media)',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args?.join(' ')?.trim();
 
@@ -60,7 +59,7 @@ export default {
         { quoted: message }
       );
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('FileLength plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to process media.' }, { quoted: message });
     }}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import { exec } from 'child_process';
 import fs from 'fs';
@@ -28,8 +27,8 @@ async function convertMediaToSticker(mediaBuffer, isAnimated) {
     ? `ffmpeg -y -i "${input}" -vf "scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000,fps=15" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 60 -compression_level 6 "${output}"`
     : `ffmpeg -y -i "${input}" -vf "scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${output}"`;
 
-  await new Promise((resolve, reject) => {
-    exec(ffmpegCmd, (err) => (err ? reject(err) : resolve()));
+  await new Promise<void>((resolve, reject) => {
+    exec(ffmpegCmd, (err) => (err ? reject(err) : resolve(undefined)));
   });
 
   let webpBuffer = fs.readFileSync(output);
@@ -80,7 +79,7 @@ async function sendAnimu(sock, chatId, message, type) {
 
     return await sock.sendMessage(chatId, { text: '❌ Failed to fetch animu.' }, { quoted: message });
 
-  } catch (err) {
+  } catch(err: any) {
     console.error('Error sending animu:', err);
     await sock.sendMessage(chatId, { text: '❌ An error occurred while fetching animu.' }, { quoted: message });
   }
@@ -92,7 +91,7 @@ export default {
   category: 'menu',
   description: 'Send anime stickers or quotes',
   usage: '.animu <type>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const subArg = args && args[0] ? args[0] : '';
     const type = normalizeType(subArg);
@@ -116,7 +115,7 @@ export default {
 
       await sendAnimu(sock, chatId, message, type);
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Error in animu handler:', err);
       await sock.sendMessage(chatId, { text: '❌ An error occurred while fetching animu.' }, { quoted: message });
     }

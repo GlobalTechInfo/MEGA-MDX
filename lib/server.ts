@@ -1,4 +1,3 @@
-// @ts-nocheck
 import express from 'express';
 import { createServer } from 'http';
 import { createRequire } from 'module';

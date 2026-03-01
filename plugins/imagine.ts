@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'ai',
   description: 'Generate an AI image based on your prompt',
   usage: '.imagine <prompt>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const imagePrompt = args.join(' ').trim();
 
@@ -35,7 +34,7 @@ export default {
         caption: `🎨 Generated image for prompt: "${imagePrompt}"`
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in imagine command:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to generate image. Please try again later.'

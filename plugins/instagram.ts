@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { igdl } from 'ruhend-scraper';
 
 const processedMessages = new Set();
@@ -19,7 +18,7 @@ export default {
   description: 'Download Instagram posts, reels & videos',
   usage: '.ig <instagram link>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text =
       args.join(' ') ||
@@ -109,7 +108,7 @@ export default {
         }
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Instagram plugin error:', err);
       await sock.sendMessage(
         chatId,

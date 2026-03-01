@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import { channelInfo } from '../lib/messageConfig.js';
 
@@ -9,7 +8,7 @@ export default {
   description: 'Waste someone in style!',
   usage: '.wasted @user',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let userToWaste;
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {
@@ -42,7 +41,7 @@ export default {
         ...channelInfo
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in wasted command:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to create wasted image! Try again later.',

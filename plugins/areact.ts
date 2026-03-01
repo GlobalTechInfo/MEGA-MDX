@@ -1,4 +1,3 @@
-// @ts-nocheck
 const autoEmojis = [
   '💘','💝','💖','💗','💓','💞','💕','💟','❣️','❤️',
   '🧡','💛','💚','💙','💜','🤎','🖤','🤍','♥️',
@@ -23,7 +22,7 @@ export default {
   usage: '.autoreact on/off',
   ownerOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     if (!args[0] || !['on', 'off'].includes(args[0])) {

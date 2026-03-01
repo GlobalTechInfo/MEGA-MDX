@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 // Utility to decode Unicode escapes
@@ -16,7 +15,7 @@ export default {
   description: 'Stalk Genshin Impact UID',
   usage: '.genshin <UID>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     if (!args.length) {
@@ -46,7 +45,7 @@ export default {
 
       await sock.sendMessage(chatId, { image: { url: result.image }, caption: caption }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Genshin plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch UID info.' }, { quoted: message });
     }

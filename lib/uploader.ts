@@ -1,9 +1,7 @@
-// @ts-nocheck
 
 import axios from 'axios'
 import BodyForm from 'form-data'
-import fileType from 'file-type'
-const { fromBuffer } = fileType;
+import { fileTypeFromBuffer } from 'file-type'
 import fetch from 'node-fetch'
 import fs from 'fs'
 import * as cheerio from 'cheerio'
@@ -25,7 +23,7 @@ function TelegraPh (Path) {
 				data: form
 			})
 			return resolve("https://telegra.ph" + data.data[0].src)
-		} catch (err) {
+		} catch(err: any) {
 			return reject(new Error(String(err)))
 		}
 	})
@@ -59,7 +57,7 @@ function webp2mp4File(path) {
 			  url: 'https://s6.ezgif.com/webp-to-mp4',
 			  data: form,
 			  headers: {
-				   'Content-Type': `multipart/form-data; boundary=${form._boundary}`
+				   'Content-Type': `multipart/form-data; boundary=${(form as any)._boundary}`
 			  }
 		 }).then(({ data }) => {
 			  const bodyFormThen = new BodyForm()
@@ -72,7 +70,7 @@ function webp2mp4File(path) {
 				   url: 'https://ezgif.com/webp-to-mp4/' + file,
 				   data: bodyFormThen,
 				   headers: {
-						'Content-Type': `multipart/form-data; boundary=${bodyFormThen._boundary}`
+						'Content-Type': `multipart/form-data; boundary=${(bodyFormThen as any)._boundary}`
 				   }
 			  }).then(({ data }) => {
 				   const $ = cheerio.load(data)
@@ -88,7 +86,7 @@ function webp2mp4File(path) {
 }
 
 async function floNime(medianya, options = {}) {
-const { ext } = await fromBuffer(medianya) || options.ext
+const { ext } = await fileTypeFromBuffer(medianya) || (options as any).ext
         var form = new BodyForm()
         form.append('file', medianya, 'tmp.'+ext)
         let jsonnya = await fetch('https://flonime.my.id/upload', {

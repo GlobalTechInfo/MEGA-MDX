@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import {
     proto,
@@ -33,7 +32,7 @@ export const generateMessageTag = (epoch) => {
 }
 
 export const processTime = (timestamp, now) => {
-    return moment.duration(now - moment(timestamp * 1000)).asSeconds()
+    return moment.duration(now.valueOf() - moment(Number(timestamp) * 1000).valueOf()).asSeconds()
 }
 
 export const getRandom = (ext) => {
@@ -54,7 +53,7 @@ export const getBuffer = async (url, options) => {
             responseType: 'arraybuffer'
         })
         return res.data
-    } catch (err) {
+    } catch(err: any) {
         return err
     }
 }
@@ -73,7 +72,7 @@ export const getImg = async (url, options) => {
             responseType: 'arraybuffer'
         })
         return res.data
-    } catch (err) {
+    } catch(err: any) {
         return err
     }
 }
@@ -90,7 +89,7 @@ export const fetchJson = async (url, options) => {
             ...options
         })
         return res.data
-    } catch (err) {
+    } catch(err: any) {
         return err
     }
 }
@@ -99,8 +98,8 @@ export const runtime = function(seconds) {
     seconds = Number(seconds);
     var d = Math.floor(seconds / (3600 * 24));
     var h = Math.floor(seconds % (3600 * 24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
+    var m = Math.floor(Number(seconds) % Number(3600) / 60);
+    var s = Math.floor(Number(seconds) % Number(60));
     var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
     var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
@@ -112,7 +111,7 @@ export const clockString = (ms) => {
     let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
     let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
     let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+    return [h, m, s].map(v => v.toString().padStart(2, String(0))).join(':')
 }
 
 export const sleep = async (ms) => {
@@ -151,21 +150,21 @@ export const tanggal = (numer) => {
     const day = tgl.getDate();
     const bulan = tgl.getMonth();
     let thisDay = tgl.getDay();
-    thisDay = myDays[thisDay];
-    const yy = tgl.getYear();
+    let thisDayName = myDays[thisDay as number];
+    const yy = tgl.getFullYear();
     const year = (yy < 1000) ? yy + 1900 : yy;
     const time = moment.tz('Asia/Karachi').format('DD/MM HH:mm:ss');
     const d = new Date();
     const locale = 'en';
     const gmt = new Date(0).getTime() - new Date('1 January 1970').getTime();
-    const weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(((d * 1) + gmt) / 84600000) % 5];
+    const weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(((Number(d) * 1) + gmt) / 84600000) % 5];
 
     return `${thisDay}, ${day} - ${myMonths[bulan]} - ${year}`;
 }
 
 export const jam = (numer, options = {}) => {
-    let format = options.format ? options.format : "HH:mm"
-    let jam = options?.timeZone ? moment(numer).tz(timeZone).format(format) : moment(numer).format(format)
+    let format = (options as any).format ? (options as any).format : "HH:mm"
+    let jam = (options as any)?.timeZone ? moment(numer).tz((options as any).timeZone).format(format) : moment(numer).format(format)
 
     return `${jam}`
 }
@@ -194,12 +193,12 @@ export const logic = (check, inp, out) => {
 
 export const generateProfilePicture = async (buffer) => {
     const jimp = await Jimp.read(buffer)
-    const min = jimp.getWidth()
-    const max = jimp.getHeight()
-    const cropped = jimp.crop(0, 0, min, max)
+    const min = jimp.width
+    const max = jimp.height
+    const cropped = jimp.crop({ x: 0, y: 0, w: min, h: max })
     return {
-        img: await cropped.scaleToFit(720, 720).getBufferAsync(Jimp.MIME_JPEG),
-        preview: await cropped.scaleToFit(720, 720).getBufferAsync(Jimp.MIME_JPEG)
+        img: await cropped.scaleToFit({ w: 720, h: 720 }).getBuffer('image/jpeg'),
+        preview: await cropped.scaleToFit({ w: 720, h: 720 }).getBuffer('image/jpeg')
     }
 }
 
@@ -361,7 +360,7 @@ export const smsg = (QasimDev, m, store) => {
 export const reSize = (buffer, ukur1, ukur2) => {
     return new Promise(async (resolve, reject) => {
         var baper = await Jimp.read(buffer);
-        var ab = await baper.resize(ukur1, ukur2).getBufferAsync(Jimp.MIME_JPEG)
+        var ab = await (baper as any).resize(ukur1, ukur2).getBuffer('image/jpeg')
         resolve(ab)
     })
 }
@@ -374,6 +373,5 @@ let file = __filename;
 fs.watchFile(file, () => {
     fs.unwatchFile(file)
     console.log(chalk.redBright(`Update ${__filename}`))
-    delete _require.cache[file]
-    require(file)
+    // hot reload not supported in ESM
 })

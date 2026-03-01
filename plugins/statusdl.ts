@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
 export default {
@@ -9,7 +8,7 @@ export default {
   usage: 'Reply to a status and type .dlstatus',
   ownerOnly: 'true',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const m = message.message;
@@ -35,8 +34,7 @@ export default {
       }
 
       const stream = await downloadContentFromMessage(
-        mediaData, 
-        quotedType.replace('Message', '')
+        mediaData, quotedType.replace('Message', '') as any
       );
 
       let buffer = Buffer.from([]);
@@ -50,7 +48,7 @@ export default {
         await sock.sendMessage(chatId, { video: buffer, caption: mediaData.caption || '' }, { quoted: message });
       }
 
-    } catch (e) {
+    } catch(e: any) {
       console.error('SW Download Error:', e);
       await sock.sendMessage(chatId, { text: "❌ Failed to download status media." }, { quoted: message });
     }

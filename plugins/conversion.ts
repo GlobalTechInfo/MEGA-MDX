@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Convert units (e.g., c → f, m → km, kg → g)',
   usage: '.convert <from_unit> <to_unit> <value>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     if (!args || args.length < 3) {
@@ -41,7 +40,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: reply }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Unit conversion plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

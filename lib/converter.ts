@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -28,11 +27,11 @@ function ffmpeg(buffer, args = [], ext = '', ext2 = '') {
             if (code !== 0) return reject(code)
             resolve(await fs.promises.readFile(out))
             await fs.promises.unlink(out)
-          } catch (e) {
+          } catch(e: any) {
             reject(e)
           }
         })
-    } catch (e) {
+    } catch(e: any) {
       reject(e)
     }
   })

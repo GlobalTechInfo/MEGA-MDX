@@ -1,6 +1,4 @@
-// @ts-nocheck
 class TicTacToe {
-  [key: string]: any;
   [key: string]: any;
     constructor(playerX = 'x', playerO = 'o') {
         this.playerX = playerX;

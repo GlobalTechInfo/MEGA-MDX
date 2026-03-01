@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
@@ -29,10 +28,10 @@ export async function stickercropFromBuffer(inputBuffer, isAnimated) {
     ffmpegCommand = `ffmpeg -y -i "${tempInput}" -vf "crop=min(iw\\,ih):min(iw\\,ih),scale=512:512,format=rgba" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
   }
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     exec(ffmpegCommand, (error) => {
       if (error) return reject(error);
-      resolve();
+      resolve(undefined);
     });
   });
 
@@ -67,7 +66,7 @@ export default {
   description: 'Crop image/video/sticker to circle sticker',
   usage: '.crop (reply to image/video/sticker)',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     const messageToQuote = message;
     let targetMessage = message;
@@ -137,7 +136,7 @@ export default {
         ffmpegCommand = `ffmpeg -i "${tempInput}" -vf "crop=min(iw\\,ih):min(iw\\,ih),scale=512:512,format=rgba" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
       }
 
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         exec(ffmpegCommand, (error, stdout, stderr) => {
           if (error) {
             console.error('FFmpeg error:', error);
@@ -145,7 +144,7 @@ export default {
             reject(error);
           } else {
             console.log('FFmpeg stdout:', stdout);
-            resolve();
+            resolve(undefined);
           }
         });
       });
@@ -192,11 +191,11 @@ export default {
       try {
         fs.unlinkSync(tempInput);
         fs.unlinkSync(tempOutput);
-      } catch (err) {
+      } catch(err: any) {
         console.error('Error cleaning up temp files:', err);
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in stickercrop command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to crop sticker! Try with an image.',

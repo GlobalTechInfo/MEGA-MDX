@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL, pathToFileURL } from 'url';
 import { dirname } from 'path';
@@ -52,7 +51,7 @@ class CommandHandler {
               console.log(`[WATCHER] Hot-reloaded: ${filename}`);
             }
           }
-        } catch (error) {
+        } catch(error: any) {
           console.error(`[WATCHER] Error reloading ${filename}:`, error.message);
         }
       }
@@ -82,7 +81,7 @@ class CommandHandler {
             }
           }
         }
-      } catch (error) {
+      } catch(error: any) {
         console.error(`Error loading ${file}:`, error.message);
       }
     }
@@ -135,7 +134,7 @@ class CommandHandler {
       try {
         s.calls++;
         return await handler(sock, message, ...args);
-      } catch (err) {
+      } catch(err: any) {
         s.errors++;
         throw err;
       } finally {

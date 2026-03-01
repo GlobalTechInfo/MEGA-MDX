@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -56,7 +55,7 @@ export default {
     description: 'List all sticker commands',
     usage: '.listcmd',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId } = context;
         
         const stickers = await getStickerCommands();
@@ -70,12 +69,12 @@ export default {
 
         const stickerList = entries
             .map(([key, value], index) => 
-                `${index + 1}. ${value.locked ? `*(blocked)* ${key}` : key} : ${value.text}`
+                `${index + 1}. ${(value as any).locked ? `*(blocked)* ${key}` : key} : ${(value as any).text}`
             )
             .join('\n');
 
         const mentions = entries
-            .map(([, value]) => value.mentionedJid)
+            .map(([, value]) => (value as any).mentionedJid)
             .flat()
             .filter(Boolean);
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download media (video or image) from X/Twitter post',
   usage: '.twitter <Tweet URL>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0];
 
@@ -41,7 +40,7 @@ export default {
         }
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Twitter plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

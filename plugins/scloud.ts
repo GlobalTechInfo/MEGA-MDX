@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search for tracks on SoundCloud',
   usage: '.scloud <song name>',
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const searchQuery = args.join(' ').trim();
 
@@ -78,7 +77,7 @@ export default {
             image: imageBuffer,
             caption: resultText
           }, { quoted: message });
-        } catch (imgError) {
+        } catch(imgError: any) {
           await sock.sendMessage(chatId, {
             text: resultText
           }, { quoted: message });
@@ -89,7 +88,7 @@ export default {
         }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('SoundCloud Search Error:', error);
       
       let errorMsg = "❌ *Search failed!*\n\n";

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -28,11 +27,11 @@ async function getAllCloneSessions() {
     if (HAS_DB) {
         const settings = await store.getAllSettings('clones') || {};
         return Object.entries(settings)
-            .filter(([key, value]) => value && value.status)
-            .map(([authId, data]) => ({ authId, ...data }));
+            .filter(([key, value]) => value && (value as any).status)
+            .map(([authId, data]) => ({ authId, ...((data) as any) }));
     } else {
-        const fs = require('fs');
-        const path = require('path');
+        const { default: fs } = await import('fs');
+        const { default: path } = await import('path');
         const clonesDir = path.join(process.cwd(), 'session', 'clones');
         if (!fs.existsSync(clonesDir)) return [];
         
@@ -42,8 +41,8 @@ async function getAllCloneSessions() {
             if (fs.existsSync(sessionPath)) {
                 try {
                     const data = JSON.parse(fs.readFileSync(sessionPath, 'utf-8'));
-                    return { authId, ...data };
-                } catch (e) {
+                    return { authId, ...((data) as any) };
+                } catch(e: any) {
                     return { authId, status: 'unknown' };
                 }
             }
@@ -59,7 +58,7 @@ export default {
     description: 'List all currently active sub-bots',
     usage: '.listrent',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId } = context;
 
         const activeConns = global.conns || [];
@@ -89,7 +88,7 @@ export default {
             const offlineClones = storedClones.filter(clone => {
                 return !activeConns.some(conn => {
                     const connNumber = conn.user.id.split(':')[0];
-                    return clone.userNumber === connNumber;
+                    return (clone as any).userNumber === connNumber;
                 });
             });
 
@@ -98,8 +97,8 @@ export default {
                 
                 offlineClones.forEach((clone, i) => {
                     msg += `*${i + 1}.* ID: ${clone.authId}\n`;
-                    msg += `   └ Number: ${clone.userNumber || 'N/A'}\n`;
-                    msg += `   └ Status: ${clone.status || 'offline'}\n`;
+                    msg += `   └ Number: ${(clone as any).userNumber || 'N/A'}\n`;
+                    msg += `   └ Status: ${(clone as any).status || 'offline'}\n`;
                     if (clone.createdAt) {
                         const date = new Date(clone.createdAt);
                         msg += `   └ Created: ${date.toLocaleString()}\n`;

@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: '8ball',
   aliases: ['eightball', 'magic8ball'],
@@ -6,7 +5,7 @@ export default {
   description: 'Ask the magic 8-ball a question',
   usage: '.8ball Will I be rich?',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -37,7 +36,7 @@ export default {
         text: `🎱 *Question:* ${question}\n\n*Answer:* ${randomResponse}`
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in 8ball command:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Something went wrong with the magic 8-ball!'

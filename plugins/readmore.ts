@@ -1,4 +1,3 @@
-// @ts-nocheck
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
@@ -8,7 +7,7 @@ export default {
   category: 'tools',
   description: 'Hide text using read more',
   usage: '.readmore text\n.readmore text1|text2',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
     if (!text) {

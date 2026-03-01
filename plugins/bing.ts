@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Search something on Bing',
   usage: '.bing <query>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ')?.trim();
     if (!query) {
@@ -34,7 +33,7 @@ export default {
           .join('\n\n');
 
       await sock.sendMessage(chatId, { text }, { quoted: message });
-    } catch (error) {
+    } catch(error: any) {
       console.error('Bing plugin error:', error);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch Bing search results.' }, { quoted: message });
     }}

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -53,7 +52,7 @@ function formatTime() {
         hour12: false,
         timeZone: settings.timeZone || 'UTC'
     };
-    return now.toLocaleTimeString('en-US', options);
+    return now.toLocaleTimeString('en-US', options as any);
 }
 
 export default {
@@ -64,7 +63,7 @@ export default {
   usage: '.smenu',
   isPrefixless: true,
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -137,25 +136,25 @@ export default {
       menuText += `├─ ${slowEmoji} Slow Response\n`;
       menuText += `⁠└────────────────`;
 
-      const messageOptions = {
-        image: thumbnail,
-        caption: menuText,
-        contextInfo: {
-          forwardingScore: 1,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363319098372999@newsletter',
-            newsletterName: settings.botName || 'MEGA MD',
-            serverMessageId: -1
-          }
+      const contextInfo = {
+        forwardingScore: 1,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363319098372999@newsletter',
+          newsletterName: settings.botName || 'MEGA MD',
+          serverMessageId: -1
         }
       };
 
-      await sock.sendMessage(chatId, messageOptions, { quoted: message });
+      const messageOptions = thumbnail
+        ? { image: thumbnail, caption: menuText, contextInfo }
+        : { text: menuText, contextInfo };
 
-    } catch (error) {
+      await (sock as any).sendMessage(chatId, messageOptions, { quoted: message });
+
+    } catch(error: any) {
       console.error('Menu Error:', error);
-      await sock.sendMessage(chatId, { 
+      await (sock as any).sendMessage(chatId, { 
         text: `❌ *Menu Error*\n\n${error.message}`
       }, { quoted: message });
     }

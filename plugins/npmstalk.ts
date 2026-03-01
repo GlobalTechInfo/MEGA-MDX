@@ -1,5 +1,5 @@
-// @ts-nocheck
 import Qasim from 'api-qasim';
+const QasimAny = Qasim as any;
 export default {
   command: 'npmstalk',
   aliases: ['npmstlk'],
@@ -7,7 +7,7 @@ export default {
   description: 'Get details about an NPM package',
   usage: '.npmstalk <package-name>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const { chatId, usedPrefix, command } = context;
 
     if (!args[0]) {
@@ -18,7 +18,7 @@ export default {
 
     try {
 
-      let res = await Qasim.npmStalk(args[0]);
+      let res = await QasimAny.npmStalk(args[0]);
 
       if (!res || !res.result) {
         throw 'Package not found or API error.';
@@ -42,7 +42,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: te }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('NPM Stalk Error:', error);
       await sock.sendMessage(chatId, { text: `✳️ Error: Package not found or API issue.` }, { quoted: message });
     }

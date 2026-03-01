@@ -1,4 +1,3 @@
-// @ts-nocheck
 import 'dotenv/config';
 
 global.SESSION_ID = process.env.SESSION_ID || "" // put your session id here

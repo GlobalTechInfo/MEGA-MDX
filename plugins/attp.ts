@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -11,7 +10,7 @@ export default {
   description: 'Generate an animated sticker from text',
   usage: '.attp <text>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ');
 

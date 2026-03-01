@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -24,7 +23,7 @@ async function loadCommandReactState() {
       return data?.autoReaction || false;
     } else {
       if (fs.existsSync(USER_GROUP_DATA)) {
-        const data = JSON.parse(fs.readFileSync(USER_GROUP_DATA));
+        const data = JSON.parse(fs.readFileSync(USER_GROUP_DATA, "utf-8").toString());
         return data.autoReaction || false;
       }
     }
@@ -38,7 +37,7 @@ loadCommandReactState().then(state => {
   COMMAND_REACT_ENABLED = state;
 });
 
-async function addCommandReaction(sock, message) {
+async function addCommandReaction(sock: any, message: any) {
   if (!COMMAND_REACT_ENABLED) return;
   if (!message?.key?.id) return;
 
@@ -56,14 +55,14 @@ async function setCommandReactState(state) {
       data.autoReaction = state;
       await store.saveSetting('global', 'userGroupData', data);
     } else {
-      let data = {};
+      let data: Record<string, any> = {};
       if (fs.existsSync(USER_GROUP_DATA)) {
-        data = JSON.parse(fs.readFileSync(USER_GROUP_DATA));
+        data = JSON.parse(fs.readFileSync(USER_GROUP_DATA, "utf-8").toString());
       }
       data.autoReaction = state;
       fs.writeFileSync(USER_GROUP_DATA, JSON.stringify(data, null, 2));
     }
-  } catch (error) {
+  } catch(error: any) {
     console.error('Error saving command react state:', error);
   }
 }

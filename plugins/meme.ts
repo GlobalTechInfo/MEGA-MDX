@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'fun',
   description: 'Get a random cheems meme with buttons for another meme or joke',
   usage: '.meme',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -39,7 +38,7 @@ export default {
         });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Meme Command Error:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to fetch meme. Please try again later.',

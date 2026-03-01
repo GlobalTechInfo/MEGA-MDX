@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import FormData from 'form-data';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -20,7 +19,7 @@ export default {
   category: 'tools',
   description: 'Remove background from an image',
   usage: '.removebg (reply to image or send image with caption)',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -60,7 +59,7 @@ export default {
         caption: '✨ *Background removed successfully*\n\n𝗣𝗢𝗪𝗘𝗥𝗘𝗗 𝗕𝗬 𝗠𝗘𝗚𝗔-𝗠𝗗'
       }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('RemoveBG Error:', err?.response?.data || err.message);
 
       let msg = '❌ Failed to remove background.';

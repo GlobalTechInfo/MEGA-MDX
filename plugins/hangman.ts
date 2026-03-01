@@ -1,4 +1,3 @@
-// @ts-nocheck
 const words = ['javascript', 'bot', 'hangman', 'whatsapp', 'nodejs', 'python', 'programming', 'developer', 'computer', 'algorithm'];
 let hangmanGames = {};
 
@@ -48,7 +47,7 @@ export default {
     description: 'Play hangman word guessing game',
     usage: '.hangman to start, then .guess <letter>',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         
         const word = words[Math.floor(Math.random() * words.length)];

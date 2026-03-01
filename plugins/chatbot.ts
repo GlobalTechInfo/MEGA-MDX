@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -51,9 +50,9 @@ async function loadUserGroupData() {
             const data = await store.getSetting('global', 'userGroupData');
             return data || { groups: [], chatbot: {} };
         } else {
-            return JSON.parse(fs.readFileSync(USER_GROUP_DATA));
+            return JSON.parse(fs.readFileSync(USER_GROUP_DATA, "utf-8"));
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error loading user group data:', error.message);
         return { groups: [], chatbot: {} };
     }
@@ -70,7 +69,7 @@ async function saveUserGroupData(data) {
             }
             fs.writeFileSync(USER_GROUP_DATA, JSON.stringify(data, null, 2));
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error saving user group data:', error.message);
     }
 }
@@ -84,13 +83,13 @@ async function showTyping(sock, chatId) {
         await sock.presenceSubscribe(chatId);
         await sock.sendPresenceUpdate('composing', chatId);
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
-    } catch (error) {
+    } catch(error: any) {
         console.error('Typing indicator error:', error);
     }
 }
 
 function extractUserInfo(message) {
-    const info = {};
+    const info: Record<string, any> = {};
     
     if (message.toLowerCase().includes('my name is')) {
         info.name = message.split('my name is')[1].trim().split(' ')[0];
@@ -192,7 +191,7 @@ export async function handleChatbotResponse(sock, chatId, message, userMessage, 
             quoted: message
         });
 
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in chatbot response:', error.message);
         
         if (error.message && error.message.includes('No sessions')) {
@@ -205,7 +204,7 @@ export async function handleChatbotResponse(sock, chatId, message, userMessage, 
                 text: "Oops! 😅 I got a bit confused there. Could you try asking that again?",
                 quoted: message
             });
-        } catch (sendError) {
+        } catch(sendError: any) {
             console.error('Failed to send chatbot error message:', sendError.message);
         }
     }
@@ -276,17 +275,20 @@ You:
         try {
             console.log(`Trying ${api.name}...`);
             
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
             const response = await fetch(api.url(prompt), {
                 method: 'GET',
-                timeout: 10000
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
                 console.log(`${api.name} failed with status ${response.status}`);
                 continue;
             }
             
-            const data = await response.json();
+            const data = await response.json() as any as any;
             const result = api.parse(data);
             
             if (!result) {
@@ -339,7 +341,7 @@ You:
             
             return cleanedResponse;
             
-        } catch (error) {
+        } catch(error: any) {
             console.log(`${api.name} error: ${error.message}`);
             // Continue to next API
             continue;
@@ -360,7 +362,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const match = args.join(' ').toLowerCase();
 

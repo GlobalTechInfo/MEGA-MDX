@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Lookup Twitter user profile',
   usage: '.xstalk <username>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     if (!args.length) {
@@ -56,7 +55,7 @@ export default {
         await sock.sendMessage(chatId, { image: { url: bannerImage }, caption: `📌 Banner of @${username}` });
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Twitter plugin error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch Twitter profile.' }, { quoted: message });
     }

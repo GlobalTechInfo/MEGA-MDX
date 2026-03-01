@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 const supportedAnimes = [
@@ -61,7 +60,7 @@ export default {
   description: 'Send random anime images',
   usage: '.animes <anime_name>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const input = args[0] ? args[0] : '';
     const typeLower = input.toLowerCase();
@@ -87,7 +86,7 @@ export default {
         } catch {}
       }
 
-    } catch (err) {
+    } catch(err: any) {
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch anime images. Please try again later.' }, { quoted: message });
     }
   }

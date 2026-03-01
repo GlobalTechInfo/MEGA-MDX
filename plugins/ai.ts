@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +23,7 @@ export default {
   category: 'ai',
   description: 'Ask a question to AI (GPT or Gemini)',
   usage: '.gpt <question> or .gemini <question>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const command = (args[0] || '').toLowerCase();
     const query = args.join(' ').trim();
@@ -61,14 +60,14 @@ export default {
         for (const api of apis) {
           try {
             const res = await fetch(api);
-            const data = await res.json();
+            const data = await res.json() as any as any;
             const answer = data.message || data.data || data.answer || data.result;
             if (answer) {
               await sock.sendMessage(chatId, { text: answer }, { quoted: message });
               answered = true;
               break;
             }
-          } catch (e) {
+          } catch(e: any) {
             continue;
           }
         }
@@ -76,7 +75,7 @@ export default {
           throw new Error('All Gemini APIs failed');
         }
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('AI Command Error:', error);
       await sock.sendMessage(chatId, {
         text: "❌ Failed to get AI response. Please try again later."

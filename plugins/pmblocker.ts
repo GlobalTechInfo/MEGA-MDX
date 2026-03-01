@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import store from '../lib/lightweight_store.js';
 
@@ -59,7 +58,7 @@ async function writeState(enabled, message) {
             }
             fs.writeFileSync(PMBLOCKER_PATH, JSON.stringify(payload, null, 2));
         }
-    } catch (e) {
+    } catch(e: any) {
         console.error('Error writing PM blocker state:', e);
     }
 }
@@ -72,7 +71,7 @@ export default {
     usage: '.pmblocker <on|off|status|setmsg>',
     ownerOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const state = await readState();
         
@@ -119,7 +118,7 @@ export default {
         }
 
         const enable = sub === 'on';
-        await writeState(enable);
+        await writeState(enable, undefined);
         
         await sock.sendMessage(chatId, {
             text: `📵 *PM Blocker ${enable ? 'ENABLED' : 'DISABLED'}*\n\n` +

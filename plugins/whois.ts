@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get WHOIS information of a domain',
   usage: '.whois <domain>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let domain = args?.[0]?.trim();
 
@@ -55,7 +54,7 @@ export default {
 
       await sock.sendMessage(chatId, { text }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('WHOIS plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

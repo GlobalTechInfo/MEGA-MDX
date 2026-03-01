@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -23,7 +22,7 @@ async function loadAntilinkSettings() {
     } else {
         if (fs.existsSync(antilinkFilePath)) {
             const data = fs.readFileSync(antilinkFilePath);
-            return JSON.parse(data);
+            return JSON.parse(String(data));
         }
         return {};
     }

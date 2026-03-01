@@ -1,4 +1,5 @@
-// @ts-nocheck
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -26,9 +27,9 @@ async function hasGitRepo() {
 }
 
 async function updateViaGit() {
-  const oldRev = (await run('git rev-parse HEAD').catch(() => 'unknown')).trim();
+  const oldRev = String(await run('git rev-parse HEAD').catch(() => 'unknown')).trim();
   await run('git fetch --all --prune');
-  const newRev = (await run('git rev-parse origin/main')).trim();
+  const newRev = String(await run('git rev-parse origin/main')).trim();
   const alreadyUpToDate = oldRev === newRev;
   const commits = alreadyUpToDate ? '' : await run(`git log --pretty=format:"%h %s (%an)" ${oldRev}..${newRev}`).catch(() => '');
   const files = alreadyUpToDate ? '' : await run(`git diff --name-status ${oldRev} ${newRev}`).catch(() => '');
@@ -46,7 +47,8 @@ function downloadFile(url, dest, visited = new Set()) {
       visited.add(url);
 
       const useHttps = url.startsWith('https://');
-      const client = useHttps ? require('https') : require('http');
+      const http = require('http');
+      const client: any = useHttps ? https : http;
       const req = client.get(url, {
         headers: {
           'User-Agent': 'MegaBot-Updater/1.0',
@@ -76,7 +78,7 @@ function downloadFile(url, dest, visited = new Set()) {
       req.on('error', err => {
         fs.unlink(dest, () => reject(err));
       });
-    } catch (e) {
+    } catch(e: any) {
       reject(e);
     }
   });
@@ -142,7 +144,7 @@ async function updateViaZip(sock, chatId, message, zipOverride) {
   let preservedOwner = null;
   let preservedBotOwner = null;
   try {
-    const currentSettings = require('../settings');
+    const currentSettings = (await import('../settings.js')).default;
     preservedOwner = currentSettings && currentSettings.ownerNumber ? String(currentSettings.ownerNumber) : null;
     preservedBotOwner = currentSettings && currentSettings.botOwner ? String(currentSettings.botOwner) : null;
   } catch {}
@@ -183,7 +185,7 @@ export default {
   usage: '.update [zip_url]',
   ownerOnly: true,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -205,15 +207,15 @@ export default {
           changesSummary += `📌 New: ${newRev.substring(0, 7)}\n\n`;
           
           if (commits) {
-            const commitLines = commits.split('\n').slice(0, 5);
+            const commitLines = String(commits).split('\n').slice(0, 5);
             changesSummary += `📝 Recent commits:\n${commitLines.map(c => `• ${c}`).join('\n')}\n\n`;
           }
           
           if (files) {
-            const fileLines = files.split('\n').slice(0, 10);
+            const fileLines = String(files).split('\n').slice(0, 10);
             changesSummary += `📁 Changed files:\n${fileLines.map(f => `• ${f}`).join('\n')}`;
-            if (files.split('\n').length > 10) {
-              changesSummary += `\n... and ${files.split('\n').length - 10} more`;
+            if (String(files).split('\n').length > 10) {
+              changesSummary += `\n... and ${String(files).split('\n').length - 10} more`;
             }
           }
         }
@@ -237,7 +239,7 @@ export default {
       
       try {
         delete require.cache[require.resolve('../settings')];
-        const newSettings = require('../settings');
+        const newSettings = (await import('../settings.js')).default;
         const v = newSettings.version || 'unknown';
         changesSummary += `\n\n🔖 Version: ${v}`;
       } catch {}
@@ -250,7 +252,7 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 1000));
       await restartProcess();
       
-    } catch (err) {
+    } catch(err: any) {
       console.error('Update failed:', err);
       await sock.sendMessage(chatId, { 
         text: `❌ Update failed:\n${String(err.message || err)}`,

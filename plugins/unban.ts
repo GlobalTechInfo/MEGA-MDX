@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fs from 'fs';
 import path from 'path';
 import store from '../lib/lightweight_store.js';
@@ -17,7 +16,7 @@ async function getBannedUsers() {
         return banned || [];
     } else {
         if (fs.existsSync(bannedFilePath)) {
-            return JSON.parse(fs.readFileSync(bannedFilePath));
+            return JSON.parse(fs.readFileSync(bannedFilePath, "utf-8"));
         }
         return [];
     }
@@ -42,7 +41,7 @@ export default {
   usage: '.unban [@user] or reply to message',
   ownerOnly: false,
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, senderId, isGroup, channelInfo, senderIsOwnerOrSudo, isSenderAdmin, isBotAdmin } = context;
     
     if (isGroup) {
@@ -107,7 +106,7 @@ export default {
           ...channelInfo 
         }, { quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in unban command:', error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to unban user!', 

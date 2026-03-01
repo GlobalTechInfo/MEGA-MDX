@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 import { writeExifImg } from '../lib/exif.js';
 const delay = time => new Promise(res => setTimeout(res, time));
@@ -17,7 +16,7 @@ export default {
   description: 'Download stickers from Telegram',
   usage: '.tgstk <telegram sticker URL>',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -56,7 +55,7 @@ export default {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const stickerSet = await response.json();
+        const stickerSet = await response.json() as any as any;
         
         if (!stickerSet.ok || !stickerSet.result) {
           throw new Error('Invalid sticker pack or API response');
@@ -84,7 +83,7 @@ export default {
             
             if (!fileInfo.ok) continue;
             
-            const fileData = await fileInfo.json();
+            const fileData = await fileInfo.json() as any;
             if (!fileData.ok || !fileData.result.file_path) continue;
 
             const fileUrl = `https://api.telegram.org/file/bot${botToken}/${fileData.result.file_path}`;
@@ -100,12 +99,12 @@ export default {
               ? `ffmpeg -i "${tempInput}" -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=15,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`
               : `ffmpeg -i "${tempInput}" -vf "scale=512:512:force_original_aspect_ratio=decrease,format=rgba,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
 
-            await new Promise((resolve, reject) => {
+            await new Promise<void>((resolve, reject) => {
               exec(ffmpegCommand, (error) => {
                 if (error) {
                   console.error('FFmpeg error:', error);
                   reject(error);
-                } else resolve();
+                } else resolve(undefined);
               });
             });
 
@@ -140,11 +139,11 @@ export default {
             try {
               fs.unlinkSync(tempInput);
               fs.unlinkSync(tempOutput);
-            } catch (err) {
+            } catch(err: any) {
               console.error('Error cleaning up temp files:', err);
             }
 
-          } catch (err) {
+          } catch(err: any) {
             console.error(`Error processing sticker ${i}:`, err);
             continue;
           }
@@ -155,11 +154,11 @@ export default {
           ...channelInfo
         }, { quoted: message });
 
-      } catch (error) {
+      } catch(error: any) {
         throw new Error(`Failed to process sticker pack: ${error.message}`);
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in stickertelegram command:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to process Telegram stickers!\nMake sure:\n1. The URL is correct\n2. The sticker pack exists\n3. The sticker pack is public',

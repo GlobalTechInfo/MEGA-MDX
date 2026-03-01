@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 
 export default {
@@ -10,7 +9,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.participant || message.key.remoteJid;
         const isBotAdmin = context.isBotAdmin;
@@ -98,7 +97,7 @@ export default {
                             }
                         });
                         countArg = Math.max(0, countArg - 1);
-                    } catch (e) {}
+                    } catch(e: any) {}
                 }
             }
             for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < countArg; i--) {
@@ -134,7 +133,7 @@ export default {
                     }
                 });
                 await new Promise(r => setTimeout(r, 300));
-            } catch (e) {
+            } catch(e: any) {
                 console.error('Error deleting message:', e);
             }
         }

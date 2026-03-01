@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { handleGoodbye } from '../lib/welcome.js';
 import { isGoodByeOn, getGoodbye } from '../lib/index.js';
 import fetch from 'node-fetch';
@@ -28,7 +27,7 @@ async function handleLeaveEvent(sock, id, participants) {
                         displayName = userParticipant.name;
                     }
                 }
-            } catch (nameError) {
+            } catch(nameError: any) {
                 console.log('Could not fetch display name, using phone number');
             }
             
@@ -48,7 +47,7 @@ async function handleLeaveEvent(sock, id, participants) {
                     if (profilePic) {
                         profilePicUrl = profilePic;
                     }
-                } catch (profileError) {
+                } catch(profileError: any) {
                     console.log('Could not fetch profile picture, using default');
                 }
                 
@@ -65,7 +64,7 @@ async function handleLeaveEvent(sock, id, participants) {
                     });
                     continue;
                 }
-            } catch (imageError) {
+            } catch(imageError: any) {
                 console.log('Image generation failed, falling back to text');
             }
             
@@ -73,7 +72,7 @@ async function handleLeaveEvent(sock, id, participants) {
                 text: finalMessage,
                 mentions: [participantString]
             });
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error sending goodbye message:', error);
             const participantString = typeof participant === 'string' ? participant : (participant.id || participant.toString());
             const user = participantString.split('@')[0];
@@ -104,7 +103,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const matchText = args.join(' ');
 

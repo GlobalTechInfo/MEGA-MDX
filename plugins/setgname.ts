@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
     command: 'setgname',
     aliases: ['setname', 'groupname'],
@@ -8,7 +7,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const name = args.join(' ').trim();
 
@@ -24,7 +23,7 @@ export default {
             await sock.sendMessage(chatId, {
                 text: `✅ *Group name updated to:*\n${name}`
             }, { quoted: message });
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error updating group name:', error);
             await sock.sendMessage(chatId, {
                 text: '❌ *Failed to update group name*\n\nMake sure the bot is an admin.'

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -22,7 +21,7 @@ export default {
   description: 'Send a message replying to a fake status',
   usage: '.spoof @user | StatusText | YourReply',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const input = args.join(' ');
     
@@ -57,7 +56,7 @@ export default {
           }
         }
       });
-    } catch (err) {
+    } catch(err: any) {
       console.error('Spoof Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Failed to spoof. Protocol rejected.' });
     }

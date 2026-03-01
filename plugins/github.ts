@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -15,13 +14,13 @@ export default {
   category: 'info',
   description: 'Get information about the MEGA-MD GitHub repository',
   usage: '.script',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
       const res = await fetch('https://api.github.com/repos/GlobalTechInfo/MEGA-MD');
       if (!res.ok) throw new Error('Error fetching repository data');
-      const json = await res.json();
+      const json = await res.json() as any as any;
 
       let txt = `*乂  MEGA MD  乂*\n\n`;
       txt += `✩  *Name* : ${json.name}\n`;
@@ -37,7 +36,7 @@ export default {
       const imgBuffer = fs.readFileSync(imgPath);
 
       await sock.sendMessage(chatId, { image: imgBuffer, caption: txt }, { quoted: message });
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in github command:', error);
       await sock.sendMessage(chatId, { text: '❌ Error fetching repository information.' }, { quoted: message });
     }

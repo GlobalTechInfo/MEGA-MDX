@@ -1,7 +1,6 @@
-// @ts-nocheck
 
 import ytdl from '@distube/ytdl-core';
-import yts from 'youtube-yts';
+const yts = (await import('yt-search')).default;
 import readline from 'readline';
 import ffmpeg from 'fluent-ffmpeg';
 import NodeID3 from 'node-id3';
@@ -66,7 +65,7 @@ class YTDownloader {
                         id: 3,
                         name: 'front cover',
                     },
-                    imageBuffer: (await fetchBuffer(Metadata.Image)).buffer,
+                    imageBuffer: (await (fetchBuffer as any)(Metadata.Image, {})).buffer,
                     description: `Cover of ${Metadata.Title}`,
                 },
                 album: Metadata.Album,
@@ -125,7 +124,7 @@ class YTDownloader {
                  
                 }
                 resolve(result)
-            } catch (error) {
+            } catch(error: any) {
                 reject(error)
             }
         })
@@ -168,7 +167,7 @@ class YTDownloader {
                 path: file,
                 size: fs.statSync(songPath).size
             }
-        } catch (error) {
+        } catch(error: any) {
             throw new Error(error)
         }
     }
@@ -196,7 +195,7 @@ class YTDownloader {
                 description:videoInfo.videoDetails.description,
                 videoUrl: format.url
             }
-        } catch (error) {
+        } catch(error: any) {
             throw error
         }
     }
@@ -264,7 +263,7 @@ class YTDownloader {
                 path: file,
                 size: fs.statSync(songPath).size
             }
-        } catch (error) {
+        } catch(error: any) {
             throw error
         }
     }
@@ -298,7 +297,7 @@ class YTDownloader {
                     })
                     .on('error', (err) => reject(err));
             });
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error downloading audio:', error);
             throw error;
         }

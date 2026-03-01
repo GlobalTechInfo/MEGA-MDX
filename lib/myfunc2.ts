@@ -1,21 +1,17 @@
-// @ts-nocheck
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod }
-}
-Object.defineProperty(exports, "__esModule", { value: true })
 
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { resolve } from 'path';
 import util from 'util';
-let BodyForm = require('form-data')
-let { fromBuffer } = require('file-type')
-let fs = require('fs')
+import BodyForm from 'form-data'
+import { fileTypeFromBuffer } from 'file-type';
+import fs from 'fs'
 import child_process from 'child_process';
 import ffmpeg from 'fluent-ffmpeg';
 
-const {unlink } = require ('fs').promises
+import { promises as fsPromises } from 'fs';
+const { unlink } = fsPromises;
 
 
 export const sleep = async (ms) => {
@@ -33,7 +29,7 @@ export const fetchJson = async (url, options) => {
             ...options
         })
         return res.data
-    } catch (err) {
+    } catch(err: any) {
         return err
     }
 }
@@ -52,7 +48,7 @@ export const fetchBuffer = async (url, options) => {
 			responseType: 'arraybuffer'
 		})
 		return res.data
-	} catch (err) {
+	} catch(err: any) {
 		return err
 	}
 }
@@ -66,7 +62,7 @@ export const webp2mp4File = async(path) =>{
 			  url: 'https://s6.ezgif.com/webp-to-mp4',
 			  data: form,
 			  headers: {
-				   'Content-Type': `multipart/form-data; boundary=${form._boundary}`
+				   'Content-Type': `multipart/form-data; boundary=${(form as any)._boundary}`
 			  }
 		 }).then(({ data }) => {
 			  const bodyFormThen = new BodyForm()
@@ -79,7 +75,7 @@ export const webp2mp4File = async(path) =>{
 				   url: 'https://ezgif.com/webp-to-mp4/' + file,
 				   data: bodyFormThen,
 				   headers: {
-						'Content-Type': `multipart/form-data; boundary=${bodyFormThen._boundary}`
+						'Content-Type': `multipart/form-data; boundary=${(bodyFormThen as any)._boundary}`
 				   }
 			  }).then(({ data }) => {
 				   const $ = cheerio.load(data)
@@ -106,7 +102,7 @@ export const fetchUrl = async (url, options) => {
             ...options
         })
         return res.data
-    } catch (err) {
+    } catch(err: any) {
         return err
     }
 }
@@ -144,7 +140,7 @@ export const TelegraPh = (Path) =>{
 				data: form
 			})
 			return resolve("https://telegra.ph" + data.data[0].src)
-		} catch (err) {
+		} catch(err: any) {
 			return reject(new Error(String(err)))
 		}
 	})

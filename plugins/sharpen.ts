@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -17,7 +16,7 @@ export default {
   description: 'Convert an image to sharpen',
   usage: 'Reply to an image with .sharpen',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -69,7 +68,7 @@ export default {
       );
       fs.unlinkSync(grayFile);
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Sharpen Plugin Error:', err);
       await sock.sendMessage(
         chatId,

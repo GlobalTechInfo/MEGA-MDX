@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -34,7 +33,7 @@ async function uploadToCatbox(filePath) {
             status: true,
             url: response.data.trim()
         };
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Catbox upload failed: ${error.message}`);
     }
 }
@@ -59,7 +58,7 @@ async function uploadToPomf2(filePath) {
         } else {
             throw new Error('Upload failed');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Pomf2 upload failed: ${error.message}`);
     }
 }
@@ -86,7 +85,7 @@ async function uploadToImgbb(filePath, apiKey) {
         } else {
             throw new Error('Upload failed');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Imgbb upload failed: ${error.message}`);
     }
 }
@@ -114,7 +113,7 @@ async function uploadToFreeimage(filePath) {
         } else {
             throw new Error('Upload failed');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Freeimage upload failed: ${error.message}`);
     }
 }
@@ -141,7 +140,7 @@ async function uploadToLitterbox(filePath, time = '1h') {
             url: response.data.trim(),
             expires: time
         };
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Litterbox upload failed: ${error.message}`);
     }
 }
@@ -170,7 +169,7 @@ async function uploadToPixhost(filePath) {
             }
         }
         throw new Error('Failed to extract image URL from Pixhost');
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Pixhost upload failed: ${error.message}`);
     }
 }
@@ -198,7 +197,7 @@ async function uploadToTmpfiles(filePath) {
         } else {
             throw new Error('Upload failed');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Tmpfiles upload failed: ${error.message}`);
     }
 }
@@ -222,7 +221,7 @@ async function uploadToQuax(filePath) {
         } else {
             throw new Error('Upload failed');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Qu.ax upload failed: ${error.message}`);
     }
 }
@@ -242,7 +241,7 @@ async function uploadToX0(filePath) {
             status: true,
             url: response.data.trim()
         };
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`X0.at upload failed: ${error.message}`);
     }
 }
@@ -268,7 +267,7 @@ async function uploadToUguu(filePath) {
         } else {
             throw new Error('Invalid response structure');
         }
-    } catch (error) {
+    } catch(error: any) {
         throw new Error(`Uguu upload failed: ${error.message}`);
     }
 }
@@ -290,7 +289,7 @@ async function uploadFile(filePath) {
             const result = await uploader.fn();
             console.log(`[Upload] ✓ Success with ${uploader.name}`);
             return { ...result, service: uploader.name };
-        } catch (error) {
+        } catch(error: any) {
             console.error(`[Upload] ✗ ${uploader.name} failed:`, error.message);
             continue;
         }

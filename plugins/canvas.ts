@@ -1,9 +1,8 @@
-// @ts-nocheck
 import axios from 'axios';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import { uploadImage } from '../lib/uploadImage.js';
 
-async function getQuotedOrOwnImageUrl(sock, message) {
+async function getQuotedOrOwnImageUrl(sock: any, message: any) {
     const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     if (quoted?.imageMessage) {
         const stream = await downloadContentFromMessage(quoted.imageMessage, 'image');
@@ -37,13 +36,13 @@ async function getQuotedOrOwnImageUrl(sock, message) {
     }
 }
 
-async function handleHeart(sock, chatId, message) {
+async function handleHeart(sock: any, chatId: any, message: any) {
     try {
         const avatarUrl = await getQuotedOrOwnImageUrl(sock, message);
         const url = `https://api.some-random-api.com/canvas/misc/heart?avatar=${encodeURIComponent(avatarUrl)}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         await sock.sendMessage(chatId, { image: Buffer.from(response.data) }, { quoted: message });
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in misc heart:', error);
         await sock.sendMessage(chatId, { text: '❌ Failed to create heart image. Try again later.' }, { quoted: message });
     }
@@ -56,7 +55,7 @@ export default {
     description: 'Generate various fun images using avatar',
     usage: '.canvas <type> [args]',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const sub = (args[0] || '').toLowerCase();
         const rest = args.slice(1);
@@ -191,7 +190,7 @@ export default {
                     }, { quoted: message });
                     break;
             }
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in misc command:', error);
             await sock.sendMessage(chatId, { text: '❌ *Failed to generate image*\n\nCheck your parameters and try again.' }, { quoted: message });
         }

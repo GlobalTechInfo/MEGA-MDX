@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download video from ShareChat',
   usage: '.sharechat <ShareChat URL>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0];
 
@@ -35,7 +34,7 @@ export default {
         await sock.sendMessage(chatId, { video: { url: videoUrl }, caption: '🎬 ShareChat Video' }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('ShareChat plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

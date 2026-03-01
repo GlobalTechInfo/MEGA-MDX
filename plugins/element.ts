@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get information about a chemical element',
   usage: '.element <name or symbol>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ')?.trim();
 
@@ -36,7 +35,7 @@ export default {
 
       await sock.sendMessage(chatId, { image: { url: json.image }, caption: text }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Element plugin error:', error);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch element info.' }, { quoted: message });
     }

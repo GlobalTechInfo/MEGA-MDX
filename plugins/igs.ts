@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { igdl } from 'ruhend-scraper';
 import axios from 'axios';
 import { exec } from 'child_process';
@@ -51,10 +50,10 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
     ffmpegCommand = `ffmpeg -y -i "${tempInput}" -vf "${vf}" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 75 -compression_level 6 "${tempOutput}"`;
   }
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     exec(ffmpegCommand, (error) => {
       if (error) return reject(error);
-      resolve();
+      resolve(undefined);
     });
   });
   
@@ -67,8 +66,8 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
       const harsherCmd = cropSquare
         ? `ffmpeg -y -i "${tempInput}" -t 2 -vf "crop=min(iw\\,ih):min(iw\\,ih),scale=512:512,fps=8" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 30 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`
         : `ffmpeg -y -i "${tempInput}" -t 2 -vf "scale=512:512:force_original_aspect_ratio=decrease,pad=512:512:(ow-iw)/2:(oh-ih)/2:color=#00000000,fps=8" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality 35 -compression_level 6 -b:v 100k -max_muxing_queue_size 1024 "${tempOutput2}"`;
-      await new Promise((resolve, reject) => {
-        exec(harsherCmd, (error) => error ? reject(error) : resolve());
+      await new Promise<void>((resolve, reject) => {
+        exec(harsherCmd, (error) => error ? reject(error) : resolve(undefined));
       });
       if (fs.existsSync(tempOutput2)) {
         webpBuffer = fs.readFileSync(tempOutput2);
@@ -100,8 +99,8 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
         ? `crop=min(iw\\,ih):min(iw\\,ih),scale=320:320${isAnimated ? ',fps=8' : ''}`
         : `scale=320:320:force_original_aspect_ratio=decrease,pad=320:320:(ow-iw)/2:(oh-ih)/2:color=#00000000${isAnimated ? ',fps=8' : ''}`;
       const cmdSmall = `ffmpeg -y -i "${tempInput}" ${isAnimated ? '-t 2' : ''} -vf "${vfSmall}" -c:v libwebp -preset default -loop 0 -vsync 0 -pix_fmt yuva420p -quality ${isAnimated ? 28 : 65} -compression_level 6 -b:v 80k -max_muxing_queue_size 1024 "${tempOutput3}"`;
-      await new Promise((resolve, reject) => {
-        exec(cmdSmall, (error) => error ? reject(error) : resolve());
+      await new Promise<void>((resolve, reject) => {
+        exec(cmdSmall, (error) => error ? reject(error) : resolve(undefined));
       });
       if (fs.existsSync(tempOutput3)) {
         const smallWebp = fs.readFileSync(tempOutput3);
@@ -143,7 +142,7 @@ async function fetchBufferFromUrl(url) {
       validateStatus: s => s >= 200 && s < 400
     });
     return Buffer.from(res.data);
-  } catch (e1) {
+  } catch(e1: any) {
     try {
       const res = await axios.get(url, {
         responseType: 'stream',
@@ -158,13 +157,13 @@ async function fetchBufferFromUrl(url) {
         validateStatus: s => s >= 200 && s < 400
       });
       const chunks = [];
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         res.data.on('data', c => chunks.push(c));
         res.data.on('end', resolve);
         res.data.on('error', reject);
       });
       return Buffer.concat(chunks);
-    } catch (e2) {
+    } catch(e2: any) {
       console.error('Both axios download attempts failed:', e1?.message || e1, e2?.message || e2);
       throw e2;
     }
@@ -185,8 +184,8 @@ async function forceMiniSticker(inputBuffer, isVideo, cropSquare) {
 
   const cmd = `ffmpeg -y -i "${tempInput}" ${isVideo ? '-t 2' : ''} -vf "${vf}" -c:v libwebp -preset default -loop 0 -pix_fmt yuva420p -quality 25 -compression_level 6 -b:v 60k "${tempOutput}"`;
 
-  await new Promise((resolve, reject) => {
-    exec(cmd, (error) => error ? reject(error) : resolve());
+  await new Promise<void>((resolve, reject) => {
+    exec(cmd, (error) => error ? reject(error) : resolve(undefined));
   });
 
   if (!fs.existsSync(tempOutput)) {
@@ -223,7 +222,7 @@ export default {
   description: 'Convert Instagram post/reel to sticker',
   usage: '.igs <instagram URL>',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -277,7 +276,8 @@ export default {
           const isVideo = (media?.type === 'video') || /\.(mp4|mov|avi|mkv|webm)$/i.test(mediaUrl);
 
           const buffer = await fetchBufferFromUrl(mediaUrl);
-          const hash = require('crypto').createHash('sha1').update(buffer).digest('hex');
+          const { createHash } = await import('crypto');
+          const hash = createHash('sha1').update(buffer).digest('hex');
           if (seenHashes.has(hash)) {
             continue;
           }
@@ -292,7 +292,7 @@ export default {
               if (fallback && fallback.length <= 900 * 1024) {
                 finalSticker = fallback;
               }
-            } catch (e) {
+            } catch(e: any) {
               console.error('forceMiniSticker error:', e);
             }
           }
@@ -305,12 +305,12 @@ export default {
           if (i < maxItems - 1) {
             await new Promise(r => setTimeout(r, 800));
           }
-        } catch (perItemErr) {
+        } catch(perItemErr: any) {
           console.error('IGS item error:', perItemErr);
         }
       }
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Error in igs command:', err);
       await sock.sendMessage(chatId, { 
         text: 'Failed to create sticker from Instagram link.',

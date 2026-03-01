@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 const imageUrls = {
@@ -54,7 +53,7 @@ export default {
     category: 'menu',
     description: 'Send 3 random images for a given category',
     usage: '.images <category>',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const category = (args[0] || '').toLowerCase();
         if (!category || !imageUrls[category]) {
@@ -77,7 +76,7 @@ ${categoriesList}
             const res = await fetch(imageUrls[category]);
             if (!res.ok) throw new Error('Failed to fetch image dataset');
 
-            const images = await res.json();
+            const images = await res.json() as any as any;
 
             if (!Array.isArray(images) || images.length === 0) {
                 throw new Error('No images found in the dataset');
@@ -91,7 +90,7 @@ ${categoriesList}
                 }, { quoted: message });
             }
 
-        } catch (err) {
+        } catch(err: any) {
             console.error('Images Command Error:', err);
             await sock.sendMessage(chatId, {
                 text: '❌ An error occurred while processing your request. Please try again later.'

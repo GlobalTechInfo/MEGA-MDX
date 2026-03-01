@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import isAdmin from '../lib/isAdmin.js';
@@ -11,7 +10,7 @@ async function setAntilink(chatId, type, action) {
             type: type
         });
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error setting antilink:', error);
         return false;
     }
@@ -21,7 +20,7 @@ async function getAntilink(chatId, type) {
     try {
         const settings = await store.getSetting(chatId, 'antilink');
         return settings || null;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error getting antilink:', error);
         return null;
     }
@@ -35,7 +34,7 @@ async function removeAntilink(chatId, type) {
             type: null
         });
         return true;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error removing antilink:', error);
         return false;
     }
@@ -54,7 +53,7 @@ export async function handleLinkDetection(sock, chatId, message, userMessage, se
         try {
             const { isSenderAdmin } = await isAdmin(sock, chatId, senderId);
             if (isSenderAdmin) return;
-        } catch (e) {}
+        } catch(e: any) {}
 
         const action = config.action || 'delete';
         let shouldAct = false;
@@ -96,7 +95,7 @@ export async function handleLinkDetection(sock, chatId, message, userMessage, se
                         participant: participant 
                     }
                 });
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Failed to delete message:', error);
             }
         }
@@ -115,7 +114,7 @@ export async function handleLinkDetection(sock, chatId, message, userMessage, se
                     text: `🚫 @${senderId.split('@')[0]} has been removed for posting ${linkType} links.`,
                     mentions: [senderId]
                 });
-            } catch (error) {
+            } catch(error: any) {
                 console.error('Failed to kick user:', error);
                 await sock.sendMessage(chatId, {
                     text: `⚠️ Failed to remove user. Make sure the bot is an admin.`
@@ -123,7 +122,7 @@ export async function handleLinkDetection(sock, chatId, message, userMessage, se
             }
         }
 
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in link detection:', error);
     }
 }
@@ -137,7 +136,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const action = args[0]?.toLowerCase();
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get detailed info about a text string',
   usage: '.string <text>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const textInput = args?.join(' ')?.trim();
 
@@ -34,7 +33,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: reply }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('String plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

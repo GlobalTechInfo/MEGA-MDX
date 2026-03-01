@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -15,7 +14,7 @@ export default {
   description: 'Convert text to speech and send as an audio message.',
   usage: '.tts <text> or reply to a message with .tts',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
 

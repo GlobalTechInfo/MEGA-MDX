@@ -1,5 +1,5 @@
-// @ts-nocheck
 import Qasim from 'api-qasim';
+const QasimAny = Qasim as any;
 
 export default {
   command: 'stext',
@@ -7,7 +7,7 @@ export default {
   category: 'menu',
   description: 'Style text in different fancy formats',
   usage: '.stext <text>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ');
     try {
@@ -17,7 +17,7 @@ export default {
         }, { quoted: message });
         return;
       }
-      const styledResult = await Qasim.styletext(text);
+      const styledResult = await QasimAny.styletext(text);
 
       if (!Array.isArray(styledResult) || styledResult.length === 0) {
         throw new Error('No styled text found.');
@@ -71,7 +71,7 @@ export default {
 
       sock.ev.on('messages.upsert', listener);
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in styleTextCommand:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to style the text. Please try again later.' 

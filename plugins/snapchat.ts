@@ -1,4 +1,3 @@
-// @ts-nocheck
 
 import axios from 'axios';
 
@@ -9,7 +8,7 @@ export default {
   description: 'Download media (video or image) from Snapchat Spotlight URL',
   usage: '.snapchat <Snapchat URL>',
 
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo, rawText } = context;
     
     const prefix = context.rawText.match(/^[.!#]/)?.[0] || '.';
@@ -68,7 +67,7 @@ export default {
         }
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Snapchat plugin error:', error.message);
       
       await sock.sendMessage(chatId, { 

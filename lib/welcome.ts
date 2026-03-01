@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { addWelcome, delWelcome, isWelcomeOn, addGoodbye, delGoodBye, isGoodByeOn } from '../lib/index.js';
 import { delay } from '@whiskeysockets/baileys';
 

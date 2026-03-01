@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 import settings from '../settings.js';
 
@@ -8,7 +7,7 @@ export default {
   category: 'stickers',
   description: 'Get a GIF based on a search term',
   usage: '.gif <search term>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ');
     if (!query) {
@@ -37,7 +36,7 @@ export default {
         await sock.sendMessage(chatId, { document: { url: gifUrl }, mimetype: 'image/gif', caption: `Here is your GIF for "${query}"` }, { quoted: message });
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in gif command:', error);
       await sock.sendMessage(chatId, { text: '❌ Failed to fetch GIF. Please try again later.' }, { quoted: message });
     }

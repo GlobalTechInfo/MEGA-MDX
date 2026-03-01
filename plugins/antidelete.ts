@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -37,7 +36,7 @@ const getFolderSizeInMB = (folderPath) => {
         }
 
         return totalSize / (1024 * 1024);
-    } catch (err) {
+    } catch(err: any) {
         console.error('Error getting folder size:', err);
         return 0;
     }
@@ -54,7 +53,7 @@ const cleanTempFolderIfLarge = () => {
                 fs.unlinkSync(filePath);
             }
         }
-    } catch (err) {
+    } catch(err: any) {
         console.error('Temp cleanup error:', err);
     }
 };
@@ -68,7 +67,7 @@ async function loadAntideleteConfig() {
             return config || { enabled: false };
         } else {
             if (!fs.existsSync(CONFIG_PATH)) return { enabled: false };
-            return JSON.parse(fs.readFileSync(CONFIG_PATH));
+            return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
         }
     } catch {
         return { enabled: false };
@@ -82,12 +81,12 @@ async function saveAntideleteConfig(config) {
         } else {
             fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
         }
-    } catch (err) {
+    } catch(err: any) {
         console.error('Config save error:', err);
     }
 }
 
-export async function storeMessage(sock, message) {
+export async function storeMessage(sock: any, message: any) {
     try {
         const config = await loadAntideleteConfig();
         if (!config.enabled) return;
@@ -107,7 +106,7 @@ export async function storeMessage(sock, message) {
             if (viewOnceContainer.imageMessage) {
                 mediaType = 'image';
                 content = viewOnceContainer.imageMessage.caption || '';
-                const stream = await downloadContentFromMessage(viewOnceContainer.imageMessage, 'image');
+                const stream = await downloadContentFromMessage(viewOnceContainer.imageMessage, 'image' as any);
                 let buffer = Buffer.from([]);
                 for await (const chunk of stream) {
                     buffer = Buffer.concat([buffer, chunk]);
@@ -118,7 +117,7 @@ export async function storeMessage(sock, message) {
             } else if (viewOnceContainer.videoMessage) {
                 mediaType = 'video';
                 content = viewOnceContainer.videoMessage.caption || '';
-                const stream = await downloadContentFromMessage(viewOnceContainer.videoMessage, 'video');
+                const stream = await downloadContentFromMessage(viewOnceContainer.videoMessage, 'video' as any);
                 let buffer = Buffer.from([]);
                 for await (const chunk of stream) {
                     buffer = Buffer.concat([buffer, chunk]);
@@ -134,7 +133,7 @@ export async function storeMessage(sock, message) {
         } else if (message.message?.imageMessage) {
             mediaType = 'image';
             content = message.message.imageMessage.caption || '';
-            const stream = await downloadContentFromMessage(message.message.imageMessage, 'image');
+            const stream = await downloadContentFromMessage(message.message.imageMessage, 'image' as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -143,7 +142,7 @@ export async function storeMessage(sock, message) {
             await writeFile(mediaPath, buffer);
         } else if (message.message?.stickerMessage) {
             mediaType = 'sticker';
-            const stream = await downloadContentFromMessage(message.message.stickerMessage, 'sticker');
+            const stream = await downloadContentFromMessage(message.message.stickerMessage, 'sticker' as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -153,7 +152,7 @@ export async function storeMessage(sock, message) {
         } else if (message.message?.videoMessage) {
             mediaType = 'video';
             content = message.message.videoMessage.caption || '';
-            const stream = await downloadContentFromMessage(message.message.videoMessage, 'video');
+            const stream = await downloadContentFromMessage(message.message.videoMessage, 'video' as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -164,7 +163,7 @@ export async function storeMessage(sock, message) {
             mediaType = 'audio';
             const mime = message.message.audioMessage.mimetype || '';
             const ext = mime.includes('mpeg') ? 'mp3' : (mime.includes('ogg') ? 'ogg' : 'mp3');
-            const stream = await downloadContentFromMessage(message.message.audioMessage, 'audio');
+            const stream = await downloadContentFromMessage(message.message.audioMessage, 'audio' as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) {
                 buffer = Buffer.concat([buffer, chunk]);
@@ -196,10 +195,10 @@ export async function storeMessage(sock, message) {
                     await sock.sendMessage(ownerNumber, { video: { url: mediaPath }, ...mediaOptions });
                 }
                 try { fs.unlinkSync(mediaPath); } catch {}
-            } catch (e) {}
+            } catch(e: any) {}
         }
 
-    } catch (err) {
+    } catch(err: any) {
         console.error('storeMessage error:', err);
     }
 }
@@ -280,7 +279,7 @@ export async function handleMessageRevocation(sock, revocationMessage) {
                         });
                         break;
                 }
-            } catch (err) {
+            } catch(err: any) {
                 await sock.sendMessage(ownerNumber, {
                     text: `⚠️ Error sending media: ${err.message}`
                 });
@@ -288,14 +287,14 @@ export async function handleMessageRevocation(sock, revocationMessage) {
 
             try {
                 fs.unlinkSync(original.mediaPath);
-            } catch (err) {
+            } catch(err: any) {
                 console.error('Media cleanup error:', err);
             }
         }
 
         messageStore.delete(messageId);
 
-    } catch (err) {
+    } catch(err: any) {
         console.error('handleMessageRevocation error:', err);
     }
 }
@@ -308,7 +307,7 @@ export default {
     usage: '.antidelete <on|off>',
     ownerOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const config = await loadAntideleteConfig();
         const action = args[0]?.toLowerCase();

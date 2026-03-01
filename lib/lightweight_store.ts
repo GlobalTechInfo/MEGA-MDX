@@ -1,4 +1,7 @@
 // @ts-nocheck
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *

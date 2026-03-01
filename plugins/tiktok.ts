@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download TikTok video without watermark (HD if available)',
   usage: '.tiktok <TikTok URL>',
 
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo, rawText } = context;
     
     const prefix = rawText.match(/^[.!#]/)?.[0] || '.';
@@ -76,7 +75,7 @@ ${res.title || 'No caption'}
         caption 
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('TikTok plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

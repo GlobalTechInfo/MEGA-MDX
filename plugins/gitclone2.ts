@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download a GitHub repository as a ZIP file',
   usage: '.gitclone2 <github-link>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const { chatId } = context;
     const regex = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i;
 
@@ -30,7 +29,8 @@ export default {
       
       const url = `https://api.github.com/repos/${user}/${repo}/zipball`;
 
-      const response = require('axios').head;
+      const { default: _axios } = await import('axios');
+      const response = _axios.head;
       const headRes = await axios.head(url);
       const contentDisposition = headRes.headers['content-disposition'];
       
@@ -49,7 +49,7 @@ export default {
         caption: `📦 *Repository:* ${user}/${repo}\n✨ *Cloned by MEGA-MD*`
       }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Gitclone Error:', err);
       await sock.sendMessage(chatId, { text: '❌ *Failed to download the repository.* Make sure it is public.' }, { quoted: message });
     }

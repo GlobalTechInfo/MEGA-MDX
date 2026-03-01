@@ -1,4 +1,3 @@
-// @ts-nocheck
 import store from '../lib/lightweight_store.js';
 
 const MONGO_URL = process.env.MONGO_URL;
@@ -32,7 +31,7 @@ export default {
   category: 'menu',
   description: 'Store, view, and delete your personal notes',
   usage: '.notes <add|all|del|delall> [text|ID]',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const sender = message.key.participant || message.key.remoteJid;
     try {
@@ -113,7 +112,7 @@ export default {
       }
       return await sock.sendMessage(chatId, { text: menuText }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error("Notes Command Error:", err);
       await sock.sendMessage(chatId, { text: "❌ Error in notes module." }, { quoted: message });
     }

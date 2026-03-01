@@ -1,4 +1,3 @@
-// @ts-nocheck
 import mumaker from 'mumaker';
 
 const allTypes = [
@@ -89,7 +88,7 @@ export default {
                 { quoted: message }
             );
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error generating styled text:', error);
             await sock.sendMessage(
                 chatId,

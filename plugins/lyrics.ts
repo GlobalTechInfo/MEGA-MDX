@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'music',
   description: 'Get lyrics of a song along with artist and image',
   usage: '.lyrics <song name>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const songTitle = args.join(' ').trim();
 
@@ -22,7 +21,7 @@ export default {
       const apiUrl = `https://discardapi.dpdns.org/api/music/lyrics?apikey=qasim&song=${encodeURIComponent(songTitle)}`;
       const res = await fetch(apiUrl);
       if (!res.ok) throw `API request failed with status ${res.status}`;
-      const data = await res.json();
+      const data = await res.json() as any as any;
       const messageData = data?.result?.message;
       if (!messageData?.lyrics) {
         await sock.sendMessage(chatId, {
@@ -56,7 +55,7 @@ ${lyricsOutput}
           quoted: message
         });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('Lyrics Command Error:', error);
       await sock.sendMessage(chatId, {
         text: `❌ An error occurred while fetching the lyrics for "${songTitle}".`,

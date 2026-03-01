@@ -1,5 +1,5 @@
-// @ts-nocheck
 import Qasim from 'api-qasim';
+const QasimAny = Qasim as any;
 
 export default {
   command: 'trends',
@@ -8,7 +8,7 @@ export default {
   description: 'Get trending topics from a country.',
   usage: '.trends <country-name>',
   
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -21,7 +21,7 @@ export default {
         return;
       }
 
-      const result = await Qasim.trendtwit(country);
+      const result = await QasimAny.trendtwit(country);
 
       if (!result) {
         throw new Error('No data received');
@@ -45,7 +45,7 @@ export default {
         text: output
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Error in trendsCommand:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to fetch trending topics. Please try again later.'

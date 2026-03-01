@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'brainfuck',
   aliases: ['bfcode', 'obfuscate'],
@@ -6,7 +5,7 @@ export default {
   description: 'Convert text into Brainfuck code',
   usage: '.brainfuck <text> OR reply to a message',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       let text = args?.join(' ') || "";
@@ -47,7 +46,7 @@ export default {
       
       await sock.sendMessage(chatId, { text: response }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('BF Encoding Error:', err);
       await sock.sendMessage(chatId, { text: '❌ Error generating code.' }, { quoted: message });
     }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Download music from Spotify',
   usage: '.spotify <song/artist/keywords>',
   
-  async handler(sock, message, args, context) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context;
     
     try {
@@ -62,7 +61,7 @@ export default {
         ...channelInfo
       }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('[SPOTIFY] error:', error?.message || error);
       await sock.sendMessage(chatId, { 
         text: 'Failed to fetch Spotify audio. Try another query later.',

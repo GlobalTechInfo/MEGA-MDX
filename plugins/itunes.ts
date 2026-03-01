@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get detailed information about a song from iTunes',
   usage: '.itunes <song name>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
 
@@ -22,7 +21,7 @@ export default {
       const url = `https://api.popcat.xyz/itunes?q=${encodeURIComponent(text)}`;
       const res = await fetch(url);
       if (!res.ok) throw `API request failed with status ${res.status}`;
-      const json = await res.json();
+      const json = await res.json() as any as any;
       const songInfo = `
 🎵 *${json.name || 'N/A'}*
 👤 *Artist:* ${json.artist || 'N/A'}
@@ -42,7 +41,7 @@ export default {
       } else {
         await sock.sendMessage(chatId, { text: songInfo, quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('iTunes Command Error:', error);
       await sock.sendMessage(chatId, {
         text: '❌ An error occurred while fetching the song info. Please try again later.',

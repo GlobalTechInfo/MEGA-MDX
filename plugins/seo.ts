@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -8,7 +7,7 @@ export default {
   description: 'Get full SEO analysis of a website (split into multiple messages for WhatsApp)',
   usage: '.seo <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let url = args?.[0]?.trim();
 
@@ -103,7 +102,7 @@ export default {
         await sendSection('Server Info', [`Headers: ${r.information_server.header_text}`]);
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('SEO plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {
@@ -126,7 +125,7 @@ export default {
   description: 'Get full SEO analysis of a website',
   usage: '.seo <url>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     let url = args?.[0]?.trim();
 
@@ -240,7 +239,7 @@ export default {
 
       await sock.sendMessage(chatId, { text }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('SEO plugin error:', error);
 
       if (error.code === 'ECONNABORTED') {

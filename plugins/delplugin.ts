@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -14,7 +13,7 @@ export default {
   description: 'Delete a plugin by name (owner only)',
   usage: '.delplugin <plugin_name>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
@@ -39,7 +38,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: `⚠️ Plugin "${args[0]}.js" has been deleted.` }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('rmplugin error:', err);
       await sock.sendMessage(chatId, {  text: `❌ Failed to delete plugin: ${err.message}` 
       }, { quoted: message });

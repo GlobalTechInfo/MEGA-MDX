@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -51,7 +50,7 @@ async function readConfig() {
                 reactOn: !!config.reactOn
             };
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error reading auto status config:', error);
         return { enabled: false, reactOn: false };
     }
@@ -64,7 +63,7 @@ async function writeConfig(config) {
         } else {
             fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
         }
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error writing auto status config:', error);
     }
 }
@@ -106,7 +105,7 @@ async function reactToStatus(sock, statusKey) {
         );
         
         console.log('✅ Reacted to status');
-    } catch (error) {
+    } catch(error: any) {
         console.error('❌ Error reacting to status:', error.message);
     }
 }
@@ -127,7 +126,7 @@ async function handleStatusUpdate(sock, status) {
                     console.log('✅ Viewed status from messages');
                     
                     await reactToStatus(sock, msg.key);
-                } catch (err) {
+                } catch(err: any) {
                     if (err.message?.includes('rate-overlimit')) {
                         console.log('⚠️ Rate limit hit, waiting before retrying...');
                         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -146,7 +145,7 @@ async function handleStatusUpdate(sock, status) {
                 console.log('✅ Viewed status from key');
                 
                 await reactToStatus(sock, status.key);
-            } catch (err) {
+            } catch(err: any) {
                 if (err.message?.includes('rate-overlimit')) {
                     console.log('⚠️ Rate limit hit, waiting before retrying...');
                     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -163,7 +162,7 @@ async function handleStatusUpdate(sock, status) {
                 console.log('✅ Viewed status from reaction');
                 
                 await reactToStatus(sock, status.reaction.key);
-            } catch (err) {
+            } catch(err: any) {
                 if (err.message?.includes('rate-overlimit')) {
                     console.log('⚠️ Rate limit hit, waiting before retrying...');
                     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -175,7 +174,7 @@ async function handleStatusUpdate(sock, status) {
             return;
         }
 
-    } catch (error) {
+    } catch(error: any) {
         console.error('❌ Error in auto status view:', error.message);
     }
 }
@@ -188,7 +187,7 @@ export default {
     usage: '.autostatus <on|off|react on|react off>',
     ownerOnly: true,
     
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         
         try {
@@ -284,7 +283,7 @@ export default {
                 }, { quoted: message });
             }
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in autostatus command:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ *Error occurred while managing auto status!*\n\n' +

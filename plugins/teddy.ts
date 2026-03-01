@@ -1,4 +1,3 @@
-// @ts-nocheck
 let teddyUsers = {};
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -9,7 +8,7 @@ export default {
     category: 'fun',
     description: 'Send an animated teddy with cute emojis',
     usage: '.teddy',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 
@@ -42,7 +41,7 @@ export default {
                     {}
                 );
             }
-        } catch (err) {
+        } catch(err: any) {
             console.error('Error in teddy command:', err);
             try {
                 await sock.sendMessage(chatId, { text: '❌ Something went wrong while sending teddy emojis.' }, { quoted: message });

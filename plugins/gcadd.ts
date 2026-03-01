@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +23,7 @@ export default {
     groupOnly: 'true',
     adminOnly: 'true',
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const { chatId, channelInfo } = context;
 
         let targetNumber = null;
@@ -128,7 +127,7 @@ export default {
                 }, { quoted: message });
             }
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Add command error:', error);
             await sock.sendMessage(chatId, {
                 text: `❌ *Error adding user!*\n\n${error.message}`,

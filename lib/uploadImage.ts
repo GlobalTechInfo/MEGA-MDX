@@ -1,7 +1,6 @@
-// @ts-nocheck
 import axios from 'axios';
 import FormData from 'form-data';
-import FileType from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 
 /**
  * Upload buffer to catbox.moe
@@ -19,7 +18,7 @@ async function uploadImage(buffer) {
             throw new Error('File exceeds 10MB limit');
         }
 
-        const type = await FileType.fromBuffer(buffer);
+        const type = await fileTypeFromBuffer(buffer);
         if (!type?.ext) {
             throw new Error('Unable to detect file type');
         }
@@ -41,7 +40,7 @@ async function uploadImage(buffer) {
 
         return res.data;
 
-    } catch (err) {
+    } catch(err: any) {
         console.error('[UPLOAD] Catbox error:', err.message);
         throw err;
     }

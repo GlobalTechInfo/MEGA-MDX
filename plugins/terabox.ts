@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -15,7 +14,7 @@ export default {
   description: 'Download files from TeraBox',
   usage: '.terabox <terabox link>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -29,7 +28,7 @@ export default {
             headers: { 'User-Agent': 'Mozilla/5.0' }
           });
           return response;
-        } catch (error) {
+        } catch(error: any) {
           const isRateLimited = error.response?.status === 429 || 
                                error.code === 'ECONNABORTED' ||
                                error.code === 'ETIMEDOUT';
@@ -67,7 +66,7 @@ export default {
 
           fs.writeFileSync(filepath, response.data);
           return true;
-        } catch (error) {
+        } catch(error: any) {
           console.error(`Download attempt ${attempt} failed:`, error.message);
           
           if (attempt === maxRetries) {
@@ -245,7 +244,7 @@ export default {
         );
       }
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('[TERABOX] Command Error:', error);
       
       let errorMsg = "❌ *Download failed!*\n\n";

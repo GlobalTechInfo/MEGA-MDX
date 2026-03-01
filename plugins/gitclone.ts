@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'gitclone',
   aliases: ['githubdl', 'clone'],
@@ -44,7 +43,7 @@ export default {
         fileName: repoName + '.zip',
         mimetype: 'application/zip'
       });
-    } catch (e) {
+    } catch(e: any) {
       console.error(e);
       await sock.sendMessage(chatId, {
         text: '❌ Failed to fetch the repository. Please make sure the repository exists and try again.'

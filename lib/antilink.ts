@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { isJidGroup } from '@whiskeysockets/baileys';
 import { getAntilink, incrementWarningCount, resetWarningCount, isSudo } from '../lib/index.js';
 import isAdmin from '../lib/isAdmin.js';
@@ -37,7 +36,7 @@ async function Antilink(msg, sock) {
 	try {
 		const { isSenderAdmin } = await isAdmin(sock, jid, sender);
 		if (isSenderAdmin) return;
-	} catch (_) {}
+	} catch(_: any) {}
 	const senderIsSudo = await isSudo(sender);
 	if (senderIsSudo) return;
 
@@ -84,7 +83,7 @@ async function Antilink(msg, sock) {
 				}
 				break;
 		}
-	} catch (error) {
+	} catch(error: any) {
 		console.error('Error in Antilink:', error);
 	}
 }

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -29,7 +28,7 @@ async function initConfig() {
             }
             fs.writeFileSync(configPath, JSON.stringify({ enabled: false }, null, 2));
         }
-        return JSON.parse(fs.readFileSync(configPath));
+        return JSON.parse(fs.readFileSync(configPath, "utf-8"));
     }
 }
 
@@ -45,7 +44,7 @@ async function isAutotypingEnabled() {
     try {
         const config = await initConfig();
         return config.enabled;
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error checking autotyping status:', error);
         return false;
     }
@@ -55,7 +54,7 @@ async function isGhostModeActive() {
     try {
         const ghostMode = await store.getSetting('global', 'stealthMode');
         return ghostMode && ghostMode.enabled;
-    } catch (error) {
+    } catch(error: any) {
         return false;
     }
 }
@@ -82,7 +81,7 @@ export async function handleAutotypingForMessage(sock, chatId, userMessage) {
             await sock.sendPresenceUpdate('paused', chatId);
             
             return true;
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error sending typing indicator:', error);
             return false;
         }
@@ -112,7 +111,7 @@ async function handleAutotypingForCommand(sock, chatId) {
             await sock.sendPresenceUpdate('paused', chatId);
             
             return true;
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error sending command typing indicator:', error);
             return false;
         }
@@ -134,7 +133,7 @@ export async function showTypingAfterCommand(sock, chatId) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             await sock.sendPresenceUpdate('paused', chatId);
             return true;
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error sending post-command typing indicator:', error);
             return false;
         }
@@ -150,7 +149,7 @@ export default {
     usage: '.autotyping <on|off>',
     ownerOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         
@@ -216,7 +215,7 @@ export default {
                 }, { quoted: message });
             }
             
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in autotyping command:', error);
             await sock.sendMessage(chatId, {
                 text: '❌ *Error processing command!*',

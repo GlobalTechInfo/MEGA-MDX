@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
@@ -10,7 +9,7 @@ export default {
     category: 'stickers',
     description: 'Convert an image or video into a sticker',
     usage: '.sticker (reply to image/video)',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {
@@ -26,7 +25,7 @@ export default {
                 return;
             }
 
-            const stream = await downloadContentFromMessage(quotedMsg[type], type.split('Message')[0]);
+            const stream = await downloadContentFromMessage(quotedMsg[type], type.split('Message')[0] as any);
             let buffer = Buffer.from([]);
             for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);
 
@@ -38,14 +37,14 @@ export default {
 
             fs.writeFileSync(tempInput, buffer);
 
-            await new Promise((resolve, reject) => {
+            await new Promise<void>((resolve, reject) => {
                 const cmd = type === 'imageMessage'
                     ? `ffmpeg -i "${tempInput}" -vf "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease" "${tempOutput}"`
                     : `ffmpeg -i "${tempInput}" -vf "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease" -c:v libwebp -preset default -loop 0 -vsync 0 -t 6 "${tempOutput}"`;
 
                 exec(cmd, (error) => {
                     if (error) reject(error);
-                    else resolve();
+                    else resolve(undefined);
                 });
             });
 
@@ -54,7 +53,7 @@ export default {
             fs.unlinkSync(tempInput);
             fs.unlinkSync(tempOutput);
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Sticker Command Error:', error);
             await sock.sendMessage(chatId, { text: '❌ Failed to create sticker!' }, { quoted: message });
         }

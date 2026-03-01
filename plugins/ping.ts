@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default {
   command: 'ping',
   aliases: ['p', 'pong'],

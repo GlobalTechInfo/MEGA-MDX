@@ -1,11 +1,10 @@
-// @ts-nocheck
 import TicTacToe from '../lib/tictactoe.js';
 
-const games = {};
+const games: Record<string, any> = {};
 
 export async function handleTicTacToeMove(sock, chatId, senderId, text) {
     try {
-        const room = Object.values(games).find(room => 
+        const room = Object.values(games).find((room: any) => 
             room.id.startsWith('tictactoe') && 
             [room.game.playerX, room.game.playerO].includes(senderId) && 
             room.state === 'PLAYING'
@@ -110,7 +109,7 @@ ${!winner && !isTie ? '• Type a number (1-9) to make your move\n• Type *surr
             delete games[room.id];
         }
 
-    } catch (error) {
+    } catch(error: any) {
         console.error('Error in tictactoe move:', error);
     }
 }
@@ -123,13 +122,13 @@ export default {
     usage: '.tictactoe [room name]',
     groupOnly: true,
 
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.participant || message.key.remoteJid;
         const text = args.join(' ').trim();
 
         try {
-            if (Object.values(games).find(room => 
+            if (Object.values(games).find((room: any) => 
                 room.id.startsWith('tictactoe') && 
                 [room.game.playerX, room.game.playerO].includes(senderId)
             )) {
@@ -139,7 +138,7 @@ export default {
                 return;
             }
 
-            let room = Object.values(games).find(room => 
+            let room = Object.values(games).find((room: any) => 
                 room.state === 'WAITING' && 
                 (text ? room.name === text : true)
             );
@@ -202,7 +201,7 @@ ${arr.slice(6).join('')}
                 games[room.id] = room;
             }
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Error in tictactoe command:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ *Error starting game*\n\nPlease try again later.'

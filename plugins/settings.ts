@@ -1,4 +1,3 @@
-// @ts-nocheck
 import isOwnerOrSudo from '../lib/isOwner.js';
 import store from '../lib/lightweight_store.js';
 import { cleanJid } from '../lib/isOwner.js';
@@ -9,7 +8,7 @@ export default {
     category: 'owner',
     description: 'Show bot settings and per-group configurations',
     usage: '.settings',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = message.key.participant || message.key.remoteJid;
 
@@ -86,7 +85,7 @@ export default {
                 }
             }, { quoted: message });
 
-        } catch (error) {
+        } catch(error: any) {
             console.error('Settings Command Error:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ Error: Failed to load settings.' 

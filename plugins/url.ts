@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createRequire } from 'module';
 import { fileURLToPath, URL } from 'url';
 import { dirname } from 'path';
@@ -55,7 +54,7 @@ export default {
   description: 'Get a URL for media (image, video, audio, sticker, document).',
   usage: '.url (send or reply to media)',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid
 
     try {
@@ -100,18 +99,18 @@ export default {
       try {
         if (['.jpg', '.png', '.webp'].includes(ext)) {
           try {
-            url = await TelegraPh(tempPath)
+            url = await TelegraPh(tempPath) as string
           } catch {
             const res = await UploadFileUgu(tempPath)
             url = typeof res === 'string'
               ? res
-              : (res.url || res.url_full || '')
+              : ((res as any).url || (res as any).url_full || '')
           }
         } else {
           const res = await UploadFileUgu(tempPath)
           url = typeof res === 'string'
             ? res
-            : (res.url || res.url_full || '')
+            : ((res as any).url || (res as any).url_full || '')
         }
       } finally {
         setTimeout(() => {
@@ -133,7 +132,7 @@ export default {
         { quoted: message }
       )
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('[URL] error:', error)
       await sock.sendMessage(
         chatId,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get the latest top 5 news headlines from the US',
   usage: '.news',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const apiKey = 'dcd720a6f1914e2d9dba9790c188c08c';
@@ -29,7 +28,7 @@ export default {
         text: newsMessage.trim(),
         quoted: message
       });
-    } catch (error) {
+    } catch(error: any) {
       console.error('News Command Error:', error);
       await sock.sendMessage(chatId, {
         text: '❌ Sorry, I could not fetch news right now. Please try again later.',

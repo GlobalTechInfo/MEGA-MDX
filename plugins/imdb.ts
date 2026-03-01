@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get detailed information about a movie or series from IMDB',
   usage: '.imdb <movie/series title>',
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
 
@@ -21,7 +20,7 @@ export default {
     try {
       const res = await fetch(`https://api.popcat.xyz/imdb?q=${encodeURIComponent(text)}`);
       if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
-      const json = await res.json();
+      const json = await res.json() as any as any;
       const ratings = (json.ratings || [])
         .map(r => `⭐ *${r.source}:* ${r.value}`)
         .join('\n') || 'No ratings available';
@@ -57,7 +56,7 @@ ${ratings}
       } else {
         await sock.sendMessage(chatId, { text: movieInfo, quoted: message });
       }
-    } catch (error) {
+    } catch(error: any) {
       console.error('IMDB Command Error:', error);
       await sock.sendMessage(chatId, { 
         text: '❌ Failed to fetch movie information. Please try again later.', 

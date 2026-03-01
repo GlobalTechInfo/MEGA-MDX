@@ -1,4 +1,3 @@
-// @ts-nocheck
 import fetch from 'node-fetch';
 
 export default {
@@ -7,11 +6,11 @@ export default {
     category: 'quotes',
     description: 'Get a random shayari',
     usage: '.shayari',
-    async handler(sock, message, args, context = {}) {
+    async handler(sock: any, message: any, args: any, context: any = {}) {
         const chatId = context.chatId || message.key.remoteJid;
         try {
             const response = await fetch('https://shizoapi.onrender.com/api/texts/shayari?apikey=shizo');
-            const data = await response.json();
+            const data = await response.json() as any as any;
 
             if (!data || !data.result) {
                 throw new Error('Invalid response from API');
@@ -25,7 +24,7 @@ export default {
                 buttons: buttons,
                 headerType: 1
             }, { quoted: message });
-        } catch (error) {
+        } catch(error: any) {
             console.error('Shayari Command Error:', error);
             await sock.sendMessage(chatId, { 
                 text: '❌ Failed to fetch shayari. Please try again later.',

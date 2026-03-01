@@ -1,4 +1,3 @@
-// @ts-nocheck
 import axios from 'axios';
 
 const AXIOS_DEFAULTS = {
@@ -16,7 +15,7 @@ export default {
   description: 'Download Facebook videos',
   usage: '.fb <facebook video link>',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const url =
       args.join(' ') ||
@@ -69,7 +68,7 @@ export default {
 
       await sock.sendMessage(chatId, { video: { url: videoUrl }, mimetype: 'video/mp4', caption }, { quoted: message });
 
-    } catch (err) {
+    } catch(err: any) {
       console.error('Facebook downloader error:', err);
       await sock.sendMessage(
         chatId,

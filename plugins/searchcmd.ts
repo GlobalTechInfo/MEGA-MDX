@@ -1,4 +1,3 @@
-// @ts-nocheck
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -23,7 +22,7 @@ export default {
   description: 'Find a command by keyword or description',
   usage: '.find [keyword]',
 
-  async handler(sock, message, args, context = {}) {
+  async handler(sock: any, message: any, args: any, context: any = {}) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').toLowerCase();
 
@@ -66,7 +65,7 @@ export default {
 
       await sock.sendMessage(chatId, { text: resultText }, { quoted: message });
 
-    } catch (error) {
+    } catch(error: any) {
       console.error('Search Error:', error);
       await sock.sendMessage(chatId, { text: '❌ An error occurred during the search.' });
     }
