@@ -124,6 +124,7 @@ async function handleMessages(sock, messageUpdate) {
                 const hash = Buffer.from(fileSha256).toString('base64');
                 const stickers = await getStickerCommands();
 
+                if (stickers[hash]) {
                     const commandText = stickers[hash].text;
                     const [cmdName, ...cmdArgs] = commandText.split(' ');
 
