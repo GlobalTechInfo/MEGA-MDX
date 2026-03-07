@@ -1,4 +1,4 @@
-import settings from '../config.js';
+import config from '../config.js';
 import { isSudo } from './index.js';
 
 
@@ -11,7 +11,7 @@ function cleanJid(jid) {
  * Check if user is owner or sudo
  */
 async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
-    const ownerNumberClean = cleanJid(settings.ownerNumber);
+    const ownerNumberClean = cleanJid(config.ownerNumber);
     const senderIdClean = cleanJid(senderId);
 
     if (senderIdClean === ownerNumberClean) {
@@ -47,7 +47,7 @@ async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
  * Check if user is ONLY owner
  */
 function isOwnerOnly(senderId) {
-    const ownerNumberClean = cleanJid(settings.ownerNumber);
+    const ownerNumberClean = cleanJid(config.ownerNumber);
     const senderIdClean = cleanJid(senderId);
     return senderIdClean === ownerNumberClean;
 }
