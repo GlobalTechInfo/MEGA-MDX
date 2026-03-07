@@ -1,14 +1,10 @@
 FROM quay.io/qasimtech/mega-md:latest
 
-WORKDIR /root/mega-md
+WORKDIR /root/mega-mdx
 
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-RUN npm run build
+RUN git clone https://github.com/GlobalTechInfo/MEGA-MDX . && \
+    npm install && \
+    npm run build
 
 EXPOSE 5000
 
