@@ -1,5 +1,5 @@
 import axios from 'axios';
-import settings from '../config.js';
+import config from '../config.js';
 
 export default {
   command: 'gif',
@@ -17,7 +17,7 @@ export default {
     try {
       const response = await axios.get('https://api.giphy.com/v1/gifs/search', {
         params: {
-          api_key: settings.giphyApiKey,
+          api_key: config.giphyApiKey,
           q: query,
           limit: 1,
           rating: 'g'
