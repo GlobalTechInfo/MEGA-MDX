@@ -2,7 +2,7 @@ import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import settings from '../config.js';
+import config from '../config.js';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 
@@ -54,7 +54,7 @@ export default {
         return;
       }
 
-      const tmpDir = path.join(process.cwd(), 'tmp');
+      const tmpDir = path.join(process.cwd(), 'temp');
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
@@ -106,7 +106,7 @@ export default {
 
       const json = {
         'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-        'sticker-pack-name': settings.packname || 'MEGA AI',
+        'sticker-pack-name': config.packname || 'MEGA-MD',
         'emojis': ['🤖']
       };
 
@@ -132,7 +132,7 @@ export default {
             await img2.load(smallWebp);
             const json2 = {
               'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-              'sticker-pack-name': settings.packname || 'MEGA AI',
+              'sticker-pack-name': config.packname || 'MEGA-MD',
               'emojis': ['🤖']
             };
             const exifAttr2 = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00]);
