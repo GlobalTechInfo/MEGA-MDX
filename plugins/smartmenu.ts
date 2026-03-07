@@ -62,7 +62,7 @@ export default {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {
-      const imagePath = path.join(process.cwd(), 'assets/bot_image.jpg');
+      const imagePath = path.join(process.cwd(), 'assets/thumb.png');
       const thumbnail = fs.existsSync(imagePath) ? fs.readFileSync(imagePath) : null;
 
       const categories = Array.from(CommandHandler.categories.keys());
