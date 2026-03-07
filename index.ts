@@ -225,7 +225,7 @@ async function startQasimDev() {
         const QasimDev = makeWASocket({
             version,
             logger: pino({ level: 'silent' }),
-            // printQRInTerminal: deprecated
+            printQRInTerminal: !pairingCode,
             browser: Browsers.macOS('Chrome'),
             auth: {
                 creds: state.creds,
@@ -500,13 +500,9 @@ async function startQasimDev() {
                 await delay(1999);
                       try { owner = JSON.parse(fs.readFileSync('./data/owner.json', 'utf-8')); } catch (_e) {}
                       printLog('info',       `[ ${global.botname || 'MEGA-MD'} ]`);
-                      printLog('info',       `YT CHANNEL : GlobalTechInfo`);
-                      printLog('info',       `GITHUB     : GlobalTechInfo`);
                       printLog('info',       `WA NUMBER  : ${owner[0] || config.ownerNumber || ''}`);
-                      printLog('info',       `CREDIT     : Qasim Ali`);
                       printLog('success',    `Bot Connected Successfully!`);
-                      printLog('info',       `Version    : ${config.version}`);
-                      printLog('info',       `Commands   : ${commandHandler.commands.size}`);
+                      printLog('info',       `Plugins   : ${commandHandler.commands.size}`);
                       printLog('info',       `Prefixes   : ${config.prefixes.join(', ')}`);
                       printLog('store',      `Backend    : ${store.getStats().backend}`);
                 console.log();
