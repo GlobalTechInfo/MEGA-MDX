@@ -4,7 +4,7 @@ import path from 'path';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 import { exec } from 'child_process';
-import settings from '../config.js';
+import config from '../config.js';
 
 export default {
   command: 'tgstk',
@@ -63,7 +63,7 @@ export default {
           ...channelInfo
         }, { quoted: message });
 
-        const tmpDir = path.join(process.cwd(), 'tmp');
+        const tmpDir = path.join(process.cwd(), 'temp');
         if (!fs.existsSync(tmpDir)) {
           fs.mkdirSync(tmpDir, { recursive: true });
         }
@@ -112,7 +112,7 @@ export default {
 
             const metadata = {
               'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-              'sticker-pack-name': settings.packname,
+              'sticker-pack-name': config.packname,
               'emojis': sticker.emoji ? [sticker.emoji] : ['🤖']
             };
 
