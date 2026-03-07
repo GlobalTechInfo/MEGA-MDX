@@ -1,4 +1,4 @@
-import settings from '../config.js';
+import config from '../config.js';
 
 export default {
   command: 'owner',
@@ -12,12 +12,12 @@ export default {
       const vcard = `
 BEGIN:VCARD
 VERSION:3.0
-FN:${settings.botOwner}
-TEL;waid=${settings.ownerNumber}:${settings.ownerNumber}
+FN:${config.botOwner}
+TEL;waid=${config.ownerNumber}:${config.ownerNumber}
 END:VCARD
       `.trim();
       await sock.sendMessage(chatId, {
-        contacts: { displayName: settings.botOwner, contacts: [{ vcard }] },
+        contacts: { displayName: config.botOwner, contacts: [{ vcard }] },
       }, { quoted: message });
     } catch(error: any) {
       console.error('Owner Command Error:', error);
