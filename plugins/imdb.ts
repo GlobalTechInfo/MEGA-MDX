@@ -22,7 +22,7 @@ export default {
       if (!res.ok) throw new Error(`API request failed with status ${res.status}`);
       const json = await res.json() as any as any;
       const ratings = (json.ratings || [])
-        .map(r => `⭐ *${r.source}:* ${r.value}`)
+        .map((r: any) => `⭐ *${r.source}:* ${r.value}`)
         .join('\n') || 'No ratings available';
 
       const movieInfo = `

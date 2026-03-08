@@ -18,7 +18,7 @@ export default {
         return await sock.sendMessage(chatId, { text: '❌ Failed to fetch joke.' }, { quoted: message });
       }
 
-      const jokes = res.data.split('\n').filter(line => line.trim() !== '');
+      const jokes = res.data.split('\n').filter((line: any) => line.trim() !== '');
 
       if (jokes.length === 0) {
         return await sock.sendMessage(chatId, { text: '❌ No jokes available.' }, { quoted: message });

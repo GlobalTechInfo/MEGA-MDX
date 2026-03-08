@@ -2,9 +2,9 @@ import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 // Utility to decode Unicode escapes
-function decodeUnicode(str) {
+function decodeUnicode(str: any) {
   if (!str) return 'N/A';
-  return str.replace(/\\u[\dA-F]{4}/gi, match =>
+  return str.replace(/\\u[\dA-F]{4}/gi, (match: any) =>
     String.fromCharCode(parseInt(match.replace("\\u", ""), 16))
   );
 }

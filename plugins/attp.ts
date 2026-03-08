@@ -30,14 +30,14 @@ export default {
   }
 };
 
-function _renderTextToPngWithFfmpeg(text) {
+function _renderTextToPngWithFfmpeg(text: string) {
     return new Promise((resolve, reject) => {
         const fontPath = process.platform === 'win32'
             ? 'C:/Windows/Fonts/arialbd.ttf'
             : '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
 
         // Robust escaping for ffmpeg drawtext
-        const escapeDrawtextText = (s) => s
+        const escapeDrawtextText = (s: string) => s
             .replace(/\\/g, '\\\\')
             .replace(/:/g, '\\:')
             .replace(/'/g, "\\'")
@@ -61,8 +61,8 @@ function _renderTextToPngWithFfmpeg(text) {
         ];
 
         const ff = spawn('ffmpeg', args);
-        const chunks = [];
-        const errors = [];
+        const chunks: Buffer[] = [];
+        const errors: Buffer[] = [];
         ff.stdout.on('data', d => chunks.push(d));
         ff.stderr.on('data', e => errors.push(e));
         ff.on('error', reject);
@@ -73,13 +73,13 @@ function _renderTextToPngWithFfmpeg(text) {
     });
 }
 
-function renderBlinkingVideoWithFfmpeg(text) {
+function renderBlinkingVideoWithFfmpeg(text: string) {
     return new Promise((resolve, reject) => {
         const fontPath = process.platform === 'win32'
             ? 'C:/Windows/Fonts/arialbd.ttf'
             : '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
 
-        const escapeDrawtextText = (s) => s
+        const escapeDrawtextText = (s: string) => s
             .replace(/\\/g, '\\\\')
             .replace(/:/g, '\\:')
             .replace(/,/g, '\\,')
@@ -117,8 +117,8 @@ function renderBlinkingVideoWithFfmpeg(text) {
         ];
 
         const ff = spawn('ffmpeg', args);
-        const chunks = [];
-        const errors = [];
+        const chunks: Buffer[] = [];
+        const errors: Buffer[] = [];
         ff.stdout.on('data', d => chunks.push(d));
         ff.stderr.on('data', e => errors.push(e));
         ff.on('error', reject);

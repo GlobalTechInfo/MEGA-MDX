@@ -42,7 +42,7 @@ export default {
 
     try {
       const mediaBuffer = await downloadMediaMessage(targetMessage, 'buffer', {}, {
-        logger: undefined,
+        logger: undefined as any,
         reuploadRequest: sock.updateMediaMessage
       });
 

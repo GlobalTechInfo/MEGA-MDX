@@ -29,7 +29,7 @@ async function initConfig() {
     }
 }
 
-async function saveConfig(config) {
+async function saveConfig(config: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'autoread', config);
     } else {
@@ -47,7 +47,7 @@ async function isAutoreadEnabled() {
     }
 }
 
-function isBotMentionedInMessage(message, botNumber) {
+function isBotMentionedInMessage(message: any, botNumber: any) {
     if (!message.message) return false;
 
     const messageTypes = [
@@ -58,7 +58,7 @@ function isBotMentionedInMessage(message, botNumber) {
     for (const type of messageTypes) {
         if (message.message[type]?.contextInfo?.mentionedJid) {
             const mentionedJid = message.message[type].contextInfo.mentionedJid;
-            if (mentionedJid.some(jid => jid === botNumber)) {
+            if (mentionedJid.some((jid: any) => jid === botNumber)) {
                 return true;
             }
         }

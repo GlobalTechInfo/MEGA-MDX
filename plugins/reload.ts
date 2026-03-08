@@ -6,7 +6,7 @@ export default {
   usage: '.reload',
   ownerOnly: true,
 
-  async handler(sock, message, _args) {
+  async handler(sock: any, message: any, _args: any) {
     const chatId = message.key.remoteJid;
     const commandHandler = (await import('../lib/commandHandler.js')).default;
 

@@ -51,7 +51,7 @@ export default {
             const file = File.fromURL(text);
             await file.loadAttributes();
 
-            if (file.size >= 500 * 1024 * 1024) {
+            if (((file.size as number) as any) >= 500 * 1024 * 1024) {
                 return sock.sendMessage(
                     chatId,
                     { text: '❌ *Error:* File too large (Limit: 500MB)' },
@@ -60,7 +60,7 @@ export default {
             }
 
             const { key } = await sock.sendMessage(chatId, {
-                text: `🌩️ *MEGA DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${formatBytes(file.size)}\n\n*Progress:* 0% [░░░░░░░░░░]`
+                text: `🌩️ *MEGA DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${formatBytes(((file.size as number) as number))}\n\n*Progress:* 0% [░░░░░░░░░░]`
             }, { quoted: message });
 
             const stream = (file as any).download();
@@ -91,7 +91,7 @@ export default {
                     document: buffer,
                     fileName: file.name,
                     mimetype: MIME_TYPES[ext] || 'application/octet-stream',
-                    caption: `✅ *Download Complete*\n▢ *File:* ${file.name}\n▢ *Size:* ${formatBytes(file.size)}`
+                    caption: `✅ *Download Complete*\n▢ *File:* ${file.name}\n▢ *Size:* ${formatBytes(((file.size as number) as number))}`
                 }, { quoted: message });
             });
 

@@ -34,7 +34,7 @@ export default {
 
     if (!txt) return await sock.sendMessage(chatId, { text: '*What should I flip?*' });
 
-    const charMap = {
+    const charMap: Record<string, any> = {
       'a': 'ɐ', 'b': 'q', 'c': 'ɔ', 'd': 'p', 'e': 'ǝ', 'f': 'ɟ', 'g': 'ƃ', 'h': 'ɥ', 'i': 'ᴉ', 'j': 'ɾ',
       'k': 'ʞ', 'l': 'l', 'm': 'ɯ', 'n': 'u', 'o': 'o', 'p': 'd', 'q': 'b', 'r': 'ɹ', 's': 's', 't': 'ʇ',
       'u': 'n', 'v': 'ʌ', 'w': 'ʍ', 'x': 'x', 'y': 'ʎ', 'z': 'z',
@@ -46,7 +46,7 @@ export default {
       '{': '}', '}': '{', '<': '>', '>': '<', '_': '‾', '&': '⅋'
     };
 
-    const flipped = txt.split('').map(char => charMap[char] || char).reverse().join('');
+    const flipped = txt.split('').map((char: any) => charMap[char] || char).reverse().join('');
 
     await sock.sendMessage(chatId, { text: flipped }, { quoted: message });
   }

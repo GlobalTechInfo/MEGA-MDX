@@ -2,7 +2,7 @@ import config from '../config.js';
 import { isSudo } from './index.js';
 
 
-function cleanJid(jid) {
+function cleanJid(jid: string) {
     if (!jid) return '';
     return jid.split(':')[0].split('@')[0];
 }
@@ -10,7 +10,7 @@ function cleanJid(jid) {
 /**
  * Check if user is owner or sudo
  */
-async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
+async function isOwnerOrSudo(senderId: string, sock: any = null, chatId: string | null = null) {
     const ownerNumberClean = cleanJid(config.ownerNumber);
     const senderIdClean = cleanJid(senderId);
 
@@ -28,7 +28,7 @@ async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
             const metadata = await sock.groupMetadata(chatId);
             const participants = metadata.participants || [];
 
-            const participant = participants.find(p => p.lid === senderId || p.id === senderId);
+            const participant = participants.find((p: any) => p.lid === senderId || p.id === senderId);
 
             if (participant) {
                 const pRealIdClean = cleanJid(participant.id);
@@ -46,7 +46,7 @@ async function isOwnerOrSudo(senderId, sock = null, chatId = null) {
 /**
  * Check if user is ONLY owner
  */
-function isOwnerOnly(senderId) {
+function isOwnerOnly(senderId: string) {
     const ownerNumberClean = cleanJid(config.ownerNumber);
     const senderIdClean = cleanJid(senderId);
     return senderIdClean === ownerNumberClean;
@@ -56,7 +56,7 @@ function isOwnerOnly(senderId) {
  * Helper for commands to show clean names/numbers
  * Usage: getCleanName(jid, sock)
  */
-async function getCleanName(jid, sock) {
+async function getCleanName(jid: string, sock: any) {
     if (!jid) return 'Unknown';
     const cleanNumber = cleanJid(jid);
 

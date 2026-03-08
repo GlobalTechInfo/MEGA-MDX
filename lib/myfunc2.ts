@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import * as cheerio from 'cheerio';
 import BodyForm from 'form-data';
 import fs from 'fs';
@@ -117,7 +118,7 @@ export const isUrl = (url: string): RegExpMatchArray | null => {
 };
 
 export const isNumber = (number: string | number): boolean => {
-    const int = parseInt(String(number));
+    const int = parseInt(String(number), 10);
     return typeof int === 'number' && !isNaN(int);
 };
 

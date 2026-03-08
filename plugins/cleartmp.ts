@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import isOwnerOrSudo from '../lib/isOwner.js';
 
-function clearDirectory(dirPath) {
+function clearDirectory(dirPath: any) {
   try {
     if (!fs.existsSync(dirPath)) {
       return { success: false, message: `Directory not found: ${path.basename(dirPath)}` };

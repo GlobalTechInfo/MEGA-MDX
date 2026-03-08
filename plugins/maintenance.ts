@@ -17,7 +17,7 @@ import type { BotContext } from '../types.js';
 
 import CommandHandler from '../lib/commandHandler.js';
 
-let activeMaintenanceTimer = null;
+let activeMaintenanceTimer: any = null;
 
 export default {
   command: 'maintenance',
@@ -25,7 +25,7 @@ export default {
   category: 'owner',
   description: 'Disable non-owner commands for a duration or stop it early',
   usage: '.maintenance [minutes / stop]',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
@@ -48,7 +48,7 @@ export default {
       return await sock.sendMessage(chatId, { text: '✅ *MAINTENANCE ENDED EARLY*\nAll commands are now active.' }, { quoted: message });
     }
 
-    const minutes = parseInt(input);
+    const minutes = parseInt(input, 10);
     if (isNaN(minutes) || minutes <= 0) {
       return await sock.sendMessage(chatId, { text: '❌ Usage: .maintenance [minutes] OR .maintenance stop' }, { quoted: message });
     }

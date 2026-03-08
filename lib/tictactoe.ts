@@ -47,7 +47,7 @@ class TicTacToe {
         return null;
     }
 
-    turn(player, pos) {
+    turn(player: any, pos: any) {
         // If game is over or invalid position
         if (this.winner || pos < 0 || pos > 8) return -1;
 

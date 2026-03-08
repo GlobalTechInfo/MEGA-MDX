@@ -26,7 +26,7 @@ async function readState() {
   }
 }
 
-async function writeState(enabled) {
+async function writeState(enabled: any) {
   try {
     if (HAS_DB) {
       await store.saveSetting('global', 'anticall', { enabled: !!enabled });

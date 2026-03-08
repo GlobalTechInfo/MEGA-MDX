@@ -23,7 +23,7 @@ async function getBannedUsers() {
     }
 }
 
-async function saveBannedUsers(bannedUsers) {
+async function saveBannedUsers(bannedUsers: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'banned', bannedUsers);
     } else {
@@ -34,7 +34,7 @@ async function saveBannedUsers(bannedUsers) {
     }
 }
 
-async function isUserBanned(userId) {
+async function isUserBanned(userId: any) {
     const bannedUsers = await getBannedUsers();
     return bannedUsers.includes(userId);
 }

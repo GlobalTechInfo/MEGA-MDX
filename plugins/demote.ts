@@ -1,5 +1,5 @@
 import type { BotContext } from '../types.js';
-async function handleDemotionEvent(sock, groupId, participants, author) {
+async function handleDemotionEvent(sock: any, groupId: any, participants: any, author: any) {
     try {
         if (!Array.isArray(participants) || participants.length === 0) {
             return;
@@ -84,7 +84,7 @@ export default {
             await new Promise(resolve => setTimeout(resolve, 1000));
             await sock.groupParticipantsUpdate(chatId, userToDemote, "demote");
 
-            const usernames = await Promise.all(userToDemote.map(async jid => {
+            const usernames = await Promise.all(userToDemote.map(async (jid: any) => {
                 return `@${jid.split('@')[0]}`;
             }));
 

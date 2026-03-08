@@ -2,7 +2,7 @@ import type { BotContext } from '../types.js';
 import { handleGoodbye } from '../lib/welcome.js';
 import { isGoodByeOn, getGoodbye } from '../lib/index.js';
 
-async function handleLeaveEvent(sock, id, participants) {
+async function handleLeaveEvent(sock: any, id: any, participants: any) {
     const isGoodbyeEnabled = await isGoodByeOn(id);
     if (!isGoodbyeEnabled) return;
 
@@ -22,7 +22,7 @@ async function handleLeaveEvent(sock, id, participants) {
                     displayName = contact.name;
                 } else {
                     const groupParticipants = groupMetadata.participants;
-                    const userParticipant = groupParticipants.find(p => p.id === participantString);
+                    const userParticipant = groupParticipants.find((p: any) => p.id === participantString);
                     if (userParticipant && userParticipant.name) {
                         displayName = userParticipant.name;
                     }

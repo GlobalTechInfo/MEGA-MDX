@@ -12,7 +12,7 @@ const GITHUB_USERNAME = 'stormfiber';
  * Save credentials from GitHub Gist to session/creds.json
  * @param {string} txt - Gist ID with optional prefix
  */
-async function SaveCreds(txt) {
+async function SaveCreds(txt: any) {
     const __dirname = path.dirname(__filename);
 
     const gistId = txt.replace('GlobalTechInfo/MEGA-MD_', '');

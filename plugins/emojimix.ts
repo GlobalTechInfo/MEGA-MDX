@@ -28,7 +28,7 @@ export default {
         return;
       }
 
-      const [emoji1, emoji2] = args[0].split('+').map(e => e.trim());
+      const [emoji1, emoji2] = args[0].split('+').map((e: any) => e.trim());
 
       const url =
         `https://tenor.googleapis.com/v2/featured?` +

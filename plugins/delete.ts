@@ -65,12 +65,12 @@ export default {
         } else {
             deleteGroupMessages = true;
         }
-        const chatMessages = Array.isArray(store.messages[chatId]) ? store.messages[chatId] : [];
+        const chatMessages = Array.isArray((store.messages as any)[chatId]) ? (store.messages as any)[chatId] : [];
         const toDelete = [];
         const seenIds = new Set();
 
         if (deleteGroupMessages) {
-            for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < countArg; i--) {
+            for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < Number(countArg); i--) {
                 const m = chatMessages[i];
                 if (!seenIds.has(m.key.id)) {
                     if (!m.message?.protocolMessage &&
@@ -83,7 +83,7 @@ export default {
             }
         } else {
             if (repliedMsgId) {
-                const repliedInStore = chatMessages.find(m => m.key.id === repliedMsgId && (m.key.participant || m.key.remoteJid) === targetUser);
+                const repliedInStore = chatMessages.find((m: any) => m.key.id === repliedMsgId && (m.key.participant || m.key.remoteJid) === targetUser);
                 if (repliedInStore) {
                     toDelete.push(repliedInStore);
                     seenIds.add(repliedInStore.key.id);
@@ -97,11 +97,11 @@ export default {
                                 participant: repliedParticipant
                             }
                         });
-                        countArg = Math.max(0, countArg - 1);
+                        countArg = String(Math.max(0, Number(countArg) - 1));
                     } catch(e: any) {}
                 }
             }
-            for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < countArg; i--) {
+            for (let i = chatMessages.length - 1; i >= 0 && toDelete.length < Number(countArg); i--) {
                 const m = chatMessages[i];
                 const participant = m.key.participant || m.key.remoteJid;
                 if (participant === targetUser && !seenIds.has(m.key.id)) {

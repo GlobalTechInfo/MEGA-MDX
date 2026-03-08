@@ -274,4 +274,4 @@ class CommandHandler {
 }
 
 export default new CommandHandler();
-                         
+

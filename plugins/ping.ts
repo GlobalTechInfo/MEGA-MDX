@@ -6,7 +6,7 @@ export default {
   usage: '.ping',
   isPrefixless: true,
 
-  async handler(sock, message, _args) {
+  async handler(sock: any, message: any, _args: any) {
     const start = Date.now();
     const chatId = message.key.remoteJid;
 

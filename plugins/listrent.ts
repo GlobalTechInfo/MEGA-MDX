@@ -62,7 +62,7 @@ export default {
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
-        const activeConns = global.conns || [];
+        const activeConns = (global as any).conns || [];
         const storedClones = await getAllCloneSessions();
 
         if (activeConns.length === 0 && storedClones.length === 0) {
@@ -77,7 +77,7 @@ export default {
         if (activeConns.length > 0) {
             msg += `*🟢 ONLINE CLONES:*\n\n`;
 
-            activeConns.forEach((conn, i) => {
+            activeConns.forEach((conn: any, i: any) => {
                 const user = conn.user;
                 msg += `*${i + 1}.* @${user.id.split(':')[0]}\n`;
                 msg += `   └ Name: ${user.name || 'Sub-Bot'}\n`;
@@ -87,7 +87,7 @@ export default {
 
         if (HAS_DB && storedClones.length > 0) {
             const offlineClones = storedClones.filter(clone => {
-                return !activeConns.some(conn => {
+                return !activeConns.some((conn: any) => {
                     const connNumber = conn.user.id.split(':')[0];
                     return (clone as any).userNumber === connNumber;
                 });
@@ -114,7 +114,7 @@ export default {
             msg += `*Total Stored:* ${storedClones.length}`;
         }
 
-        const mentions = activeConns.map(c => c.user.id);
+        const mentions = activeConns.map((c: any) => c.user.id);
 
         await sock.sendMessage(chatId, {
             text: msg,

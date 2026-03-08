@@ -16,7 +16,7 @@ store.getSetting('global', 'autoReaction').then((v: any) => {
 }).catch(() => {});
 let lastReactedTime = 0;
 
-function random(arr) {
+function random(arr: any) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -49,7 +49,7 @@ export default {
 
     if (sock.__autoReactAttached) return;
 
-    sock.ev.on('messages.upsert', async ({ messages }) => {
+    sock.ev.on('messages.upsert', async ({ messages }: any) => {
       if (!AUTO_REACT_MESSAGES) return;
 
       for (const m of messages) {

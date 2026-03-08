@@ -8,7 +8,7 @@ export default {
   usage: '.gitinfo',
   ownerOnly: true,
 
-  async handler(sock, message) {
+  async handler(sock: any, message: any) {
     const chatId = message.key.remoteJid;
     const git: any = (simpleGit as any)();
 
@@ -31,7 +31,7 @@ export default {
 
       const remotes = await git.getRemotes(true);
       const remoteText = remotes.length
-        ? remotes.map(r => `• ${r.name}: ${r.refs.fetch}`).join('\n')
+        ? remotes.map((r: any) => `• ${r.name}: ${r.refs.fetch}`).join('\n')
         : 'None';
 
       const warning = dirty ? '⚠️ Warning: Working tree has uncommitted changes!' : '';

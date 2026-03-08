@@ -9,7 +9,7 @@ import store from '../lib/lightweight_store.js';
  * - inbox: Only works in private chats (everyone in DM)
  * - self: Owner/sudo only (alias for private)
  */
-async function modeCommand(sock, message, args, context) {
+async function modeCommand(sock: any, message: any, args: any, context: any) {
     const { chatId, channelInfo } = context
 
     const _senderId = message.key.participant || message.key.remoteJid
@@ -26,7 +26,7 @@ async function modeCommand(sock, message, args, context) {
     const currentMode = await store.getBotMode() || 'public'
 
     if (!subCommand || subCommand === 'status' || subCommand === 'check') {
-        const modeEmojis = {
+        const modeEmojis: Record<string, string> = {
             public: '🌍',
             private: '🔒',
             groups: '👥',
@@ -34,7 +34,7 @@ async function modeCommand(sock, message, args, context) {
             self: '👤'
         }
 
-        const modeDescriptions = {
+        const modeDescriptions: Record<string, string> = {
             public: 'Everyone can use bot (groups + private chats)',
             private: 'Only owner and sudo users can use bot',
             groups: 'Only works in group chats (everyone in groups)',
@@ -79,7 +79,7 @@ async function modeCommand(sock, message, args, context) {
 
     await store.setBotMode(subCommand)
 
-    const modeEmojis = {
+    const modeEmojis: Record<string, string> = {
         public: '🌍',
         private: '🔒',
         groups: '👥',
@@ -87,7 +87,7 @@ async function modeCommand(sock, message, args, context) {
         self: '👤'
     }
 
-    const modeMessages = {
+    const modeMessages: Record<string, string> = {
         public: 'Bot is now accessible to *everyone* in groups and private chats.',
         private: 'Bot is now restricted to *owner and sudo users only*.',
         groups: 'Bot now works *only in group chats* (all group members can use it).',

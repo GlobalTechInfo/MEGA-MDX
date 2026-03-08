@@ -3,7 +3,7 @@ import TicTacToe from '../lib/tictactoe.js';
 
 const games: Record<string, any> = {};
 
-export async function handleTicTacToeMove(sock, chatId, senderId, text) {
+export async function handleTicTacToeMove(sock: any, chatId: any, senderId: any, text: any) {
     try {
         const room = Object.values(games).find((room: any) =>
             room.id.startsWith('tictactoe') &&
@@ -26,7 +26,7 @@ export async function handleTicTacToeMove(sock, chatId, senderId, text) {
 
         const ok = isSurrender ? true : room.game.turn(
             senderId === room.game.playerO,
-            parseInt(text) - 1
+            parseInt(text, 10) - 1
         );
 
         if (!ok) {
@@ -39,7 +39,8 @@ export async function handleTicTacToeMove(sock, chatId, senderId, text) {
         let winner = room.game.winner;
         const isTie = room.game.turns === 9;
 
-        const arr = room.game.render().map(v => ({
+        const arr = room.game.render().map((v: any) => (({
+
             'X': '❎',
             'O': '⭕',
             '1': '1️⃣',
@@ -51,7 +52,7 @@ export async function handleTicTacToeMove(sock, chatId, senderId, text) {
             '7': '7️⃣',
             '8': '8️⃣',
             '9': '9️⃣',
-        }[v]));
+        } as Record<string,string>)[v] || v));
 
         if (isSurrender) {
             winner = senderId === room.game.playerX ? room.game.playerO : room.game.playerX;
@@ -149,7 +150,8 @@ export default {
                 room.game.playerO = senderId;
                 room.state = 'PLAYING';
 
-                const arr = room.game.render().map(v => ({
+                const arr = room.game.render().map((v: any) => (({
+
                     'X': '❎',
                     'O': '⭕',
                     '1': '1️⃣',
@@ -161,7 +163,7 @@ export default {
                     '7': '7️⃣',
                     '8': '8️⃣',
                     '9': '9️⃣',
-                }[v]));
+                } as Record<string,string>)[v] || v));
 
                 const str = `
 🎮 *TicTacToe Game Started!*

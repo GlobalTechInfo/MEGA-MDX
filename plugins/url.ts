@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { UploadFileUgu, TelegraPh } from '../lib/uploader.js';
 
-async function getMediaBuffer(msg, sock) {
+async function getMediaBuffer(msg: any, sock: any) {
   return await downloadMediaMessage(
     msg,
     'buffer',
@@ -16,7 +16,7 @@ async function getMediaBuffer(msg, sock) {
   )
 }
 
-function getQuotedMessage(message) {
+function getQuotedMessage(message: any) {
   const ctx = message.message?.extendedTextMessage?.contextInfo
   if (!ctx?.quotedMessage) return null
 
@@ -31,7 +31,7 @@ function getQuotedMessage(message) {
   }
 }
 
-function getExtFromMessage(msg) {
+function getExtFromMessage(msg: any) {
   const m = msg.message
   if (m.imageMessage) return '.jpg'
   if (m.videoMessage) return '.mp4'

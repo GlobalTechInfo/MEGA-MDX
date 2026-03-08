@@ -46,7 +46,7 @@ export default {
                 cmdReactEnabled = ugd.autoReaction ?? true;
             } catch { cmdReactEnabled = true; }
 
-            const getSt = (val) => val ? '✅' : '❌';
+            const getSt = (val: any) => val ? '✅' : '❌';
 
             let menuText = `╭━〔 *MEGA CONFIG* 〕━┈\n┃\n`;
             menuText += `┃ 👤 *User:* @${cleanJid(senderId)}\n`;

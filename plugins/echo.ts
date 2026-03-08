@@ -6,14 +6,14 @@ export default {
   usage: '.echo <text> <count>',
   isPrefixless: true,
 
-  async handler(sock, message, args) {
+  async handler(sock: any, message: any, args: any) {
     const chatId = message.key.remoteJid;
 
     if (args.length < 2) {
       return await sock.sendMessage(chatId, { text: 'Usage: .echo <text> <count>' }, { quoted: message });
     }
 
-    const count = parseInt(args[args.length - 1]);
+    const count = parseInt(args[args.length - 1], 10);
     if (isNaN(count) || count <= 0) {
       return await sock.sendMessage(chatId, { text: 'Count must be a positive number.' }, { quoted: message });
     }

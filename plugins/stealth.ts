@@ -7,7 +7,7 @@ export default {
     category: 'owner',
     description: 'Toggle online status - bot will not send presence updates if off',
     usage: '.stealth <on|off>',
-    ownerOnly: 'true',
+    ownerOnly: true,
 
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;

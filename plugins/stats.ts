@@ -23,7 +23,7 @@ export default {
   category: 'general',
   description: 'View command performance and error metrics',
   usage: '.perf',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;

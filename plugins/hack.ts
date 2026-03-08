@@ -53,12 +53,12 @@ export default {
 /**
  * Helper function: delay for a number of milliseconds
  */
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * Display progress bar in chat
  */
-async function displayProgressBar(sock, message, taskName, steps, chatId) {
+async function displayProgressBar(sock: any, message: any, taskName: any, steps: any, chatId: any) {
   const progressBarLength = 20;
 
   for (let i = 1; i <= steps; i++) {

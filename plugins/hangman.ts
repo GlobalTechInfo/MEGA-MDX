@@ -1,8 +1,8 @@
 import type { BotContext } from '../types.js';
 const words = ['javascript', 'bot', 'hangman', 'whatsapp', 'nodejs', 'python', 'programming', 'developer', 'computer', 'algorithm'];
-const hangmanGames = {};
+const hangmanGames: Record<string, any> = {};
 
-function guessLetter(sock, chatId, letter) {
+function guessLetter(sock: any, chatId: any, letter: any) {
     if (!hangmanGames[chatId]) {
         sock.sendMessage(chatId, { text: '❌ *No game in progress*\n\nStart a new game with `.hangman`' });
         return;

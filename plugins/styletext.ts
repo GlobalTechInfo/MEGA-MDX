@@ -36,7 +36,7 @@ export default {
       sock.styletext = sock.styletext || {};
       sock.styletext[sentMsg.key.id] = styledResult;
 
-      const listener = async ({ messages }) => {
+      const listener = async ({ messages }: any) => {
         const m = messages[0];
         if (!m.message || !m.key || !m.key.remoteJid) return;
         if (m.key.remoteJid !== chatId) return;
@@ -57,7 +57,7 @@ export default {
         if (!userReply) return;
         if (!isQuoted && m.message.conversation !== sentMsg.key.id) return;
 
-        const choice = parseInt(userReply.trim());
+        const choice = parseInt(userReply.trim(), 10);
         if (!isNaN(choice) && choice >= 1 && choice <= styledResult.length) {
           const selectedText = styledResult[choice - 1].result || styledResult[choice - 1];
           await sock.sendMessage(m.key.remoteJid, { text: selectedText }, { quoted: m });

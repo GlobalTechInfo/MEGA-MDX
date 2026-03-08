@@ -45,7 +45,7 @@ async function addCommandReaction(sock: any, message: any) {
   });
 }
 
-async function setCommandReactState(state) {
+async function setCommandReactState(state: any) {
   COMMAND_REACT_ENABLED = state;
 
   try {

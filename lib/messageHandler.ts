@@ -53,7 +53,7 @@ async function getStickerCommands() {
     }
 }
 
-async function handleMessages(sock, messageUpdate) {
+async function handleMessages(sock: any, messageUpdate: any) {
     try {
         const { messages, type } = messageUpdate;
         if (type !== 'notify') return;
@@ -559,7 +559,7 @@ async function handleMessages(sock, messageUpdate) {
  }
 
 
-async function handleGroupParticipantUpdate(sock, update) {
+async function handleGroupParticipantUpdate(sock: any, update: any) {
     try {
         const { id, participants, action, author } = update;
         // Invalidate antispam cache so admin changes take effect immediately
@@ -615,7 +615,7 @@ async function handleGroupParticipantUpdate(sock, update) {
     }
 }
 
-async function handleStatus(sock, status) {
+async function handleStatus(sock: any, status: any) {
     try {
         const { default: _autostatus } = await import('../plugins/autostatus.js');
         const handleStatusUpdate = _autostatus.handleStatusUpdate;
@@ -626,7 +626,7 @@ async function handleStatus(sock, status) {
     }
 }
 
-async function handleCall(sock, calls) {
+async function handleCall(sock: any, calls: any) {
     try {
         const anticallPlugin = (await import('../plugins/anticall.js')).default;
         const state = anticallPlugin.readState ? await anticallPlugin.readState() : { enabled: false };

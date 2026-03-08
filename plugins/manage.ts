@@ -7,7 +7,7 @@ export default {
   category: 'owner',
   description: 'Manage bot commands and aliases',
   usage: '.manage [toggle/alias] [command_name] [new_alias]',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;

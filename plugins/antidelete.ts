@@ -20,7 +20,7 @@ if (!fs.existsSync(TEMP_MEDIA_DIR)) {
     fs.mkdirSync(TEMP_MEDIA_DIR, { recursive: true });
 }
 
-const getFolderSizeInMB = (folderPath) => {
+const getFolderSizeInMB = (folderPath: any) => {
     try {
         const files = fs.readdirSync(folderPath);
         let totalSize = 0;
@@ -71,7 +71,7 @@ async function loadAntideleteConfig() {
     }
 }
 
-async function saveAntideleteConfig(config) {
+async function saveAntideleteConfig(config: any) {
     try {
         if (HAS_DB) {
             await store.saveSetting('global', 'antidelete', config);
@@ -200,7 +200,7 @@ export async function storeMessage(sock: any, message: any) {
     }
 }
 
-export async function handleMessageRevocation(sock, revocationMessage) {
+export async function handleMessageRevocation(sock: any, revocationMessage: any) {
     try {
         const config = await loadAntideleteConfig();
         if (!config.enabled) return;

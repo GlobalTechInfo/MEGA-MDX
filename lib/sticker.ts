@@ -34,7 +34,7 @@ export async function sticker(
 }
 
 export async function sticker2(img: Buffer | null, url: string | null): Promise<Buffer> {
-    const input = url || img;
+    const input = (url || img)!;
     return await new Sticker(input, { type: StickerTypes.DEFAULT }).toBuffer();
 }
 
@@ -44,7 +44,7 @@ export async function sticker3(
     packname: string,
     author: string
 ): Promise<Buffer> {
-    const input = url || img;
+    const input = (url || img)!;
     return await new Sticker(input, {
         pack: packname,
         author,
@@ -53,7 +53,7 @@ export async function sticker3(
 }
 
 export async function sticker4(img: Buffer | null, url: string | null): Promise<Buffer> {
-    const input = url || img;
+    const input = (url || img)!;
     return await new Sticker(input, { type: StickerTypes.DEFAULT }).toBuffer();
 }
 
@@ -65,7 +65,7 @@ export async function sticker5(
     categories: string[] = [''],
     extra: StickerExtra = {}
 ): Promise<Buffer> {
-    const input = url || img;
+    const input = (url || img)!;
     return await new Sticker(input, {
         pack: packname || config.packname,
         author: author || config.author,
@@ -76,7 +76,7 @@ export async function sticker5(
 }
 
 export async function sticker6(img: Buffer | null, url: string | null): Promise<Buffer> {
-    const input = url || img;
+    const input = (url || img)!;
     return await new Sticker(input, { type: StickerTypes.FULL }).toBuffer();
 }
 

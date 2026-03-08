@@ -24,13 +24,13 @@ export default {
       }
 
       let messageText = '🔊 *Hello Everyone:*\n\n';
-      participants.forEach(participant => {
+      participants.forEach((participant: any) => {
         messageText += `@${participant.id.split('@')[0]}\n`;
       });
 
       await sock.sendMessage(chatId, {
         text: messageText,
-        mentions: participants.map(p => p.id),
+        mentions: participants.map((p: any) => p.id),
         ...channelInfo
       });
 

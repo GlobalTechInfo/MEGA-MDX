@@ -331,8 +331,8 @@ export default {
         }
 
         if (action === 'set') {
-            const maxMsgs = parseInt(args[1]);
-            const windowSec = parseInt(args[2]);
+            const maxMsgs = parseInt(args[1], 10);
+            const windowSec = parseInt(args[2], 10);
             if (isNaN(maxMsgs) || isNaN(windowSec) || maxMsgs < 2 || windowSec < 1) {
                 return await sock.sendMessage(chatId, { text: '❌ Usage: `.antispam set <messages> <seconds>`\nExample: `.antispam set 5 10`', ...channelInfo }, { quoted: message });
             }
@@ -356,7 +356,7 @@ export default {
         }
 
         if (action === 'warns') {
-            const count = parseInt(args[1]);
+            const count = parseInt(args[1], 10);
             if (isNaN(count) || count < 1) return await sock.sendMessage(chatId, { text: '❌ Example: `.antispam warns 3`', ...channelInfo }, { quoted: message });
             groupConfig.warnCount = count;
             await saveConfig(config);

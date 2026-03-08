@@ -1,5 +1,5 @@
 
-async function isAdmin(sock, chatId, senderId) {
+async function isAdmin(sock: any, chatId: string, senderId: string) {
     try {
         const metadata = await sock.groupMetadata(chatId);
         const participants = metadata.participants || [];
@@ -15,7 +15,7 @@ async function isAdmin(sock, chatId, senderId) {
         const senderNumber = senderId.includes(':') ? senderId.split(':')[0] : (senderId.includes('@') ? senderId.split('@')[0] : senderId);
         const senderIdWithoutSuffix = senderId.includes('@') ? senderId.split('@')[0] : senderId;
 
-        const isBotAdmin = participants.some(p => {
+        const isBotAdmin = participants.some((p: any) => {
             const pPhoneNumber = p.phoneNumber ? p.phoneNumber.split('@')[0] : '';
             const pId = p.id ? p.id.split('@')[0] : '';
             const pLid = p.lid ? p.lid.split('@')[0] : '';
@@ -40,7 +40,7 @@ async function isAdmin(sock, chatId, senderId) {
             return botMatches && (p.admin === 'admin' || p.admin === 'superadmin');
         });
 
-        const isSenderAdmin = participants.some(p => {
+        const isSenderAdmin = participants.some((p: any) => {
             const pPhoneNumber = p.phoneNumber ? p.phoneNumber.split('@')[0] : '';
             const pId = p.id ? p.id.split('@')[0] : '';
             const pLid = p.lid ? p.lid.split('@')[0] : '';

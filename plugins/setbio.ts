@@ -8,7 +8,7 @@ const QUOTE_URLS = [
   'https://raw.githubusercontent.com/GlobalTechInfo/Islamic-Database/main/text/pickup_quotes.txt'
 ];
 
-let cachedQuotes = [];
+let cachedQuotes: string[] = [];
 let lastFetchTime = 0;
 const CACHE_DURATION = 60 * 60 * 1000;
 
@@ -18,15 +18,15 @@ async function fetchQuotes() {
       return cachedQuotes;
     }
 
-    const allQuotes = [];
+    const allQuotes: string[] = [];
 
     for (const url of QUOTE_URLS) {
       try {
         const response = await axios.get(url, { timeout: 15000 });
         const lines = response.data
           .split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 10);
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 10);
 
         allQuotes.push(...lines);
       } catch(error: any) {
@@ -56,12 +56,12 @@ async function fetchQuotes() {
   }
 }
 
-function getRandomQuote(quotes) {
+function getRandomQuote(quotes: string[]) {
   if (!quotes || quotes.length === 0) return '💎 By MEGA-MD';
   return quotes[Math.floor(Math.random() * quotes.length)];
 }
 
-async function updateAutoBio(sock) {
+async function updateAutoBio(sock: any) {
   try {
     const autoBioSettings = await store.getSetting('global', 'autoBio');
     if (!autoBioSettings?.enabled) return;
@@ -84,9 +84,9 @@ async function updateAutoBio(sock) {
   }
 }
 
-let autoBioInterval = null;
+let autoBioInterval: ReturnType<typeof setInterval> | null = null;
 
-export function startAutoBio(sock) {
+export function startAutoBio(sock: any) {
   if (autoBioInterval) return;
   fetchQuotes().then(() => {
   });

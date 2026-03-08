@@ -22,7 +22,7 @@ export default {
         return;
       }
       let newsMessage = '📰 *Latest News*:\n\n';
-      articles.forEach((article, index) => {
+      articles.forEach((article: any, index: any) => {
         newsMessage += `${index + 1}. *${article.title}*\n${article.description || 'No description'}\n\n`;
       });
       await sock.sendMessage(chatId, {

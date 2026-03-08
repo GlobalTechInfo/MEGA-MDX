@@ -13,7 +13,7 @@ export default {
     description: 'Generate styled text with various effects',
     usage: '.ephoto <type> <text>',
 
-    async handler(sock, message, args) {
+    async handler(sock: any, message: any, args: any) {
         const chatId = message.key.remoteJid;
         const type = args[0]?.toLowerCase();
         const text = args.slice(1).join(' ');

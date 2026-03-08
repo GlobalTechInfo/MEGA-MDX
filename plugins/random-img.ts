@@ -36,7 +36,7 @@ const imageUrls = {
     wallhp: 'https://raw.githubusercontent.com/GlobalTechInfo/GLOBAL-XMD/master/src/media/randompics/wallhp.json',
 };
 
-function pickRandom(arr, count = 1) {
+function pickRandom(arr: any[], count = 1) {
     const result = [];
     const copy = [...arr];
     for (let i = 0; i < count; i++) {
@@ -56,7 +56,7 @@ export default {
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const category = (args[0] || '').toLowerCase();
-        if (!category || !imageUrls[category]) {
+        if (!category || !(imageUrls as any)[category]) {
             const categoriesList = Object.keys(imageUrls)
                 .map((c, i) => `┃ ${i + 1}. ${c}`)
                 .join('\n');
@@ -73,7 +73,7 @@ ${categoriesList}
             return await sock.sendMessage(chatId, { text: menuText }, { quoted: message });
         }
         try {
-            const res = await fetch(imageUrls[category]);
+            const res = await fetch((imageUrls as any)[category]);
             if (!res.ok) throw new Error('Failed to fetch image dataset');
 
             const images = await res.json() as any as any;

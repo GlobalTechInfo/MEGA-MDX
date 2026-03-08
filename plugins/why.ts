@@ -1,7 +1,7 @@
 import type { BotContext } from '../types.js';
 import axios from 'axios';
 
-async function fetchWithRetries(url, retries = 3, delay = 2000) {
+async function fetchWithRetries(url: any, retries = 3, delay = 2000) {
   let attempt = 0;
 
   while (attempt < retries) {

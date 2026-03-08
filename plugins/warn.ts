@@ -37,7 +37,7 @@ async function getWarnings() {
   }
 }
 
-async function saveWarnings(warnings) {
+async function saveWarnings(warnings: any) {
   if (HAS_DB) {
     await store.saveSetting('global', 'warnings', warnings);
   } else {

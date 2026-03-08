@@ -17,7 +17,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
 
-async function uploadToCatbox(filePath) {
+async function uploadToCatbox(filePath: string) {
     try {
         const form = new FormData();
         form.append('reqtype', 'fileupload');
@@ -38,7 +38,7 @@ async function uploadToCatbox(filePath) {
     }
 }
 
-async function uploadToPomf2(filePath) {
+async function uploadToPomf2(filePath: string) {
     try {
         const form = new FormData();
         form.append('files[]', fs.createReadStream(filePath));
@@ -63,7 +63,7 @@ async function uploadToPomf2(filePath) {
     }
 }
 
-async function uploadToImgbb(filePath, apiKey) {
+async function uploadToImgbb(filePath: string, apiKey: string) {
     try {
         const imageBuffer = fs.readFileSync(filePath);
         const base64Image = imageBuffer.toString('base64');
@@ -90,7 +90,7 @@ async function uploadToImgbb(filePath, apiKey) {
     }
 }
 
-async function uploadToFreeimage(filePath) {
+async function uploadToFreeimage(filePath: string) {
     try {
         const form = new FormData();
         form.append('source', fs.createReadStream(filePath));
@@ -118,7 +118,7 @@ async function uploadToFreeimage(filePath) {
     }
 }
 
-async function uploadToLitterbox(filePath, time = '1h') {
+async function uploadToLitterbox(filePath: string, time: string = '1h') {
     try {
         if (!['1h', '12h', '24h', '72h'].includes(time)) {
             time = '1h';
@@ -145,7 +145,7 @@ async function uploadToLitterbox(filePath, time = '1h') {
     }
 }
 
-async function uploadToPixhost(filePath) {
+async function uploadToPixhost(filePath: string) {
     try {
         const form = new FormData();
         form.append('img', fs.createReadStream(filePath));
@@ -174,7 +174,7 @@ async function uploadToPixhost(filePath) {
     }
 }
 
-async function uploadToTmpfiles(filePath) {
+async function uploadToTmpfiles(filePath: string) {
     try {
         const form = new FormData();
         form.append('file', fs.createReadStream(filePath));
@@ -202,7 +202,7 @@ async function uploadToTmpfiles(filePath) {
     }
 }
 
-async function uploadToQuax(filePath) {
+async function uploadToQuax(filePath: string) {
     try {
         const form = new FormData();
         form.append('files[]', fs.createReadStream(filePath));
@@ -226,7 +226,7 @@ async function uploadToQuax(filePath) {
     }
 }
 
-async function uploadToX0(filePath) {
+async function uploadToX0(filePath: string) {
     try {
         const form = new FormData();
         form.append('file', fs.createReadStream(filePath));
@@ -246,7 +246,7 @@ async function uploadToX0(filePath) {
     }
 }
 
-async function uploadToUguu(filePath) {
+async function uploadToUguu(filePath: string) {
     try {
         const form = new FormData();
         form.append('files[]', fs.createReadStream(filePath));
@@ -272,7 +272,7 @@ async function uploadToUguu(filePath) {
     }
 }
 
-async function uploadFile(filePath) {
+async function uploadFile(filePath: string) {
     const uploaders = [
         { name: 'Catbox', fn: () => uploadToCatbox(filePath) },
         { name: 'Qu.ax', fn: () => uploadToQuax(filePath) },

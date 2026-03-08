@@ -47,7 +47,7 @@ export default {
 
       let searchText = `✨ *MUSIC SEARCH* ✨\n\n`;
 
-      videos.forEach((v, index) => {
+      videos.forEach((v: any, index: any) => {
         searchText += `*${index + 1}.🎧 ${v.title}*\n`;
         searchText += `*⌚ Duration:* ${v.timestamp}\n`;
         searchText += `*👀 Views:* ${v.views}\n`;

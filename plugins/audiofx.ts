@@ -22,7 +22,7 @@ const effectsMenu =
 'Reply to an audio / voice note with:\n' +
 'Example: *.audiofx bass*';
 
-function getFilter(cmd) {
+function getFilter(cmd: any) {
   if (/bass/i.test(cmd)) return 'equalizer=f=94:width_type=o:width=2:g=30';
   if (/blown/i.test(cmd)) return 'acrusher=.1:1:64:0:log';
   if (/deep/i.test(cmd)) return 'atempo=1,asetrate=44500*2/3';
@@ -38,7 +38,7 @@ function getFilter(cmd) {
   return null;
 }
 
-async function getAudio(message) {
+async function getAudio(message: any) {
   const m = message.message || {};
   const quoted = m.extendedTextMessage?.contextInfo?.quotedMessage;
   const audio = m.audioMessage || m.voiceMessage || quoted?.audioMessage || quoted?.voiceMessage;

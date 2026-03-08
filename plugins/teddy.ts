@@ -1,7 +1,7 @@
 import type { BotContext } from '../types.js';
 const teddyUsers = {};
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
 
 export default {
     command: 'teddy',
@@ -13,8 +13,8 @@ export default {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 
-        if (teddyUsers[sender]) return;
-        teddyUsers[sender] = true;
+        if ((teddyUsers as any)[sender]) return;
+        (teddyUsers as any)[sender] = true;
 
         const teddyEmojis = [
             '❤','💕','😻','🧡','💛','💚','💙','💜','🖤','❣',
@@ -48,7 +48,7 @@ export default {
                 await sock.sendMessage(chatId, { text: '❌ Something went wrong while sending teddy emojis.' }, { quoted: message });
             } catch {}
         } finally {
-            delete teddyUsers[sender];
+            delete (teddyUsers as any)[sender];
         }
     }
 };

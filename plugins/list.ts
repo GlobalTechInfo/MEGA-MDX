@@ -30,9 +30,17 @@ function formatTime() {
     return now.toLocaleTimeString('en-US', options as any);
 }
 
+interface MenuRenderOptions {
+  _title?: string;
+  title?: string;
+  info: { bot: string; prefix: string; total: number; version: string; time: string };
+  categories: Map<string, string[]>;
+  prefix: string;
+}
+
 const menuStyles = [
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `╭━━『 *MEGA MENU* 』━⬣\n`;
       t += `┃ ✨ *Bot: ${info.bot}*\n`;
       t += `┃ 🔧 *Prefix: ${info.prefix}*\n`;
@@ -51,7 +59,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `◈╭─❍「 *MEGA MENU* 」❍\n`;
       t += `◈├• 🌟 *Bot: ${info.bot}*\n`;
       t += `◈├• ⚙️ *Prefix: ${info.prefix}*\n`;
@@ -70,7 +78,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `┏━━━━ *MEGA MENU* ━━━┓\n`;
       t += `┃• *Bot : ${info.bot}*\n`;
       t += `┃• *Prefixes : ${info.prefix}*\n`;
@@ -89,7 +97,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `✦═══ *MEGA MENU* ═══✦\n`;
       t += `║➩ *Bot: ${info.bot}*\n`;
       t += `║➩ *Prefixes: ${info.prefix}*\n`;
@@ -108,7 +116,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `❀━━━ *MEGA MENU* ━━━❀\n`;
       t += `┃☞ *Bot: ${info.bot}*\n`;
       t += `┃☞ *Prefixes: ${info.prefix}*\n`;
@@ -127,7 +135,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `◆━━━ *MEGA MENU* ━━━◆\n`;
       t += `┃ ¤ *Bot: ${info.bot}*\n`;
       t += `┃ ¤ *Prefixes: ${info.prefix}*\n`;
@@ -145,7 +153,7 @@ const menuStyles = [
   },
 
   {
-    render({ _title, info, categories, prefix }) {
+    render({ _title, info, categories, prefix }: MenuRenderOptions) {
       let t = `╭───⬣ *MEGA MENU* ──⬣\n`;
       t += ` | ● *Bot: ${info.bot}*\n`;
       t += ` | ● *Prefixes: ${info.prefix}*\n`;
@@ -163,7 +171,7 @@ const menuStyles = [
   }
 ];
 
-const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const pick = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
 
 export default {
   command: 'menu',
@@ -202,7 +210,7 @@ export default {
 ┃ 📝 *Desc:* ${cmd.description || 'No description'}
 ┃ 📖 *Usage:* ${cmd.usage || `${prefix}${cmd.command}`}
 ┃ 🏷️ *Category:* ${cmd.category || 'misc'}
-┃ 🔖 *Aliases:* ${cmd.aliases?.length ? cmd.aliases.map(a => prefix + a).join(', ') : 'None'}
+┃ 🔖 *Aliases:* ${cmd.aliases?.length ? cmd.aliases.map((a: string) => prefix + a).join(', ') : 'None'}
 ┃
 ╰━━━━━━━━━━━━━━⬣`;
 

@@ -22,12 +22,12 @@ export default {
   usage: '.uptime',
   isPrefixless: true,
 
-  async handler(sock, message) {
+  async handler(sock: any, message: any) {
     const chatId = message.key.remoteJid;
     const commandHandler = (await import('../lib/commandHandler.js')).default;
     const uptimeMs = process.uptime() * 1000;
 
-    const formatUptime = (ms) => {
+    const formatUptime = (ms: any) => {
       const sec = Math.floor(ms / 1000) % 60;
       const min = Math.floor(ms / (1000 * 60)) % 60;
       const hr  = Math.floor(ms / (1000 * 60 * 60)) % 24;

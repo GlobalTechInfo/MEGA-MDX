@@ -27,7 +27,7 @@ async function loadAntilinkSettings() {
     }
 }
 
-async function saveAntilinkSettings(settings) {
+async function saveAntilinkSettings(settings: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'antilinkSettings', settings);
     } else {
@@ -35,13 +35,13 @@ async function saveAntilinkSettings(settings) {
     }
 }
 
-async function setAntilinkSetting(groupId, type) {
+async function setAntilinkSetting(groupId: any, type: any) {
     const settings = await loadAntilinkSettings();
     settings[groupId] = type;
     await saveAntilinkSettings(settings);
 }
 
-async function getAntilinkSetting(groupId) {
+async function getAntilinkSetting(groupId: any) {
     const settings = await loadAntilinkSettings();
     return settings[groupId] || 'off';
 }

@@ -19,7 +19,7 @@ export default {
   }
 };
 
-async function handleJoinEvent(sock, id, participants) {
+async function handleJoinEvent(sock: any, id: any, participants: any) {
   const isWelcomeEnabled = await isWelcomeOn(id);
   if (!isWelcomeEnabled) return;
 
@@ -53,7 +53,7 @@ async function handleJoinEvent(sock, id, participants) {
           displayName = contact.name;
         } else {
           const groupParticipants = groupMetadata.participants;
-          const userParticipant = groupParticipants.find(p => p.id === participantString);
+          const userParticipant = groupParticipants.find((p: any) => p.id === participantString);
           if (userParticipant && userParticipant.name) {
             displayName = userParticipant.name;
           }

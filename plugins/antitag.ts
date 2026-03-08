@@ -1,7 +1,7 @@
 import type { BotContext } from '../types.js';
 import { setAntitag, getAntitag, removeAntitag } from '../lib/index.js';
 
-export async function handleTagDetection(sock, chatId, message, senderId) {
+export async function handleTagDetection(sock: any, chatId: any, message: any, senderId: any) {
     try {
         const antitagSetting = await getAntitag(chatId, 'on');
         if (!antitagSetting || !antitagSetting.enabled) return;
@@ -21,7 +21,7 @@ export async function handleTagDetection(sock, chatId, message, senderId) {
         const _allMentions = [...new Set([...mentionedJids, ...textMentions, ...numericMentions])];
 
         const uniqueNumericMentions = new Set();
-        numericMentions.forEach(mention => {
+        numericMentions.forEach((mention: any) => {
             const numMatch = mention.match(/@(\d+)/);
             if (numMatch) uniqueNumericMentions.add(numMatch[1]);
         });
@@ -157,7 +157,7 @@ export default {
                 }
                 const setResult = await setAntitag(chatId, 'on', setAction);
 
-                const actionDescriptions = {
+                const actionDescriptions: Record<string,string> = {
                     delete: 'Delete tagall messages and warn users',
                     kick: 'Delete messages and remove users from group'
                 };

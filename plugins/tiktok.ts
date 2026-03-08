@@ -40,8 +40,8 @@ export default {
       }
 
       const res = data.result;
-      const hd = res.data.find(v => v.type === 'nowatermark_hd');
-      const noWm = res.data.find(v => v.type === 'nowatermark');
+      const hd = res.data.find((v: any) => v.type === 'nowatermark_hd');
+      const noWm = res.data.find((v: any) => v.type === 'nowatermark');
       const videoUrl = hd?.url || noWm?.url;
 
       if (!videoUrl) {

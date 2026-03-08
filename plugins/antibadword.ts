@@ -1,16 +1,16 @@
 import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 
-async function getAntibadwordSettings(chatId) {
+async function getAntibadwordSettings(chatId: string) {
     const settings = await store.getSetting(chatId, 'antibadword');
     return settings || { enabled: false, words: [] };
 }
 
-async function saveAntibadwordSettings(chatId, settings) {
+async function saveAntibadwordSettings(chatId: string, settings: any) {
     await store.saveSetting(chatId, 'antibadword', settings);
 }
 
-async function handleAntiBadwordCommand(sock, chatId, message, match) {
+async function handleAntiBadwordCommand(sock: any, chatId: string, message: any, match: string) {
     const args = match.trim().toLowerCase().split(/\s+/);
     const action = args[0];
 
@@ -99,7 +99,7 @@ async function handleAntiBadwordCommand(sock, chatId, message, match) {
             return;
         }
 
-        settings.words = settings.words.filter(w => w !== word);
+        settings.words = settings.words.filter((w: string) => w !== word);
         await saveAntibadwordSettings(chatId, settings);
 
         await sock.sendMessage(chatId, {
@@ -116,7 +116,7 @@ async function handleAntiBadwordCommand(sock, chatId, message, match) {
             return;
         }
 
-        const wordList = settings.words.map((w, i) => `${i + 1}. ${w}`).join('\n');
+        const wordList = settings.words.map((w: string, i: number) => `${i + 1}. ${w}`).join('\n');
 
         await sock.sendMessage(chatId, {
             text: `📝 *Blocked Words List*\n\n${wordList}\n\nTotal: ${settings.words.length} words`

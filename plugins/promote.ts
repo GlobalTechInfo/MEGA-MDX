@@ -1,6 +1,6 @@
 import type { BotContext } from '../types.js';
 
-async function handlePromotionEvent(sock, groupId, participants, author) {
+async function handlePromotionEvent(sock: any, groupId: any, participants: any, author: any) {
   try {
     if (!Array.isArray(participants) || participants.length === 0) {
       return;
@@ -72,7 +72,7 @@ export default {
     try {
       await sock.groupParticipantsUpdate(chatId, userToPromote, "promote");
 
-      const usernames = await Promise.all(userToPromote.map(async jid => {
+      const usernames = await Promise.all(userToPromote.map(async (jid: any) => {
         return `@${jid.split('@')[0]}`;
       }));
 

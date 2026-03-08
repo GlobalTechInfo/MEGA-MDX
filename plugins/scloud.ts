@@ -33,7 +33,7 @@ export default {
       const results = response.data.result.result;
       const totalFound = results.length;
 
-      const tracks = results.filter(item => item.kind === 'track');
+      const tracks = results.filter((item: any) => item.kind === 'track');
 
       if (tracks.length === 0) {
         return await sock.sendMessage(chatId, {

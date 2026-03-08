@@ -11,7 +11,7 @@ export default {
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
-    const durationInMinutes = args[0] ? parseInt(args[0]) : undefined;
+    const durationInMinutes = args[0] ? parseInt(args[0], 10) : undefined;
 
     try {
       await sock.groupSettingUpdate(chatId, 'announcement');

@@ -7,7 +7,7 @@ import { fileTypeFromBuffer } from 'file-type';
  * @param {Buffer} buffer
  * @returns {Promise<string>} direct URL
  */
-async function uploadImage(buffer) {
+async function uploadImage(buffer: any) {
     try {
         if (!Buffer.isBuffer(buffer)) {
             throw new Error('Invalid buffer');

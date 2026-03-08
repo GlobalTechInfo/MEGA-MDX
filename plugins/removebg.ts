@@ -3,7 +3,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
-async function getImageBuffer(message) {
+async function getImageBuffer(message: any) {
   const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
   const imageMessage = quoted?.imageMessage || message.message?.imageMessage;
   if (!imageMessage) return null;

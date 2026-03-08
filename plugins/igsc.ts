@@ -9,7 +9,7 @@ import webp from 'node-webpmux';
 import crypto from 'crypto';
 import { stickercropFromBuffer } from './stickercrop.js';
 
-async function _convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
+async function _convertBufferToStickerWebp(inputBuffer: any, isAnimated: any, cropSquare: any) {
   const tmpDir = path.join(process.cwd(), 'temp');
   if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
 
@@ -18,7 +18,7 @@ async function _convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) 
   const tempOutput = path.join(tmpDir, `igs_out_${Date.now()}_${Math.random().toString(36).slice(2)}.webp`);
 
   fs.writeFileSync(tempInput, inputBuffer);
-  const scheduleDelete = (p) => {
+  const scheduleDelete = (p: any) => {
     if (!p) return;
     setTimeout(() => {
       try { fs.unlinkSync(p); } catch {}
@@ -70,7 +70,7 @@ async function _convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) 
   return await img.save(null);
 }
 
-async function fetchBufferFromUrl(url) {
+async function fetchBufferFromUrl(url: any) {
   try {
     const res = await axios.get(url, {
       responseType: 'arraybuffer',
@@ -121,7 +121,7 @@ export default {
         return;
       }
 
-      const rawItems = (downloadData?.data || []).filter(m => m && m.url);
+      const rawItems = (downloadData?.data || []).filter((m: any) => m && m.url);
       const seenUrls = new Set();
       const items = [];
       for (const m of rawItems) {

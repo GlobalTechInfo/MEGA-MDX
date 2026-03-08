@@ -44,3 +44,9 @@ yarn-error.log*
 logs/
 logs/
 !logs/.gitkeep
+
+# Test coverage
+coverage/
+
+# TypeScript incremental build
+*.tsbuildinfo

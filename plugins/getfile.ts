@@ -8,7 +8,7 @@ export default {
   category: 'owner',
   description: 'Read and display file contents from bot directory',
   usage: '.getfile <filename>',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;

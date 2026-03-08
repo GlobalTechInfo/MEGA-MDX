@@ -13,9 +13,9 @@ export default {
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
-    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-    const apiCallWithRetry = async (url, maxRetries = 3, baseDelay = 2000) => {
+    const apiCallWithRetry = async (url: string, maxRetries = 3, baseDelay = 2000) => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           await wait(1000);
@@ -42,7 +42,7 @@ export default {
       }
     };
 
-    const downloadFileWithProgress = async (url, filepath, maxRetries = 3) => {
+    const downloadFileWithProgress = async (url: string, filepath: string, maxRetries = 3) => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           const response = await axios({
@@ -77,7 +77,7 @@ export default {
       }
     };
 
-    const isValidTeraBoxUrl = (url) => {
+    const isValidTeraBoxUrl = (url: string) => {
       return url.includes('terabox.com') ||
              url.includes('1024terabox.com') ||
              url.includes('teraboxapp.com') ||
@@ -113,7 +113,7 @@ export default {
       const apiUrl = `https://api.qasimdev.dpdns.org/api/terabox/download?apiKey=qasim-dev&url=${encodeURIComponent(url)}`;
       const apiResponse = await apiCallWithRetry(apiUrl, 3, 3000);
 
-      if (!apiResponse.data?.success || !apiResponse.data?.data?.files || apiResponse.data.data.files.length === 0) {
+      if (!apiResponse?.data?.success || !apiResponse.data?.data?.files || apiResponse?.data?.data?.files?.length === 0) {
         return await sock.sendMessage(
           chatId,
           { text: '❌ *Download failed!*\n\nNo files found or invalid link.' },
@@ -121,7 +121,7 @@ export default {
         );
       }
 
-      const fileData = apiResponse.data.data;
+      const fileData = apiResponse!.data.data;
       const files = fileData.files;
       const totalFiles = fileData.totalFiles;
 

@@ -12,7 +12,7 @@ const app = express();
 const server = createServer(app);
 const PORT = config.port || 5000;
 
-app.get('/', (req, res) => {
+app.get('/', (req: any, res: any) => {
     const uptimeSeconds = Math.floor(process.uptime());
     const hours = Math.floor(uptimeSeconds / 3600);
     const minutes = Math.floor((uptimeSeconds % 3600) / 60);
@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', (req: any, res: any) => {
     const mem = process.memoryUsage();
     res.json({
         status: 'ok',
@@ -92,13 +92,13 @@ app.get('/health', (req, res) => {
     });
 });
 
-app.get('/process', (req, res) => {
+app.get('/process', (req: any, res: any) => {
     const { send } = req.query;
     if (!send) return res.status(400).json({ error: 'Missing send query' });
     res.json({ status: 'Received', data: send });
 });
 
-app.get('/chat', (req, res) => {
+app.get('/chat', (req: any, res: any) => {
     const { message, to } = req.query;
     if (!message || !to) return res.status(400).json({ error: 'Missing message or to query' });
     res.json({ status: 200, info: 'Message received (integration not implemented)' });

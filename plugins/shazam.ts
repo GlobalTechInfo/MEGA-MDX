@@ -13,7 +13,7 @@ const acr = new acrcloud({
 
 /* ================= MEDIA HELPERS ================= */
 
-function getAudioOrVideo(message) {
+function getAudioOrVideo(message: any) {
     const m = message.message || {};
 
     if (m.audioMessage) return { msg: m.audioMessage, type: 'audio', ext: '.mp3' };
@@ -28,7 +28,7 @@ function getAudioOrVideo(message) {
     return null;
 }
 
-async function downloadMedia(msg, type) {
+async function downloadMedia(msg: any, type: any) {
     const stream = await downloadContentFromMessage(msg, type);
     const chunks = [];
     for await (const chunk of stream) chunks.push(chunk);
@@ -74,9 +74,9 @@ export default {
             const text = `
 𝚁𝙴𝚂𝚄𝙻𝚃
 • 📌 *TITLE*: ${music.title || 'NOT FOUND'}
-• 👨‍🎤 *ARTIST*: ${music.artists?.map(a => a.name).join(', ') || 'NOT FOUND'}
+• 👨‍🎤 *ARTIST*: ${music.artists?.map((a: any) => a.name).join(', ') || 'NOT FOUND'}
 • 💾 *ALBUM*: ${music.album?.name || 'NOT FOUND'}
-• 🌐 *GENRE*: ${music.genres?.map(g => g.name).join(', ') || 'NOT FOUND'}
+• 🌐 *GENRE*: ${music.genres?.map((g: any) => g.name).join(', ') || 'NOT FOUND'}
 • 📆 *RELEASE DATE*: ${music.release_date || 'NOT FOUND'}
 `.trim();
             await sock.sendMessage(chatId, { text }, { quoted: message });

@@ -1,7 +1,7 @@
 import type { BotContext } from '../types.js';
 import axios from 'axios';
 
-const triviaGames = {};
+const triviaGames: Record<string, any> = {};
 
 export default {
   command: 'trivia',

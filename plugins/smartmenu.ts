@@ -31,12 +31,12 @@ const categoryEmojis = {
     utility: ['📂', '🔧', '⚙️', '🛠️']
 };
 
-function getRandomEmoji(arr) {
+function getRandomEmoji(arr: any) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function getCategoryEmoji(category) {
-    const emojis = categoryEmojis[category.toLowerCase()] || ['📂', '📁', '🗂️', '📋'];
+function getCategoryEmoji(category: any) {
+    const emojis = (categoryEmojis as any)[category.toLowerCase()] || ['📂', '📁', '🗂️', '📋'];
     return getRandomEmoji(emojis);
 }
 
@@ -103,7 +103,7 @@ export default {
 
         const catCmds = CommandHandler.getCommandsByCategory(cat);
 
-        catCmds.forEach((cmdName, index) => {
+        catCmds.forEach((cmdName: any, index: any) => {
           const isLast = index === catCmds.length - 1;
           const prefix = isLast ? '└' : '├';
 

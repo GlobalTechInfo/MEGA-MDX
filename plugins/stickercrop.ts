@@ -7,7 +7,7 @@ import path from 'path';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 
-export async function stickercropFromBuffer(inputBuffer, isAnimated) {
+export async function stickercropFromBuffer(inputBuffer: any, isAnimated: any) {
   const tmpDir = path.join(process.cwd(), 'temp');
   if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
 
@@ -96,7 +96,7 @@ export default {
 
     try {
       const mediaBuffer = await downloadMediaMessage(targetMessage, 'buffer', {}, {
-        logger: undefined,
+        logger: undefined as any,
         reuploadRequest: sock.updateMediaMessage
       });
 

@@ -34,7 +34,7 @@ async function loadState() {
     }
 }
 
-async function saveState(state) {
+async function saveState(state: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'mention', state);
     } else {
@@ -46,7 +46,7 @@ async function saveState(state) {
     }
 }
 
-async function ensureDefaultSticker(state) {
+async function ensureDefaultSticker(state: any) {
     try {
         const assetPath = path.join(process.cwd(), state.assetPath);
         if (state.assetPath.endsWith('mention_default.webp') && !fs.existsSync(assetPath)) {
@@ -94,7 +94,7 @@ export async function handleMentionDetection(sock: any, chatId: any, message: an
             msg.listResponseMessage?.contextInfo
         ].filter(Boolean);
 
-        let mentioned = [];
+        let mentioned: string[] = [];
         for (const c of contexts) {
             if (Array.isArray(c.mentionedJid)) {
                 mentioned = mentioned.concat(c.mentionedJid);
@@ -161,13 +161,13 @@ export async function handleMentionDetection(sock: any, chatId: any, message: an
     }
 }
 
-async function setMentionCommand(sock, chatId, message, isOwner) {
+async function setMentionCommand(sock: any, chatId: string, message: any, isOwner: boolean) {
     if (!isOwner) return sock.sendMessage(chatId, { text: '❌ *Only Owner or Sudo can use this command*' }, { quoted: message });
     const ctx = message.message?.extendedTextMessage?.contextInfo;
     const qMsg = ctx?.quotedMessage;
     if (!qMsg) return sock.sendMessage(chatId, { text: '❌ *Reply to a message or media*\n\nSupported: text, sticker, image, video, audio' }, { quoted: message });
 
-    let type = 'sticker', buf, dataType;
+    let type = 'sticker', buf: Buffer, dataType: string | undefined;
     if (qMsg.stickerMessage) { dataType = 'stickerMessage'; type = 'sticker'; }
     else if (qMsg.imageMessage) { dataType = 'imageMessage'; type = 'image'; }
     else if (qMsg.videoMessage) { dataType = 'videoMessage'; type = 'video'; }
@@ -181,11 +181,11 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
         if (!buf.length) return sock.sendMessage(chatId, { text: '❌ *Empty text*' }, { quoted: message });
     } else {
         try {
-            const media = qMsg[dataType];
+            const media = qMsg[dataType!];
             if (!media) throw new Error('No media');
             const kind = type === 'sticker' ? 'sticker' : type;
             const stream = await downloadContentFromMessage(media, kind as any);
-            const chunks = [];
+            const chunks: Buffer[] = [];
             for await (const chunk of stream) chunks.push(chunk);
             buf = Buffer.concat(chunks);
         } catch(e: any) {
@@ -197,7 +197,7 @@ async function setMentionCommand(sock, chatId, message, isOwner) {
     if (buf.length > 1024 * 1024) {
         return sock.sendMessage(chatId, { text: '❌ *File too large*\n\nMaximum size: 1 MB' }, { quoted: message });
     }
-    let mimetype = qMsg[dataType]?.mimetype || '';
+    let mimetype = (dataType ? qMsg[dataType]?.mimetype : undefined) || '';
     const ptt = !!qMsg.audioMessage?.ptt;
     const gifPlayback = !!qMsg.videoMessage?.gifPlayback;
     let ext = 'bin';

@@ -27,7 +27,8 @@
     "test:unit": "vitest run test/unit",
     "test:integration": "vitest run test/integration",
     "test:watch": "vitest",
-    "audit": "npm audit --omit=dev"
+    "audit": "npm audit --omit=dev",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "whatsapp-bot",
@@ -82,8 +83,11 @@
     "yt-search": "^2.12.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/qrcode": "^1.5.6",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.2",
     "madge": "^8.0.0",
     "nodemon": "^3.1.14",

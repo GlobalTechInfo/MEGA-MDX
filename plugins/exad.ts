@@ -16,7 +16,7 @@ export default {
       }, { quoted: message });
     }
 
-    const [title, body, url] = input.split('|').map(t => t.trim());
+    const [title, body, url] = input.split('|').map((t: any) => t.trim());
 
     const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     const _hasQuotedImage = quoted?.imageMessage;

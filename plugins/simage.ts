@@ -9,7 +9,7 @@ import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 const tempDir = './temp';
 if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir);
 
-const scheduleFileDeletion = (filePath) => {
+const scheduleFileDeletion = (filePath: any) => {
     setTimeout(async () => {
         try {
             await fsPromises.unlink(filePath);

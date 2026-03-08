@@ -24,7 +24,7 @@ export default {
   category: 'owner',
   description: 'Read the source code of a specific plugin',
   usage: '.inspect [plugin_name]',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, _context: BotContext) {
     const chatId = message.key.remoteJid;

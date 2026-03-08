@@ -33,7 +33,7 @@ export default {
       let caption = `📱 *APK Search Results for:* *${query}*\n\n`;
       caption += `↩️ *Reply with a number to download*\n\n`;
 
-      results.forEach((item, i) => {
+      results.forEach((item: any, i: any) => {
         caption +=
           `*${i + 1}.* ${item.judul}\n` +
           `👨‍💻 Developer: ${item.dev}\n` +
@@ -48,7 +48,7 @@ export default {
         await sock.sendMessage(chatId, { text: '⏱ APK selection expired. Please search again.' }, { quoted: sentMsg });
       }, 5 * 60 * 1000);
 
-      const listener = async ({ messages }) => {
+      const listener = async ({ messages }: any) => {
         const m = messages[0];
         if (!m?.message || m.key.remoteJid !== chatId) return;
 
@@ -60,7 +60,7 @@ export default {
           m.message.extendedTextMessage?.text ||
           '';
 
-        const choice = parseInt(replyText.trim());
+        const choice = parseInt(replyText.trim(), 10);
         if (isNaN(choice) || choice < 1 || choice > results.length) {
           return await sock.sendMessage(chatId, { text: `❌ Invalid choice. Pick 1-${results.length}.` }, { quoted: m });
         }

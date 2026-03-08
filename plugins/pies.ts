@@ -3,7 +3,7 @@ import type { BotContext } from '../types.js';
 const BASE = 'https://shizoapi.onrender.com/api/pies';
 const VALID_COUNTRIES = ['china', 'indonesia', 'japan', 'korea', 'hijab'];
 
-async function fetchPiesImageBuffer(country) {
+async function fetchPiesImageBuffer(country: any) {
   const url = `${BASE}/${country}?apikey=shizo`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

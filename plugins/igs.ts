@@ -8,7 +8,7 @@ import path from 'path';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 
-async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
+async function convertBufferToStickerWebp(inputBuffer: Buffer, isAnimated: boolean, cropSquare: boolean) {
   const tmpDir = path.join(process.cwd(), 'temp');
   if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
 
@@ -18,7 +18,7 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
 
   fs.writeFileSync(tempInput, inputBuffer);
   const filesToDelete = [];
-  const scheduleDelete = (p) => {
+  const scheduleDelete = (p: string) => {
     if (!p) return;
     filesToDelete.push(p);
     setTimeout(() => {
@@ -126,7 +126,7 @@ async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
   return finalBuffer;
 }
 
-async function fetchBufferFromUrl(url) {
+async function fetchBufferFromUrl(url: string) {
   try {
     const res = await axios.get(url, {
       responseType: 'arraybuffer',
@@ -156,9 +156,9 @@ async function fetchBufferFromUrl(url) {
         maxBodyLength: Infinity,
         validateStatus: s => s >= 200 && s < 400
       });
-      const chunks = [];
+      const chunks: Buffer[] = [];
       await new Promise<void>((resolve, reject) => {
-        res.data.on('data', c => chunks.push(c));
+        res.data.on('data', (c: Buffer) => chunks.push(c));
         res.data.on('end', resolve);
         res.data.on('error', reject);
       });
@@ -170,7 +170,7 @@ async function fetchBufferFromUrl(url) {
   }
 }
 
-async function forceMiniSticker(inputBuffer, isVideo, cropSquare) {
+async function forceMiniSticker(inputBuffer: Buffer, isVideo: boolean, cropSquare: boolean) {
   const tmpDir = path.join(process.cwd(), 'temp');
   if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
 
@@ -248,7 +248,7 @@ export default {
         return;
       }
 
-      const rawItems = (downloadData?.data || []).filter(m => m && m.url);
+      const rawItems = (downloadData?.data || []).filter((m: any) => m && m.url);
       const seenUrls = new Set();
       const items = [];
       for (const m of rawItems) {

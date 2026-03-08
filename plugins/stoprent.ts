@@ -25,7 +25,7 @@ const MYSQL_URL = process.env.MYSQL_URL;
 const SQLITE_URL = process.env.DB_URL;
 const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL || SQLITE_URL);
 
-async function deleteCloneSession(authId) {
+async function deleteCloneSession(authId: any) {
     if (HAS_DB) {
         await store.saveSetting('clones', authId, null);
     } else {
@@ -62,12 +62,12 @@ export default {
     category: 'owner',
     description: 'Stop a specific sub-bot or all sub-bots',
     usage: '.stoprent [number/all]',
-    ownerOnly: 'true',
+    ownerOnly: true,
 
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
-        if (!global.conns || global.conns.length === 0) {
+        if (!(global as any).conns || (global as any).conns.length === 0) {
             return await sock.sendMessage(chatId, {
                 text: "❌ No sub-bots are currently running."
             }, { quoted: message });
@@ -82,7 +82,7 @@ export default {
         if (args[0].toLowerCase() === 'all') {
             let stoppedCount = 0;
 
-            for (const conn of global.conns) {
+            for (const conn of (global as any).conns) {
                 try {
                     await conn.logout();
                     conn.end();
@@ -92,7 +92,7 @@ export default {
                 }
             }
 
-            global.conns = [];
+            (global as any).conns = [];
 
             if (HAS_DB) {
                 try {
@@ -115,20 +115,20 @@ export default {
             }, { quoted: message });
         }
 
-        const index = parseInt(args[0]) - 1;
-        if (isNaN(index) || !global.conns[index]) {
+        const index = parseInt(args[0], 10) - 1;
+        if (isNaN(index) || !(global as any).conns[index]) {
             return await sock.sendMessage(chatId, {
                 text: "❌ Invalid index number. Check `.listrent` first."
             }, { quoted: message });
         }
 
         try {
-            const target = global.conns[index];
+            const target = (global as any).conns[index];
             const targetJid = target.user.id;
             const targetNumber = targetJid.split(':')[0];
 
             await target.logout();
-            global.conns.splice(index, 1);
+            (global as any).conns.splice(index, 1);
 
             if (HAS_DB) {
                 const allSettings = await store.getAllSettings('clones') || {};

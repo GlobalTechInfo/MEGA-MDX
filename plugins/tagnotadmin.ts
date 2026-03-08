@@ -15,7 +15,7 @@ export default {
       const groupMetadata = await sock.groupMetadata(chatId);
       const participants = groupMetadata.participants || [];
 
-      const nonAdmins = participants.filter(p => !p.admin).map(p => p.id);
+      const nonAdmins = participants.filter((p: any) => !p.admin).map((p: any) => p.id);
 
       if (nonAdmins.length === 0) {
         await sock.sendMessage(chatId, {
@@ -26,7 +26,7 @@ export default {
       }
 
       let text = '🔊 *Hello Everyone:*\n\n';
-      nonAdmins.forEach(jid => {
+      nonAdmins.forEach((jid: any) => {
         text += `@${jid.split('@')[0]}\n`;
       });
 

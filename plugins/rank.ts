@@ -5,7 +5,7 @@ import store from '../lib/lightweight_store.js';
  * Increment message count for a user in a chat
  * Now uses the unified store system (backward compatible)
  */
-async function incrementMessageCount(chatId, userId) {
+async function incrementMessageCount(chatId: any, userId: any) {
     try {
         await store.incrementMessageCount(chatId, userId)
     } catch(error: any) {
@@ -31,7 +31,7 @@ async function loadMessageCounts() {
  * Save message counts (backward compatible, but now a no-op)
  * Data is auto-saved by the store system
  */
-function saveMessageCounts(_messageCounts) {
+function saveMessageCounts(_messageCounts: any) {
     console.log('[RANK] saveMessageCounts called (no-op - auto-saved by store)')
 }
 

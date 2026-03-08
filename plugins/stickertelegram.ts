@@ -1,5 +1,5 @@
 import type { BotContext } from '../types.js';
-const delay = time => new Promise(res => setTimeout(res, time));
+const delay = (time: any) => new Promise(res => setTimeout(res, time));
 import fs from 'fs';
 import path from 'path';
 import webp from 'node-webpmux';

@@ -43,7 +43,7 @@ async function readState() {
     }
 }
 
-async function writeState(enabled, message) {
+async function writeState(enabled: any, message: any) {
     try {
         const current = await readState();
         const payload = {

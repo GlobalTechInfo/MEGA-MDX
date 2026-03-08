@@ -3,7 +3,7 @@ import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
 
-async function downloadMediaMessage(message, mediaType) {
+async function downloadMediaMessage(message: any, mediaType: any) {
   const stream = await downloadContentFromMessage(message, mediaType);
   let buffer = Buffer.from([]);
   for await (const chunk of stream) {
@@ -28,7 +28,7 @@ export default {
 
     const groupMetadata = await sock.groupMetadata(chatId);
     const participants = groupMetadata.participants;
-    const mentionedJidList = participants.map(p => p.id);
+    const mentionedJidList = participants.map((p: any) => p.id);
 
     const replyMessage = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     const tagText = args.join(' ');

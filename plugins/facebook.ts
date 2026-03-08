@@ -52,8 +52,8 @@ export default {
       }
 
       const sorted = videos.sort((a, b) => {
-        const qa = parseInt(a.resolution) || 0;
-        const qb = parseInt(b.resolution) || 0;
+        const qa = parseInt(a.resolution, 10) || 0;
+        const qb = parseInt(b.resolution, 10) || 0;
         return qb - qa;
       });
 

@@ -7,7 +7,7 @@ export default {
   category: 'download',
   description: 'Download quoted Status updates',
   usage: 'Reply to a status and type .dlstatus',
-  ownerOnly: 'true',
+  ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;

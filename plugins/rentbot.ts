@@ -30,7 +30,7 @@ import fs from 'fs';
 import path from 'path';
 import store from '../lib/lightweight_store.js';
 
-if (!global.conns) global.conns = [];
+if (!(global as any).conns) (global as any).conns = [];
 
 const MONGO_URL = process.env.MONGO_URL;
 const POSTGRES_URL = process.env.POSTGRES_URL;
@@ -38,7 +38,7 @@ const MYSQL_URL = process.env.MYSQL_URL;
 const SQLITE_URL = process.env.DB_URL;
 const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL || SQLITE_URL);
 
-async function saveCloneSession(authId, data) {
+async function saveCloneSession(authId: string, data: any) {
     if (HAS_DB) {
         await store.saveSetting('clones', authId, data);
     } else {
@@ -50,7 +50,7 @@ async function saveCloneSession(authId, data) {
     }
 }
 
-async function _getCloneSession(authId) {
+async function _getCloneSession(authId: string) {
     if (HAS_DB) {
         return await store.getSetting('clones', authId);
     } else {
@@ -62,7 +62,7 @@ async function _getCloneSession(authId) {
     }
 }
 
-async function deleteCloneSession(authId) {
+async function deleteCloneSession(authId: string) {
     if (HAS_DB) {
         await store.saveSetting('clones', authId, null);
     } else {
@@ -90,7 +90,7 @@ export default {
     category: 'owner',
     description: 'Start a sub-bot clone via pairing code',
     usage: '.rentbot 92305xxxxxxx',
-    ownerOnly: 'true',
+    ownerOnly: true,
 
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
@@ -173,7 +173,7 @@ export default {
                 const { connection, lastDisconnect } = update;
 
                 if (connection === 'open') {
-                    global.conns.push(conn);
+                    (global as any).conns.push(conn);
 
                     if (HAS_DB) {
                         await saveCloneSession(authId, {
@@ -197,8 +197,8 @@ export default {
                         startClone();
                     } else {
                         await deleteCloneSession(authId);
-                        const index = global.conns.indexOf(conn);
-                        if (index > -1) global.conns.splice(index, 1);
+                        const index = (global as any).conns.indexOf(conn);
+                        if (index > -1) (global as any).conns.splice(index, 1);
                     }
                 }
             });

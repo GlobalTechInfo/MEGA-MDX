@@ -12,7 +12,7 @@ export default {
 
     try {
       const participants = await sock.groupMetadata(chatId);
-      const ps = participants.participants.map(v => v.id);
+      const ps = participants.participants.map((v: any) => v.id);
 
       const firstUser = ps[Math.floor(Math.random() * ps.length)];
       let secondUser;
@@ -21,7 +21,7 @@ export default {
         secondUser = ps[Math.floor(Math.random() * ps.length)];
       } while (secondUser === firstUser);
 
-      const formatMention = id => '@' + id.split('@')[0];
+      const formatMention = (id: any) => '@' + id.split('@')[0];
 
       await sock.sendMessage(chatId, {
         text: `${formatMention(firstUser)} ❤️ ${formatMention(secondUser)}\nCongratulations 💖🍻`,

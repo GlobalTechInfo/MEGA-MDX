@@ -33,7 +33,7 @@ export default {
       if (typeof result === 'string') {
         output += result;
       } else if (result.result && Array.isArray(result.result) && result.result.length) {
-        result.result.forEach((trend, i) => {
+        result.result.forEach((trend: any, i: any) => {
           if (trend.hastag && trend.tweet) {
             output += `${i + 1}. ${trend.hastag} - ${trend.tweet}\n`;
           }

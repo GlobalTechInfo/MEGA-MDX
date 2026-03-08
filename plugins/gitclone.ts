@@ -5,7 +5,7 @@ export default {
   description: 'Download a GitHub repository as zip',
   usage: '.gitclone <url> OR <username> <repo>',
 
-  async handler(sock, message, args) {
+  async handler(sock: any, message: any, args: any) {
     const chatId = message.key.remoteJid;
 
     if (!args || args.length === 0) {

@@ -8,7 +8,7 @@ export default {
   usage: '.gitpull',
   ownerOnly: true,
 
-  async handler(sock, message) {
+  async handler(sock: any, message: any) {
     const chatId = message.key.remoteJid;
     const commandHandler = (await import('../lib/commandHandler.js')).default;
     const git: any = (simpleGit as any)();
@@ -22,7 +22,7 @@ export default {
       if (isRepo) {
         const remotes = await git.getRemotes(true);
 
-        if (remotes.some(r => r.name === 'origin')) {
+        if (remotes.some((r: any) => r.name === 'origin')) {
           await git.pull();
           gitStatus = 'Pulled from git remote';
         }

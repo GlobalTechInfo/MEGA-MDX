@@ -21,8 +21,8 @@ export default {
     category: 'admin',
     description: 'Add a user to the group',
     usage: '.add <number> or reply to vcard/message',
-    groupOnly: 'true',
-    adminOnly: 'true',
+    groupOnly: true,
+    adminOnly: true,
 
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId, channelInfo } = context;
@@ -90,7 +90,7 @@ export default {
 
         try {
             const groupMetadata = await sock.groupMetadata(chatId);
-            const participants = groupMetadata.participants.map(p => p.id);
+            const participants = groupMetadata.participants.map((p: any) => p.id);
 
             if (participants.includes(targetJid)) {
                 return await sock.sendMessage(chatId, {

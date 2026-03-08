@@ -3,7 +3,7 @@ import { addSudo, removeSudo, getSudoList } from '../lib/index.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import { cleanJid } from '../lib/isOwner.js';
 
-function extractTargetJid(message, args) {
+function extractTargetJid(message: any, args: any) {
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.[0]) {
         return message.message.extendedTextMessage.contextInfo.mentionedJid[0];
     }
@@ -50,7 +50,7 @@ export default {
                 await sock.sendMessage(chatId, { text: '❌ No sudo users found.' }, { quoted: message });
                 return;
             }
-            const textList = list.map((j, i) => `┃ ${i + 1}. @${cleanJid(j)}`).join('\n');
+            const textList = list.map((j: any, i: any) => `┃ ${i + 1}. @${cleanJid(j)}`).join('\n');
             await sock.sendMessage(chatId, {
                 text: `╭━━〔 *SUDO USERS* 〕━━┈\n┃\n${textList}\n┃\n╰━━━━━━━━━━━━━━━┈`,
                 mentions: list
@@ -73,7 +73,7 @@ export default {
         if (targetJid.includes('@lid') && isGroup) {
             try {
                 const metadata = await sock.groupMetadata(chatId);
-                const found = metadata.participants.find(p => p.lid === targetJid || p.id === targetJid);
+                const found = metadata.participants.find((p: any) => p.lid === targetJid || p.id === targetJid);
                 if (found && found.id && !found.id.includes('@lid')) {
                     displayId = cleanJid(found.id);
                 }
@@ -100,7 +100,7 @@ export default {
                 text: ok ? `✅ *Success:* Sudo privileges revoked from @${displayId}.` : `❌ *Error:* Failed to remove sudo.`,
                 mentions: [targetJid]
             }, { quoted: message });
-            return;
+
         }
     }
 };

@@ -5,7 +5,7 @@ import config from '../config.js';
 /**
  * Extract real phone number from various JID formats
  */
-function extractPhoneNumber(jid) {
+function extractPhoneNumber(jid: string) {
     if (!jid) return null
 
     const number = jid
@@ -24,7 +24,7 @@ function extractPhoneNumber(jid) {
 /**
  * Get name with fallback options
  */
-async function getNameWithFallback(jid, sock, pushName) {
+async function getNameWithFallback(jid: string, sock: any, pushName: string) {
     try {
         if (pushName && pushName.trim()) {
             return pushName.trim()
@@ -55,7 +55,7 @@ async function getNameWithFallback(jid, sock, pushName) {
  * Beautiful message logger for console
  * Prints formatted message info with colors and emojis
  */
-async function printMessage(message, sock) {
+async function printMessage(message: any, sock: any) {
     try {
         if (!message?.key) return
 
@@ -114,7 +114,7 @@ async function printMessage(message, sock) {
         }
 
         if (shouldSkipLog) return
-        const messageTypeLabels = {
+        const messageTypeLabels: Record<string, string> = {
             conversation: 'TEXT',
             extendedTextMessage: 'TEXT',
             imageMessage: 'IMAGE',
@@ -254,7 +254,7 @@ async function printMessage(message, sock) {
 /**
  * Simple colored logger for events
  */
-function printLog(type, message) {
+function printLog(type: string, message: any) {
     const timestamp = new Date().toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -263,7 +263,7 @@ function printLog(type, message) {
         timeZone: config.timeZone || 'Asia/Karachi'
     })
 
-    const colors = {
+    const colors: Record<string, any> = {
         info: chalk.blue,
         success: chalk.green,
         warning: chalk.yellow,
@@ -272,7 +272,7 @@ function printLog(type, message) {
         store: chalk.magenta
     }
 
-    const icons = {
+    const icons: Record<string, string> = {
         info: '💡',
         success: '✅',
         warning: '⚠️',

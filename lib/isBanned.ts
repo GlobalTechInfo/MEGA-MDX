@@ -9,7 +9,7 @@ const SQLITE_URL = process.env.DB_URL;
 const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL || SQLITE_URL);
 const bannedFilePath = './data/banned.json';
 
-async function isBanned(userId) {
+async function isBanned(userId: any) {
     try {
         if (HAS_DB) {
             const banned = await store.getSetting('global', 'banned');

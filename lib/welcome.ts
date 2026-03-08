@@ -1,6 +1,6 @@
 import { addWelcome, delWelcome, isWelcomeOn, addGoodbye, delGoodBye, isGoodByeOn } from '../lib/index.js';
 
-async function handleWelcome(sock, chatId, message, match) {
+async function handleWelcome(sock: any, chatId: string, message: any, match: string) {
     if (!match) {
         return sock.sendMessage(chatId, {
             text: `📥 *Welcome Message Setup*\n\n✅ *.welcome on* — Enable welcome messages\n🛠️ *.welcome set Your custom message* — Set a custom welcome message\n🚫 *.welcome off* — Disable welcome messages\n\n*Available Variables:*\n• {user} - Mentions the new member\n• {group} - Shows group name\n• {description} - Shows group description`,
@@ -43,7 +43,7 @@ async function handleWelcome(sock, chatId, message, match) {
     });
 }
 
-async function handleGoodbye(sock, chatId, message, match) {
+async function handleGoodbye(sock: any, chatId: string, message: any, match: string) {
     const lower = match?.toLowerCase();
 
     if (!match) {

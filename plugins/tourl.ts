@@ -3,7 +3,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { fileTypeFromBuffer } from 'file-type';
 
-async function getMediaBuffer(msg, sock) {
+async function getMediaBuffer(msg: any, sock: any) {
   return await downloadMediaMessage(
     msg,
     'buffer',
@@ -15,7 +15,7 @@ async function getMediaBuffer(msg, sock) {
   )
 }
 
-function getQuotedMessage(message) {
+function getQuotedMessage(message: any) {
   const ctx = message.message?.extendedTextMessage?.contextInfo
   if (!ctx?.quotedMessage) return null
 
@@ -37,7 +37,7 @@ export default {
   description: 'Upload media and get a URL.',
   usage: '.tourl (reply to media or send media with caption)',
 
-  async handler(sock, message) {
+  async handler(sock: any, message: any) {
     const chatId = message.key.remoteJid
 
     try {

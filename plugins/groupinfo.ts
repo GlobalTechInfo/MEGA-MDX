@@ -21,10 +21,10 @@ export default {
       }
 
       const participants = groupMetadata.participants;
-      const groupAdmins = participants.filter(p => p.admin);
-      const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n');
+      const groupAdmins = participants.filter((p: any) => p.admin);
+      const listAdmin = groupAdmins.map((v: any, i: any) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n');
 
-      const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || chatId.split('-')[0] + '@s.whatsapp.net';
+      const owner = groupMetadata.owner || groupAdmins.find((p: any) => p.admin === 'superadmin')?.id || chatId.split('-')[0] + '@s.whatsapp.net';
 
       const text = `
 ┌──「 *INFO GROUP* 」
@@ -46,7 +46,7 @@ ${listAdmin}
       await sock.sendMessage(chatId, {
         image: { url: pp },
         caption: text,
-        mentions: [...groupAdmins.map(v => v.id), owner],
+        mentions: [...groupAdmins.map((v: any) => v.id), owner],
         ...channelInfo
       });
 

@@ -2,7 +2,7 @@ import type { BotContext } from '../types.js';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-async function mediafireDl(url) {
+async function mediafireDl(url: any) {
     try {
         const { data } = await axios.get(url, {
             headers: {
@@ -14,7 +14,7 @@ async function mediafireDl(url) {
         const name = $('div.dl-info > div.promo-text').text().trim() || $('.dl-btn-label').attr('title');
 
         const size = $('#downloadButton').text().replace(/Download|[\(\)]|\s/g, '').trim() || 'Unknown';
-        const ext = name.split('.').pop();
+        const ext = name!.split('.').pop();
 
         return { name, size, link, ext };
     } catch(e: any) {
@@ -76,7 +76,7 @@ export default {
         'jpg': 'image/jpeg',
         'png': 'image/png'
       };
-      if (mimes[data.ext.toLowerCase()]) mimeType = mimes[data.ext.toLowerCase()];
+      if ((mimes as Record<string,string>)[(data.ext as string).toLowerCase()]) mimeType = (mimes as Record<string,string>)[(data.ext as string).toLowerCase()];
 
       await sock.sendMessage(chatId, {
         document: buffer,

@@ -100,7 +100,9 @@ function genMath(mode: string) {
   let a = randomInt(a1, a2);
   const b = randomInt(b1, b2);
   const op = pickRandom([...ops]);
-  let result = new Function(`return ${a} ${op.replace('/', '*')} ${b < 0 ? `(${b})` : b}`)();
+  const expr = `${a} ${op.replace('/', '*')} ${b < 0 ? `(${b})` : b}`;
+  // eslint-disable-next-line no-eval
+  let result = eval(expr);
   if (op === '/') [a, result] = [result, a];
   return { str: `${a} ${operators[op]} ${b}`, mode, time, result };
 }

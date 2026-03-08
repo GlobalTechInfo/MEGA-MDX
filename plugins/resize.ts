@@ -2,7 +2,7 @@ import type { BotContext } from '../types.js';
 import { uploadImage } from '../lib/uploadImage.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
-async function downloadMedia(msg, type) {
+async function downloadMedia(msg: any, type: any) {
   const stream = await downloadContentFromMessage(msg, type);
   let buffer = Buffer.alloc(0);
   for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk]);

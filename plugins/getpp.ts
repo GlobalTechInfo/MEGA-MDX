@@ -42,7 +42,7 @@ export default {
 
       if (target.endsWith('@lid') && isGroup) {
         const metadata = await sock.groupMetadata(chatId);
-        const participant = metadata.participants.find(p => p.lid === target || p.id === target);
+        const participant = metadata.participants.find((p: any) => p.lid === target || p.id === target);
         if (participant?.id) {
            realJid = participant.id;
         }

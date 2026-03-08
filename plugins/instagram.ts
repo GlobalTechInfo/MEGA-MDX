@@ -5,7 +5,7 @@ const processedMessages = new Set();
 
 function extractUniqueMedia(mediaData = []) {
   const seen = new Set();
-  return mediaData.filter(m => {
+  return (mediaData as any[]).filter((m: any) => {
     if (!m?.url || seen.has(m.url)) return false;
     seen.add(m.url);
     return true;

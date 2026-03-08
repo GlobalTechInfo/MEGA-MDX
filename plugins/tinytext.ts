@@ -40,7 +40,7 @@ export default {
         }, { quoted: message });
       }
 
-    const capsMap = {
+    const capsMap: Record<string, any> = {
         'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ꜰ', 'g': 'ɢ', 'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ',
         'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ', 'n': 'ɴ', 'o': 'ᴏ', 'p': 'ᴘ', 'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ',
         'u': 'ᴜ', 'v': 'ᴠ', 'w': 'ᴡ', 'x': 'x', 'y': 'ʏ', 'z': 'ᴢ',
@@ -50,7 +50,7 @@ export default {
       '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
     };
 
-    const result = txt.split('').map(char => capsMap[char] || char).join('');
+    const result = txt.split('').map((char: any) => capsMap[char] || char).join('');
       await sock.sendMessage(chatId, { text: result }, { quoted: message });
 
     } catch(err: any) {

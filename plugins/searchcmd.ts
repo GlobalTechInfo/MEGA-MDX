@@ -37,7 +37,7 @@ export default {
       const results = allCommands.filter(commandObject => {
         const nameMatch = commandObject.command?.toLowerCase().includes(query);
         const descMatch = commandObject.description?.toLowerCase().includes(query);
-        const aliasMatch = commandObject.aliases?.some(a => a.toLowerCase().includes(query));
+        const aliasMatch = commandObject.aliases?.some((a: any) => a.toLowerCase().includes(query));
 
         return nameMatch || descMatch || aliasMatch;
       });

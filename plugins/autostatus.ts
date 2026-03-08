@@ -53,7 +53,7 @@ async function readConfig() {
     }
 }
 
-async function writeConfig(config) {
+async function writeConfig(config: any) {
     try {
         if (HAS_DB) {
             await store.saveSetting('global', 'autoStatus', config);
@@ -75,7 +75,7 @@ async function isStatusReactionEnabled() {
     return config.reactOn;
 }
 
-async function reactToStatus(sock, statusKey) {
+async function reactToStatus(sock: any, statusKey: any) {
     try {
         const enabled = await isStatusReactionEnabled();
         if (!enabled) {
@@ -107,7 +107,7 @@ async function reactToStatus(sock, statusKey) {
     }
 }
 
-async function handleStatusUpdate(sock, status) {
+async function handleStatusUpdate(sock: any, status: any) {
     try {
         const enabled = await isAutoStatusEnabled();
         if (!enabled) {
@@ -168,7 +168,7 @@ async function handleStatusUpdate(sock, status) {
                     throw err;
                 }
             }
-            return;
+
         }
 
     } catch(error: any) {

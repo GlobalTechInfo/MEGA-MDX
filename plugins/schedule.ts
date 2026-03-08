@@ -61,8 +61,8 @@ function parseTime(input: string): Date | null {
     // e.g. 10m, 2h, 1h30m
     const relativeMatch = input.match(/^(?:(\d+)h)?(?:(\d+)m)?$/i);
     if (relativeMatch && (relativeMatch[1] || relativeMatch[2])) {
-        const hours = parseInt(relativeMatch[1] || '0');
-        const minutes = parseInt(relativeMatch[2] || '0');
+        const hours = parseInt(relativeMatch[1] || '0', 10);
+        const minutes = parseInt(relativeMatch[2] || '0', 10);
         if (hours === 0 && minutes === 0) return null;
         return new Date(now.getTime() + (hours * 60 + minutes) * 60 * 1000);
     }
@@ -70,8 +70,8 @@ function parseTime(input: string): Date | null {
     // e.g. 14:30, 10:30am, 9:00pm
     const clockMatch = input.match(/^(\d{1,2}):(\d{2})(am|pm)?$/i);
     if (clockMatch) {
-        let hour = parseInt(clockMatch[1]);
-        const minute = parseInt(clockMatch[2]);
+        let hour = parseInt(clockMatch[1], 10);
+        const minute = parseInt(clockMatch[2], 10);
         const meridiem = clockMatch[3]?.toLowerCase();
 
         if (meridiem === 'pm' && hour < 12) hour += 12;

@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import https from 'https';
 
-function run(cmd) {
+function run(cmd: string) {
   return new Promise((resolve, reject) => {
     exec(cmd, { windowsHide: true }, (err, stdout, stderr) => {
       if (err) return reject(new Error((stderr || stdout || err.message || '').toString()));
@@ -39,7 +39,7 @@ async function updateViaGit() {
   return { oldRev, newRev, alreadyUpToDate, commits, files };
 }
 
-function downloadFile(url, dest, visited = new Set()) {
+function downloadFile(url: string, dest: string, visited: Set<string> = new Set()) {
   return new Promise((resolve, reject) => {
     try {
       if (visited.has(url) || visited.size > 5) {
@@ -55,7 +55,7 @@ function downloadFile(url, dest, visited = new Set()) {
           'User-Agent': 'MegaBot-Updater/1.0',
           'Accept': '*/*'
         }
-      }, res => {
+      }, (res: any) => {
         if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
           const location = res.headers.location;
           if (!location) return reject(new Error(`HTTP ${res.statusCode} without Location`));
@@ -71,13 +71,13 @@ function downloadFile(url, dest, visited = new Set()) {
         const file = fs.createWriteStream(dest);
         res.pipe(file);
         file.on('finish', () => file.close(resolve));
-        file.on('error', err => {
+        file.on('error', (err: any) => {
           try { file.close(() => {}); } catch {}
-          fs.unlink(dest, () => reject(err));
+          fs.unlink(dest, () => reject(err as any));
         });
       });
-      req.on('error', err => {
-        fs.unlink(dest, () => reject(err));
+      req.on('error', (err: any) => {
+        fs.unlink(dest, () => reject(err as any));
       });
     } catch(e: any) {
       reject(e);
@@ -85,7 +85,7 @@ function downloadFile(url, dest, visited = new Set()) {
   });
 }
 
-async function extractZip(zipPath, outDir) {
+async function extractZip(zipPath: string, outDir: string) {
   if (process.platform === 'win32') {
     const cmd = `powershell -NoProfile -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${outDir.replace(/\\/g, '/')}' -Force"`;
     await run(cmd);
@@ -109,7 +109,7 @@ async function extractZip(zipPath, outDir) {
   throw new Error("No system unzip tool found (unzip/7z/busybox). Git mode is recommended on this panel.");
 }
 
-function copyRecursive(src, dest, ignore = [], relative = '', outList = []) {
+function copyRecursive(src: string, dest: string, ignore: string[] = [], relative: string = '', outList: string[] = []) {
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src)) {
     if (ignore.includes(entry)) continue;
@@ -125,7 +125,7 @@ function copyRecursive(src, dest, ignore = [], relative = '', outList = []) {
   }
 }
 
-async function updateViaZip(sock, chatId, message, zipOverride) {
+async function updateViaZip(sock: any, chatId: string, message: any, zipOverride: string | null) {
   const zipUrl = (zipOverride || config.updateZipUrl || process.env.UPDATE_ZIP_URL || '').trim();
   if (!zipUrl) {
     throw new Error('No ZIP URL configured. Set config.updateZipUrl or UPDATE_ZIP_URL env.');
@@ -141,7 +141,7 @@ async function updateViaZip(sock, chatId, message, zipOverride) {
   const [root] = fs.readdirSync(extractTo).map(n => path.join(extractTo, n));
   const srcRoot = fs.existsSync(root) && fs.lstatSync(root).isDirectory() ? root : extractTo;
   const ignore = ['node_modules', '.git', 'session', 'tmp', 'tmp/', 'temp', 'data', 'baileys_store.json'];
-  const copied = [];
+  const copied: string[] = [];
   let preservedOwner = null;
   let preservedBotOwner = null;
   try {

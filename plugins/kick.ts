@@ -47,7 +47,7 @@ export default {
         const metadata = await sock.groupMetadata(chatId);
         const participants = metadata.participants || [];
 
-        const isTryingToKickBot = usersToKick.some(userId => {
+        const isTryingToKickBot = usersToKick.some((userId: any) => {
             const userPhoneNumber = userId.includes(':') ? userId.split(':')[0] : (userId.includes('@') ? userId.split('@')[0] : userId);
             const userLidNumeric = userId.includes('@lid') ? userId.split('@')[0].split(':')[0] : '';
 
@@ -63,7 +63,7 @@ export default {
                 return true;
             }
 
-            const participantMatch = participants.some(p => {
+            const participantMatch = participants.some((p: any) => {
                 const pPhoneNumber = p.phoneNumber ? p.phoneNumber.split('@')[0] : '';
                 const pId = p.id ? p.id.split('@')[0] : '';
                 const pLid = p.lid ? p.lid.split('@')[0] : '';
@@ -109,7 +109,7 @@ export default {
         try {
             await sock.groupParticipantsUpdate(chatId, usersToKick, "remove");
 
-            const usernames = await Promise.all(usersToKick.map(async jid => {
+            const usernames = await Promise.all(usersToKick.map(async (jid: any) => {
                 return `@${jid.split('@')[0]}`;
             }));
 

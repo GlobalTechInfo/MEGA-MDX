@@ -29,7 +29,7 @@ async function initConfig() {
     }
 }
 
-async function saveConfig(config) {
+async function saveConfig(config: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'autotyping', config);
     } else {
@@ -56,7 +56,7 @@ async function isGhostModeActive() {
     }
 }
 
-export async function handleAutotypingForMessage(sock, chatId, userMessage) {
+export async function handleAutotypingForMessage(sock: any, chatId: any, userMessage: any) {
     const ghostActive = await isGhostModeActive();
     if (ghostActive) {
         return false;
@@ -86,7 +86,7 @@ export async function handleAutotypingForMessage(sock, chatId, userMessage) {
     return false;
 }
 
-async function handleAutotypingForCommand(sock, chatId) {
+async function handleAutotypingForCommand(sock: any, chatId: any) {
     const ghostActive = await isGhostModeActive();
     if (ghostActive) {
         return false;
@@ -116,7 +116,7 @@ async function handleAutotypingForCommand(sock, chatId) {
     return false;
 }
 
-export async function showTypingAfterCommand(sock, chatId) {
+export async function showTypingAfterCommand(sock: any, chatId: any) {
     const ghostActive = await isGhostModeActive();
     if (ghostActive) {
         return false;

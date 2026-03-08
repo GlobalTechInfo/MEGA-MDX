@@ -29,7 +29,7 @@ async function getStickerCommands() {
     }
 }
 
-async function saveStickerCommands(data) {
+async function saveStickerCommands(data: any) {
     if (HAS_DB) {
         await store.saveSetting('global', 'stickerCommands', data);
     } else {

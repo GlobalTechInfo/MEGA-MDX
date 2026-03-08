@@ -1,5 +1,6 @@
 import { proto, getContentType } from '@whiskeysockets/baileys';
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import moment from 'moment-timezone';
 import { sizeFormatter } from 'human-readable';
 import util from 'util';
@@ -191,7 +192,7 @@ export const getSizeMedia = (input: string | Buffer): Promise<string> => {
     return new Promise((resolve, reject) => {
         if (typeof input === 'string' && /http/.test(input)) {
             axios.get(input).then((res) => {
-                const length = parseInt(res.headers['content-length']);
+                const length = parseInt(res.headers['content-length'], 10);
                 const size = bytesToSize(length, 3);
                 if (!isNaN(length)) resolve(size);
                 else reject('Invalid content-length');
@@ -235,8 +236,8 @@ export const smsg = (QasimDev: any, m: any, store: any): any => {
     if (m.message) {
         m.mtype = getContentType(m.message);
         m.msg = m.mtype === 'viewOnceMessage'
-            ? m.message[m.mtype].message[getContentType(m.message[m.mtype].message)]
-            : m.message[m.mtype];
+            ? (m.message[m.mtype as any] as any).message[getContentType((m.message[m.mtype as any] as any).message) as string]
+            : m.message[m.mtype as any];
         m.body = m.message.conversation
             || m.msg?.caption
             || m.msg?.text
@@ -250,13 +251,13 @@ export const smsg = (QasimDev: any, m: any, store: any): any => {
 
         if (m.quoted) {
             let type = getContentType(quoted);
-            m.quoted = m.quoted[type];
-            if (['productMessage'].includes(type)) {
+            m.quoted = (m.quoted as any)[type as string];
+            if (['productMessage'].includes(type as string)) {
                 type = getContentType(m.quoted);
-                m.quoted = m.quoted[type];
+                m.quoted = (m.quoted as any)[type as string];
             }
             if (typeof m.quoted === 'string') m.quoted = { text: m.quoted };
-            m.quoted.mtype = type;
+            m.quoted.mtype = type as string;
             m.quoted.id = m.msg.contextInfo.stanzaId;
             m.quoted.chat = m.msg.contextInfo.remoteJid || m.chat;
             m.quoted.isBaileys = m.quoted.id ? m.quoted.id.startsWith('BAE5') && m.quoted.id.length === 16 : false;

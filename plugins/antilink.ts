@@ -3,7 +3,7 @@ import store from '../lib/lightweight_store.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import isAdmin from '../lib/isAdmin.js';
 
-async function setAntilink(chatId, type, action) {
+async function setAntilink(chatId: string, type: string, action: string) {
     try {
         await store.saveSetting(chatId, 'antilink', {
             enabled: true,
@@ -17,7 +17,7 @@ async function setAntilink(chatId, type, action) {
     }
 }
 
-async function getAntilink(chatId, _type) {
+async function getAntilink(chatId: string, _type?: string) {
     try {
         const settings = await store.getSetting(chatId, 'antilink');
         return settings || null;
@@ -27,7 +27,7 @@ async function getAntilink(chatId, _type) {
     }
 }
 
-async function removeAntilink(chatId, _type) {
+async function removeAntilink(chatId: string, _type?: string) {
     try {
         await store.saveSetting(chatId, 'antilink', {
             enabled: false,
@@ -41,7 +41,7 @@ async function removeAntilink(chatId, _type) {
     }
 }
 
-export async function handleLinkDetection(sock, chatId, message, userMessage, senderId) {
+export async function handleLinkDetection(sock: any, chatId: string, message: any, userMessage: string, senderId: string) {
     try {
         const config = await getAntilink(chatId, 'on');
         if (!config?.enabled) return;
@@ -201,7 +201,7 @@ export default {
                 }
                 const setResult = await setAntilink(chatId, 'on', setAction);
 
-                const actionDescriptions = {
+                const actionDescriptions: Record<string, string> = {
                     delete: 'Delete link messages and warn users',
                     kick: 'Delete messages and remove users',
                     warn: 'Only send warning messages'
