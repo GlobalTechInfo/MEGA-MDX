@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import config from '../config.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
@@ -66,7 +67,7 @@ export default {
   description: 'Crop image/video/sticker to circle sticker',
   usage: '.crop (reply to image/video/sticker)',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
     const messageToQuote = message;
     let targetMessage = message;

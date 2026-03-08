@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'dado',
   aliases: ['dados', 'dice'],
@@ -5,7 +6,7 @@ export default {
   description: 'Roll a random dice sticker',
   usage: '.dado',
 
-  async handler(sock: any, message: any, args: any, _context: any) {
+  async handler(sock: any, message: any, args: any, _context: BotContext) {
     const chatId = message.key.remoteJid;
 
     const diceLinks = [

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import os from 'os';
 import process from 'process';
 
@@ -9,7 +10,7 @@ export default {
   usage: '.alive',
   isPrefixless: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, config } = context;
 
     try {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -91,7 +92,7 @@ export default {
     usage: '.rentbot 92305xxxxxxx',
     ownerOnly: 'true',
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
         if (!args[0]) {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { gSpeak } from 'gspeak';
 import fs from 'fs';
 import path from 'path';
@@ -10,7 +11,7 @@ export default {
     description: 'Convert text to speech and send as an audio message.',
     usage: '.tts <text> [language code]',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         if (!args.length) {

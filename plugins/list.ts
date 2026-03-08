@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import config from '../config.js';
 /*****************************************************************************
  *                                                                           *
@@ -171,7 +172,7 @@ export default {
   description: 'Show all commands',
   usage: '.menu [command]',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
     const prefix = config.prefixes[0];
     const imagePath = path.join(process.cwd(), 'assets/thumb.png');

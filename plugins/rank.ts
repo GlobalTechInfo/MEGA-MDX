@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 
 /**
@@ -42,7 +43,7 @@ export default {
     usage: '.rank',
     groupOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid
 
         try {
@@ -157,7 +158,7 @@ export default {
     usage: '.rank',
     groupOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         const messageCounts = loadMessageCounts();

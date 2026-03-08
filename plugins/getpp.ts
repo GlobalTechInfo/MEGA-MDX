@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'getpp',
   aliases: ['dlpp', 'profilepic', 'getdp'],
@@ -5,7 +6,7 @@ export default {
   description: 'Get user profile picture',
   usage: '.getpp @user or reply or number',
 
-  async handler(sock: any, message: any, args: any, _context: any) {
+  async handler(sock: any, message: any, args: any, _context: BotContext) {
     const chatId = message.key.remoteJid;
     const isGroup = chatId.endsWith('@g.us');
 

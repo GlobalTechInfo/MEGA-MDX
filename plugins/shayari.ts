@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
     command: 'shayari',
@@ -5,7 +6,7 @@ export default {
     category: 'quotes',
     description: 'Get a random shayari',
     usage: '.shayari',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         try {
             const response = await fetch('https://shizoapi.onrender.com/api/texts/shayari?apikey=shizo');

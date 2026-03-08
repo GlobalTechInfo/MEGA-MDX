@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -23,7 +24,7 @@ export default {
   description: 'Download image or video from Alamy URL',
   usage: '.alamy <Alamy URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0]?.trim();
 

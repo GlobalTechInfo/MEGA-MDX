@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 
 const MONGO_URL = process.env.MONGO_URL;
@@ -31,7 +32,7 @@ export default {
   category: 'menu',
   description: 'Store, view, and delete your personal notes',
   usage: '.notes <add|all|del|delall> [text|ID]',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const sender = message.key.participant || message.key.remoteJid;
     try {

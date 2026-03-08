@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { File } from 'megajs';
 import path from 'path';
 
@@ -34,7 +35,7 @@ export default {
     description: 'Download from MEGA with real-time progress',
     usage: '.mega <mega-url>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const text = args.join(' ').trim();
 

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import store from '../lib/lightweight_store.js';
 
@@ -71,7 +72,7 @@ export default {
     usage: '.pmblocker <on|off|status|setmsg>',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const state = await readState();
 

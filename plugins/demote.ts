@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 async function handleDemotionEvent(sock, groupId, participants, author) {
     try {
         if (!Array.isArray(participants) || participants.length === 0) {
@@ -51,7 +52,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const isBotAdmin = context.isBotAdmin;
 

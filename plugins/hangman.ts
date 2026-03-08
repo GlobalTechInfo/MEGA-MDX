@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 const words = ['javascript', 'bot', 'hangman', 'whatsapp', 'nodejs', 'python', 'programming', 'developer', 'computer', 'algorithm'];
 const hangmanGames = {};
 
@@ -47,7 +48,7 @@ export default {
     description: 'Play hangman word guessing game',
     usage: '.hangman to start, then .guess <letter>',
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         const word = words[Math.floor(Math.random() * words.length)];

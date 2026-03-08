@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const API = 'https://api.qasimdev.dpdns.org/api/spotify/download';
@@ -16,7 +17,7 @@ export default {
     description: 'Download music from Spotify',
     usage: '.spotify <spotify-url>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const url = args.join(' ').trim();
 

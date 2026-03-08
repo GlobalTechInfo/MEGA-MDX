@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
@@ -12,7 +13,7 @@ export default {
   description: 'Convert image/video to sticker',
   usage: '.sticker2 (reply to image/video or send with caption)',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, config, channelInfo } = context;
     const messageToQuote = message;
     let targetMessage = message;

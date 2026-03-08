@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Download video and thumbnail from Vidsplay',
   usage: '.vidsplay <Vidsplay URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0];
 

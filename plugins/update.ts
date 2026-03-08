@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import config from '../config.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -208,7 +209,7 @@ export default {
   usage: '.update [zip_url]',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     try {

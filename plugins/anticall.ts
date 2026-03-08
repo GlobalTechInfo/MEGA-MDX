@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 import fs from 'fs';
 
@@ -46,7 +47,7 @@ export default {
   usage: '.anticall <on|off|status>',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const state = await readState();
     const sub = args.join(' ').trim().toLowerCase();

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const IMAGE_APIS = [
@@ -40,7 +41,7 @@ export default {
     description: 'Generate an AI image based on your prompt',
     usage: '.diffusion <prompt>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const imagePrompt = args.join(' ').trim();
 

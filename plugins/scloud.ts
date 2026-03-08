@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Search for tracks on SoundCloud',
   usage: '.scloud <song name>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const searchQuery = args.join(' ').trim();
 

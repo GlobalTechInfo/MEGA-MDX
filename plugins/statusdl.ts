@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
 export default {
@@ -8,7 +9,7 @@ export default {
   usage: 'Reply to a status and type .dlstatus',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const m = message.message;

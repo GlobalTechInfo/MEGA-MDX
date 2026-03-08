@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import config from '../config.js';
 import { igdl } from 'ruhend-scraper';
 import axios from 'axios';
@@ -221,7 +222,7 @@ export default {
   description: 'Convert Instagram post/reel to sticker',
   usage: '.igs <instagram URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     try {

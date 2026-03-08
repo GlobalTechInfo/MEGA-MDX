@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
     command: 'simp',
@@ -5,7 +6,7 @@ export default {
     category: 'group',
     description: 'Generate a simp card for a user',
     usage: '.simp (reply to user or mention someone)',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 

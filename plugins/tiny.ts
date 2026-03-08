@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'tinyurl',
@@ -6,7 +7,7 @@ export default {
   description: 'Shorten a URL using TinyURL',
   usage: '.tinyurl <url>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ')?.trim();
 

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { uploadImage } from '../lib/uploadImage.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
@@ -15,7 +16,7 @@ export default {
   description: 'Send an image or video with a custom file length',
   usage: '.length <size> (reply to media)',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args?.join(' ')?.trim();
 

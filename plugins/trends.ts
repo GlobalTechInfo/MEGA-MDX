@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import pkg from 'api-qasim';
 const QasimAny = pkg as any;
 
@@ -8,7 +9,7 @@ export default {
   description: 'Get trending topics from a country.',
   usage: '.trends <country-name>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

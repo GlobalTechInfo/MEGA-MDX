@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import store from '../lib/lightweight_store.js';
 
@@ -40,8 +41,8 @@ export default {
   usage: '.unban [@user] or reply to message',
   ownerOnly: false,
 
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, _senderId, isGroup, channelInfo, senderIsOwnerOrSudo, isSenderAdmin, isBotAdmin } = context;
+  async handler(sock: any, message: any, args: any, context: BotContext) {
+    const { chatId, isGroup, channelInfo, senderIsOwnerOrSudo, isSenderAdmin, isBotAdmin } = context;
 
     if (isGroup) {
       if (!isBotAdmin) {

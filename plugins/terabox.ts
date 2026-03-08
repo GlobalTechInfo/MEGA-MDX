@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
@@ -9,7 +10,7 @@ export default {
   description: 'Download files from TeraBox',
   usage: '.terabox <terabox link>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));

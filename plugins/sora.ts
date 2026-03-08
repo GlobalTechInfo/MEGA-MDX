@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Generate AI video from text prompt',
   usage: '.sora <prompt>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     try {

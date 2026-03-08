@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 const teddyUsers = {};
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -8,7 +9,7 @@ export default {
     category: 'fun',
     description: 'Send an animated teddy with cute emojis',
     usage: '.teddy',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 

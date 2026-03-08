@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import QRCode from 'qrcode';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Generate a QR code from text',
   usage: '.qrcode <text>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args?.join(' ')?.trim();
 

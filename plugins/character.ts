@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { channelInfo } from '../lib/messageConfig.js';
 
 const extractPhoneNumber = (jid: string): string | null => {
@@ -45,7 +46,7 @@ export default {
     description: "Analyze someone's character traits",
     usage: '.character @user',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const ctx = message.message?.extendedTextMessage?.contextInfo;
 

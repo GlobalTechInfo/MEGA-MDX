@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import { dataFile } from '../lib/paths.js';
 import store from '../lib/lightweight_store.js';
@@ -31,7 +32,7 @@ export default {
   usage: '.warnings [@user]',
   groupOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     const mentionedJidList = message.message?.extendedTextMessage?.contextInfo?.mentionedJid || [];

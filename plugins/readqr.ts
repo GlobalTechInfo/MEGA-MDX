@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
@@ -11,7 +12,7 @@ export default {
   description: 'Read QR code from an image',
   usage: 'Reply to an image with .readqr',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import path from 'path';
 import isOwnerOrSudo from '../lib/isOwner.js';
@@ -10,7 +11,7 @@ export default {
   description: 'Clear session files',
   usage: '.clearsession',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const senderId = message.key.participant || message.key.remoteJid;

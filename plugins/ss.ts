@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Get a screenshot of a website',
   usage: '.screenshot <url>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     let url = args?.[0]?.trim();
 

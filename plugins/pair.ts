@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Get session id for MEGA-MD',
   usage: '.pair 92305395XXXX',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId } = context;
 
     const forwardInfo = {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 import axios from 'axios';
 
@@ -8,7 +9,7 @@ export default {
   description: 'Download media (video or image) from Snapchat Spotlight URL',
   usage: '.snapchat <Snapchat URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo, rawText } = context;
 
     const prefix = context.rawText.match(/^[.!#]/)?.[0] || '.';

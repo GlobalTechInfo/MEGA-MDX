@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,8 +8,8 @@ export default {
   description: 'Download TikTok video without watermark (HD if available)',
   usage: '.tiktok <TikTok URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, _channelInfo, rawText } = context;
+  async handler(sock: any, message: any, args: any, context: BotContext) {
+    const { chatId, rawText } = context;
 
     const prefix = rawText.match(/^[.!#]/)?.[0] || '.';
     const commandPart = rawText.slice(prefix.length).trim();

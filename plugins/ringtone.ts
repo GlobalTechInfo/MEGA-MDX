@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -23,7 +24,7 @@ export default {
   description: 'Search and download ringtones',
   usage: '.ringtone <search term>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const searchQuery = args.join(' ').trim();
 

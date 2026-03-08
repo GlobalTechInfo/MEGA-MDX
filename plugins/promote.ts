@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 async function handlePromotionEvent(sock, groupId, participants, author) {
   try {
@@ -47,7 +48,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     let userToPromote = [];

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'bfdecode',
   aliases: ['brun', 'bfread'],
@@ -5,7 +6,7 @@ export default {
   description: 'Decode/Run Brainfuck code',
   usage: 'Reply to BF code with .bfdecode',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

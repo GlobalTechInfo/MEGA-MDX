@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const triviaGames = {};
@@ -9,7 +10,7 @@ export default {
   description: 'Start a trivia game or answer the question',
   usage: '.trivia [answer]',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     if (args.length === 0) {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -24,7 +25,7 @@ export default {
   usage: '.perf',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

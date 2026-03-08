@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'meme',
@@ -5,7 +6,7 @@ export default {
   category: 'fun',
   description: 'Get a random cheems meme with buttons for another meme or joke',
   usage: '.meme',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

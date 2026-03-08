@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 import { setCommandReactState } from '../lib/reactions.js';
 
@@ -16,7 +17,7 @@ export default {
   usage: '.creact on/off',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     if (!args[0] || !['on', 'off'].includes(args[0])) {

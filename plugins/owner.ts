@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'owner',
@@ -5,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get the contact of the bot owner',
   usage: '.owner',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const config = context.config;
     try {

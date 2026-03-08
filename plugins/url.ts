@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -49,7 +50,7 @@ export default {
   description: 'Get a URL for media (image, video, audio, sticker, document).',
   usage: '.url (send or reply to media)',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid
 
     try {

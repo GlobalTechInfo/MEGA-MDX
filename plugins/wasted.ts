@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import { channelInfo } from '../lib/messageConfig.js';
 
@@ -8,7 +9,7 @@ export default {
   description: 'Waste someone in style!',
   usage: '.wasted @user',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     let userToWaste;
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {

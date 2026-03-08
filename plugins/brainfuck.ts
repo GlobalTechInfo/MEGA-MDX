@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'brainfuck',
   aliases: ['bfcode', 'obfuscate'],
@@ -5,7 +6,7 @@ export default {
   description: 'Convert text into Brainfuck code',
   usage: '.brainfuck <text> OR reply to a message',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       let text = args?.join(' ') || "";

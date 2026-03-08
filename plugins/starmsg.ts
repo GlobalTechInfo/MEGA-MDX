@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
     command: 'star',
     aliases: ['starmsg', 'unstar', 'unstarmsg'],
@@ -6,7 +7,7 @@ export default {
     usage: '.star — reply to a message | .unstar — reply to a message',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any[], context: any) {
+    async handler(sock: any, message: any, args: any[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const rawText = (context.rawText || '').toLowerCase();

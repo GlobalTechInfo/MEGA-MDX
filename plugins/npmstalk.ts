@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import pkg from 'api-qasim';
 const QasimAny = pkg as any;
 export default {
@@ -7,8 +8,8 @@ export default {
   description: 'Get details about an NPM package',
   usage: '.npmstalk <package-name>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, _usedPrefix, _command } = context;
+  async handler(sock: any, message: any, args: any, context: BotContext) {
+    const { chatId } = context;
 
     if (!args[0]) {
       return await sock.sendMessage(chatId, {

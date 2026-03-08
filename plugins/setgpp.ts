@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import path from 'path';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -11,7 +12,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         const quoted = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;

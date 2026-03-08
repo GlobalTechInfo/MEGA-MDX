@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
@@ -28,7 +29,7 @@ export default {
   description: 'Download files from MediaFire',
   usage: '.mediafire <url>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId } = context;
     const text = args.join(' ');
 

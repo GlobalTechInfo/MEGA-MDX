@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import path from 'path';
 import store from '../lib/lightweight_store.js';
@@ -53,7 +54,7 @@ export default {
   groupOnly: true,
   adminOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, senderId, channelInfo } = context;
 
     try {

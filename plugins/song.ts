@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import yts from 'yt-search';
 
@@ -36,7 +37,7 @@ export default {
     description: 'Download song from YouTube (MP3)',
     usage: '.song <song name | youtube link>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const query = args.join(' ').trim();
 

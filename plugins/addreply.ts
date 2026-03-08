@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { initConfig, saveConfig } from './autoreply.js';
 
 export default {
@@ -8,7 +9,7 @@ export default {
     usage: '.addreply <trigger> | <response>\nFor exact match: .addreply exact:<trigger> | <response>\nUse {name} in response to mention sender name',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any[], context: any) {
+    async handler(sock: any, message: any, args: any[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};

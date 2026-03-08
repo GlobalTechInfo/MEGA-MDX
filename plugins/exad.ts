@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'excard',
   aliases: [],
@@ -5,7 +6,7 @@ export default {
   description: 'Create a rich media card',
   usage: '.excard Title | Body | ImageURL',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const input = args.join(' ');
 

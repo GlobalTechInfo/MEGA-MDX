@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 const autoEmojis = [
   '💘','💝','💖','💗','💓','💞','💕','💟','❣️','❤️',
@@ -27,7 +28,7 @@ export default {
   usage: '.autoreact on/off',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     if (!args[0] || !['on', 'off'].includes(args[0])) {

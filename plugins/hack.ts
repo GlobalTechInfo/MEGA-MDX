@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'hack',
   aliases: ['fakehack', 'prankhack'],
@@ -11,7 +12,7 @@ export default {
    * @param {Array} args - command arguments
    * @param {object} context - additional context
    */
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const target = args?.[0] || 'target';
 

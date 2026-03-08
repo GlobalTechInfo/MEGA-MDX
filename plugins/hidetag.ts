@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -25,7 +26,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const isBotAdmin = context.isBotAdmin;
         const rawText = context.rawText || '';

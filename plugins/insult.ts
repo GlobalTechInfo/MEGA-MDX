@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 const insults = [
     "You're like a cloud. When you disappear, it's a beautiful day!",
     "You bring everyone so much joy when you leave the room!",
@@ -36,7 +37,7 @@ export default {
   category: 'group',
   description: 'Send a playful insult to someone by mentioning them or replying to their message',
   usage: '.insult @username or reply to their message with .insult',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

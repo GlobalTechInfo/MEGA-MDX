@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -21,7 +22,7 @@ export default {
   description: 'Flip text upside down (supports Uppercase)',
   usage: '.flip <text> OR reply to a message',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     let txt = args?.join(' ') || "";

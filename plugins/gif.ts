@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -6,7 +7,7 @@ export default {
   category: 'stickers',
   description: 'Get a GIF based on a search term',
   usage: '.gif <search term>',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const config = context.config;
     const query = args.join(' ');

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import axios from 'axios';
 import FormData from 'form-data';

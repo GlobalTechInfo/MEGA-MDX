@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import FormData from 'form-data';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -19,7 +20,7 @@ export default {
   category: 'tools',
   description: 'Remove background from an image',
   usage: '.removebg (reply to image or send image with caption)',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 import fs from 'fs';
 import path from 'path';
@@ -48,7 +49,7 @@ export default {
     usage: '.delcmd <text>',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
         let hash = args.join(' ');

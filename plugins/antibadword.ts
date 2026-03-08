@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 
 async function getAntibadwordSettings(chatId) {
@@ -178,7 +179,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const match = args.join(' ');
 

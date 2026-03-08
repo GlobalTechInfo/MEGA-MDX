@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -9,7 +10,7 @@ export default {
   usage: '.getfile <filename>',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const filename = args.join(' ').trim();
 

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import { channelInfo } from '../lib/messageConfig.js';
 
@@ -8,7 +9,7 @@ export default {
   description: 'Get the current weather for a specific city!',
   usage: '.weather <city>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const city = args.join(' ').trim();
 

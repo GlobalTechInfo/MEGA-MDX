@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { handleWelcome } from '../lib/welcome.js';
 import { isWelcomeOn, getWelcome } from '../lib/index.js';
 
@@ -10,8 +11,8 @@ export default {
   groupOnly: true,
   adminOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, _channelInfo } = context;
+  async handler(sock: any, message: any, args: any, context: BotContext) {
+    const { chatId } = context;
 
     const matchText = args.join(' ');
     await handleWelcome(sock, chatId, message, matchText);

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import { getChatbot, getWelcome, getGoodbye, getAntitag } from '../lib/index.js';
 import store from '../lib/lightweight_store.js';
@@ -9,7 +10,7 @@ export default {
     category: 'owner',
     description: 'Show bot settings and per-group configurations',
     usage: '.settings',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = message.key.participant || message.key.remoteJid;
 

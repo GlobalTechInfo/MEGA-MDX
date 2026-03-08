@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
     command: 'privacy',
     aliases: ['setprivacy', 'pvcy', 'pri'],
@@ -6,7 +7,7 @@ export default {
     usage: '.privacy — show menu',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any[], context: any) {
+    async handler(sock: any, message: any, args: any[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const setting = args[0]?.toLowerCase();

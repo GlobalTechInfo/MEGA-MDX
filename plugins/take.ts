@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
@@ -9,7 +10,7 @@ export default {
   description: 'Change sticker pack name',
   usage: '.take <packname> (reply to sticker)',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     try {

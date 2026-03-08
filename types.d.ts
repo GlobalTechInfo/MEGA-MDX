@@ -1,37 +1,53 @@
-import type { WASocket, WAMessage } from '@whiskeysockets/baileys';
+import type { WASocket } from '@whiskeysockets/baileys';
+import type { WAMessage } from '@whiskeysockets/baileys/lib/Types/Message.js';
+import type config from './config.js';
+
+export interface ChannelInfo {
+    contextInfo: {
+        forwardingScore: number;
+        isForwarded: boolean;
+        forwardedNewsletterMessageInfo: {
+            newsletterJid: string;
+            newsletterName: string;
+            serverMessageId: number;
+        };
+    };
+}
+
+export interface GroupParticipant {
+    id: string;
+    lid?: string;
+    admin?: 'admin' | 'superadmin' | null;
+}
 
 export interface BotContext {
     chatId: string;
-    sender: string;
+    senderId: string;
     isGroup: boolean;
-    isOwner: boolean;
-    isSudo: boolean;
-    isAdmin: boolean;
+    isSenderAdmin: boolean;
     isBotAdmin: boolean;
-    command: string;
-    args: string[];
-    text: string;
-    prefix: string;
-    quoted: any;
-    message: WAMessage;
-    sock: WASocket;
-    store: any;
-    pushName: string;
-    participants: string[];
-    groupMetadata: any;
-    [key: string]: any;
+    senderIsOwnerOrSudo: boolean;
+    isOwnerOrSudoCheck: boolean;
+    channelInfo: ChannelInfo;
+    rawText: string;
+    userMessage: string;
+    messageText: string;
+    config: typeof config;
 }
 
 export interface Plugin {
-    command: string | string[];
+    command: string;
     aliases?: string[];
     category?: string;
     description?: string;
     usage?: string;
-    isOwner?: boolean;
-    isAdmin?: boolean;
+    ownerOnly?: boolean;
+    strictOwnerOnly?: boolean;
+    groupOnly?: boolean;
+    adminOnly?: boolean;
     isPrefixless?: boolean;
-    handler: (sock: WASocket, message: WAMessage, args: string[], context: BotContext) => Promise<void>;
+    cooldown?: number;
+    handler: (sock: WASocket, message: WAMessage, args: string[], context: BotContext) => Promise<void | any>;
 }
 
 declare global {

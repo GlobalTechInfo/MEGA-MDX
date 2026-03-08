@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 const imageUrls = {
     chinese: 'https://raw.githubusercontent.com/GlobalTechInfo/GLOBAL-XMD/master/src/media/tiktokpics/china.json',
@@ -52,7 +53,7 @@ export default {
     category: 'menu',
     description: 'Send 3 random images for a given category',
     usage: '.images <category>',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const category = (args[0] || '').toLowerCase();
         if (!category || !imageUrls[category]) {

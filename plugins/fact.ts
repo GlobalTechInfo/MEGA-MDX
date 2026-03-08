@@ -1,5 +1,6 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
-export default {command:'fact',aliases:['randomfact','uselessfact'],category:'fun',description:'Get a random interesting fact',usage:'.fact',async handler(sock: any, message: any, args: any, context: any){
+export default {command:'fact',aliases:['randomfact','uselessfact'],category:'fun',description:'Get a random interesting fact',usage:'.fact',async handler(sock: any, message: any, args: any, context: BotContext){
 const chatId=context.chatId||message.key.remoteJid;
 try{
 const r=await axios.get('https://uselessfacts.jsph.pl/random.json?language=en');

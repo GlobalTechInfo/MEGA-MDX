@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import path from 'path';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
@@ -9,7 +10,7 @@ export default {
   category: 'owner',
   description: 'Set or update the bot profile picture (owner only)',
   usage: '.setpp (reply to an image)',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

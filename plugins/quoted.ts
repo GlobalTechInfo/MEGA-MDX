@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 import { Sticker, StickerTypes } from 'stickers-formatter';
 
@@ -8,7 +9,7 @@ export default {
     description: 'Generate a quote sticker from text',
     usage: '.quote <text> or reply to a message',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const ctx = message.message?.extendedTextMessage?.contextInfo;
         let text = args.join(' ').trim();

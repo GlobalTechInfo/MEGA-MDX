@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -23,7 +24,7 @@ export default {
   description: 'Search YouTube',
   usage: '.yts [query]',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, config } = context;
     const query = args.join(' ');
     const prefix = config.prefix;

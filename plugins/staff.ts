@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'staff',
   aliases: ['admins', 'adminlist'],
@@ -6,7 +7,7 @@ export default {
   usage: '.staff',
   groupOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo } = context;
 
     try {

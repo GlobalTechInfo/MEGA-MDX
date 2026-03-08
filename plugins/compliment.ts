@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 const compliments = [
     "You're amazing just the way you are!",
     "You have a great sense of humor!",
@@ -38,7 +39,7 @@ export default {
   description: 'Send a random compliment to a user',
   usage: '.compliment @user',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import mumaker from 'mumaker';
 
 const allTypes = [

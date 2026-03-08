@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import CommandHandler from '../lib/commandHandler.js';
 
 export default {
@@ -8,7 +9,7 @@ export default {
   usage: '.manage [toggle/alias] [command_name] [new_alias]',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const action = args[0]?.toLowerCase();

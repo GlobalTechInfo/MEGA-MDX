@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'dare',
@@ -6,7 +7,7 @@ export default {
   description: 'Get a random dare',
   usage: '.dare',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

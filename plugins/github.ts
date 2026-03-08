@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import moment from 'moment-timezone';
 import fs from 'fs';
 import path from 'path';
@@ -8,7 +9,7 @@ export default {
   category: 'info',
   description: 'Get information about the MEGA-MDX GitHub repository',
   usage: '.script',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

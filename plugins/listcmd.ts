@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -50,7 +51,7 @@ export default {
     description: 'List all sticker commands',
     usage: '.listcmd',
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
         const stickers = await getStickerCommands();

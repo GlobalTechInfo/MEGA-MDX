@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -9,7 +10,7 @@ export default {
     category: 'upload',
     description: 'Upload to Qu.ax (anonymous)',
     usage: '.quax (reply to media or caption on media)',
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

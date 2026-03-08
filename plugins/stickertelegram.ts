@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 const delay = time => new Promise(res => setTimeout(res, time));
 import fs from 'fs';
 import path from 'path';
@@ -12,7 +13,7 @@ export default {
   description: 'Download stickers from Telegram',
   usage: '.tgstk <telegram sticker URL>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, config, channelInfo } = context;
 
     try {

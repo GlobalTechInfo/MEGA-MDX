@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import { exec } from 'child_process';
 import path from 'path';
@@ -9,7 +10,7 @@ export default {
   description: 'Mix two emojis into a sticker',
   usage: '.emojimix 😎+🥰',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

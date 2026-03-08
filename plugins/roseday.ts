@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'roseday',
@@ -5,7 +6,7 @@ export default {
   category: 'quotes',
   description: 'Get a random Rose Day message/quote',
   usage: '.roseday',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

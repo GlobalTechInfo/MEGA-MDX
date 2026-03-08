@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
   command: 'base64',
   aliases: ['b64', 'encode'],
@@ -5,7 +6,7 @@ export default {
   description: 'Encode text to Base64',
   usage: '.base64 <text> OR reply to a message',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       let txt = args?.join(' ') || "";

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const AI_APIS = [
@@ -28,7 +29,7 @@ export default {
     description: 'Ask a question to AI',
     usage: '.gpt <question>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const query = args.join(' ').trim();
 

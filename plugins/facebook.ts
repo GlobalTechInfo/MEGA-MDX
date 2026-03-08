@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const AXIOS_DEFAULTS = {
@@ -15,7 +16,7 @@ export default {
   description: 'Download Facebook videos',
   usage: '.fb <facebook video link>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const url =
       args.join(' ') ||

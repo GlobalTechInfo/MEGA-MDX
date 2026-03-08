@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   description: 'Check bot response time and ping a website',
   usage: '.pingweb [website URL]',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const { chatId, channelInfo, rawText } = context;
 
     const prefix = rawText.match(/^[.!#]/)?.[0] || '.';

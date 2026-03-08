@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import fs from 'fs';
 import path from 'path';
 import { dataFile } from '../lib/paths.js';
@@ -183,7 +184,7 @@ export default {
     usage: '.autostatus <on|off|react on|react off>',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

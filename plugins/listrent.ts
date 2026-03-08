@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -58,7 +59,7 @@ export default {
     description: 'List all currently active sub-bots',
     usage: '.listrent',
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const { chatId } = context;
 
         const activeConns = global.conns || [];

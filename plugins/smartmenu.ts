@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import config from '../config.js';
 import CommandHandler from '../lib/commandHandler.js';
 import fs from 'fs';
@@ -58,7 +59,7 @@ export default {
   usage: '.smenu',
   isPrefixless: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { setAntitag, getAntitag, removeAntitag } from '../lib/index.js';
 
 export async function handleTagDetection(sock, chatId, message, senderId) {
@@ -93,7 +94,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any) {
+    async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const action = args[0]?.toLowerCase();
 

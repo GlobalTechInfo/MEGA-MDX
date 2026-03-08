@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { loadSchedules, formatTimeLeft } from './schedule.js';
 
 export default {
@@ -7,7 +8,7 @@ export default {
     description: 'View all scheduled messages for this chat',
     usage: '.schedulelist',
 
-    async handler(sock: any, message: any, args: any[], context: any) {
+    async handler(sock: any, message: any, args: any[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};

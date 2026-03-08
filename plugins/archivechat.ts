@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 export default {
     command: 'archivechat',
     aliases: ['archive', 'unarchive', 'unarchivechat'],
@@ -6,7 +7,7 @@ export default {
     usage: '.archivechat <archive|unarchive>',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any[], context: any) {
+    async handler(sock: any, message: any, args: any[], context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const rawText = context.rawText || '';

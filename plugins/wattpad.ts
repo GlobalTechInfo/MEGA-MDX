@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import pkg from 'api-qasim';
 const QasimAny = pkg as any;
 import { channelInfo } from '../lib/messageConfig.js';
@@ -9,7 +10,7 @@ export default {
   description: 'Search for stories on Wattpad!',
   usage: '.wattpad <query>',
 
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').trim();
 

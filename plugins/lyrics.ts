@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 
 export default {
   command: 'lyrics',
@@ -5,7 +6,7 @@ export default {
   category: 'music',
   description: 'Get lyrics of a song along with artist and image',
   usage: '.lyrics <song name>',
-  async handler(sock: any, message: any, args: any, context: any) {
+  async handler(sock: any, message: any, args: any, context: BotContext) {
     const chatId = context.chatId || message.key.remoteJid;
     const songTitle = args.join(' ').trim();
 

@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import axios from 'axios';
 
 const AI_APIS = [
@@ -28,7 +29,7 @@ export default {
     description: 'Ask a question to AI',
     usage: '.llama <question>',
 
-    async handler(sock: any, message: any, args: string[], context: any) {
+    async handler(sock: any, message: any, args: string[], context: BotContext) {
         const { chatId, config } = context
         const prefix = config.prefix
         const query = args.join(' ').trim();
@@ -36,7 +37,7 @@ export default {
         if (!query) {
             return sock.sendMessage(
                 chatId,
-                { text: `🤖 *AI Assistant*\n\nUsage: `${prefix}llama <your question>`\nExample: `${prefix}llama explain quantum physics`` },
+                { text: `🤖 *AI Assistant*\n\nUsage: \`${prefix}llama <your question>\`\nExample: \`${prefix}llama explain quantum physics\`` },
                 { quoted: message }
             );
         }

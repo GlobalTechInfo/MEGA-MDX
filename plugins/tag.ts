@@ -1,3 +1,4 @@
+import type { BotContext } from '../types.js';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
 import path from 'path';
@@ -22,8 +23,8 @@ export default {
   groupOnly: true,
   adminOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, _senderId, channelInfo, _messageText } = context;
+  async handler(sock: any, message: any, args: any, context: BotContext) {
+    const { chatId, channelInfo } = context;
 
     const groupMetadata = await sock.groupMetadata(chatId);
     const participants = groupMetadata.participants;
