@@ -1,6 +1,8 @@
-const mathGames = {};
+import type { BotContext } from '../types.js';
 
-const modes = {
+const mathGames: Record<string, any> = {};
+
+const modes: Record<string, (string | number)[]> = {
   noob: [-3, 3, -3, 3, '+-', 15000],
   easy: [-10, 10, -10, 10, '*/+-', 20000],
   normal: [-40, 40, -20, 20, '*/+-', 40000],
@@ -10,7 +12,7 @@ const modes = {
   impossible2: [-999999999999999, 999999999999999, -999, 999, '/', 30000],
 };
 
-const operators = {
+const operators: Record<string, string> = {
   '+': '+',
   '-': '-',
   '*': '×',
@@ -23,9 +25,11 @@ export default {
   category: 'games',
   description: 'Solve math problems',
   usage: '.math',
+  initialized: false,
 
-  async handler(sock, message, args) {
-    const chatId = message.key.remoteJid;
+  async handler(sock: any, message: any, args: any, _context: BotContext) {
+    const { chatId, config } = _context;
+    const prefix = config.prefix;
 
     if (mathGames[chatId]) {
       return sock.sendMessage(chatId, { text: '⚠️ Solve the current problem first!' }, { quoted: mathGames[chatId].msg });
@@ -34,7 +38,7 @@ export default {
     const mode = args[0]?.toLowerCase();
     if (!mode || !(mode in modes)) {
       return sock.sendMessage(chatId, {
-        text: `🧮 *Available Difficulties:*\n\n${Object.keys(modes).join(' | ')}\n\n_Example: .math normal_`
+        text: `🧮 *Available Difficulties:*\n\n${Object.keys(modes).join(' | ')}\n\n_Example: ${prefix}math normal_`
       }, { quoted: message });
     }
 
@@ -57,7 +61,7 @@ export default {
 
     if (!this.initialized) {
       this.initialized = true;
-      sock.ev.on('messages.upsert', async (upsert) => {
+      sock.ev.on('messages.upsert', async (upsert: any) => {
         const m = upsert.messages[0];
         if (!m.message || m.key.fromMe) return;
 
@@ -91,8 +95,8 @@ export default {
   }
 };
 
-function genMath(mode) {
-  const [a1, a2, b1, b2, ops, time] = modes[mode];
+function genMath(mode: string) {
+  const [a1, a2, b1, b2, ops, time] = modes[mode] as [number, number, number, number, string, number];
   let a = randomInt(a1, a2);
   const b = randomInt(b1, b2);
   const op = pickRandom([...ops]);
@@ -101,12 +105,11 @@ function genMath(mode) {
   return { str: `${a} ${operators[op]} ${b}`, mode, time, result };
 }
 
-function randomInt(from, to) {
+function randomInt(from: number, to: number) {
   if (from > to) [from, to] = [to, from];
   return Math.floor(Math.random() * (Math.floor(to) - Math.ceil(from) + 1) + Math.ceil(from));
 }
 
-function pickRandom(list) {
+function pickRandom(list: any[]) {
   return list[Math.floor(Math.random() * list.length)];
-  }
-
+}
