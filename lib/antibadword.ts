@@ -11,7 +11,7 @@ const POSTGRES_URL = process.env.POSTGRES_URL;
 const MYSQL_URL = process.env.MYSQL_URL;
 const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL);
 
-async function loadAntibadwordConfig(groupId) {
+async function loadAntibadwordConfig(groupId: string) {
     try {
         if (HAS_DB) {
             const config = await store.getSetting(groupId, 'antibadword');
@@ -30,7 +30,7 @@ async function loadAntibadwordConfig(groupId) {
     }
 }
 
-async function setAntiBadword(chatId, type, action) {
+async function setAntiBadword(chatId: string, type: string, action: string) {
     try {
         await store.saveSetting(chatId, 'antibadword', {
             enabled: true,
@@ -44,7 +44,7 @@ async function setAntiBadword(chatId, type, action) {
     }
 }
 
-async function getAntiBadword(chatId, _type) {
+async function getAntiBadword(chatId: string, _type?: string) {
     try {
         const settings = await store.getSetting(chatId, 'antibadword');
         return settings || null;
@@ -54,7 +54,7 @@ async function getAntiBadword(chatId, _type) {
     }
 }
 
-async function removeAntiBadword(chatId) {
+async function removeAntiBadword(chatId: string) {
     try {
         await store.saveSetting(chatId, 'antibadword', {
             enabled: false,
@@ -68,7 +68,7 @@ async function removeAntiBadword(chatId) {
     }
 }
 
-async function incrementWarningCount(chatId, userId) {
+async function incrementWarningCount(chatId: string, userId: string) {
     try {
         const warningsKey = `antibadword_warnings`;
         const warnings = await store.getSetting(chatId, warningsKey) || {};
@@ -86,7 +86,7 @@ async function incrementWarningCount(chatId, userId) {
     }
 }
 
-async function resetWarningCount(chatId, userId) {
+async function resetWarningCount(chatId: string, userId: string) {
     try {
         const warningsKey = `antibadword_warnings`;
         const warnings = await store.getSetting(chatId, warningsKey) || {};
@@ -102,7 +102,7 @@ async function resetWarningCount(chatId, userId) {
     }
 }
 
-async function handleAntiBadwordCommand(sock, chatId, message, match) {
+async function handleAntiBadwordCommand(sock: any, chatId: string, message: any, match: string) {
     if (!match) {
         return sock.sendMessage(chatId, {
             text: `*ANTIBADWORD SETUP*\n\n*.antibadword on*\nTurn on antibadword\n\n*.antibadword set <action>*\nSet action: delete/kick/warn\n\n*.antibadword off*\nDisables antibadword in this group\n\nStorage: ${HAS_DB ? 'Database' : 'File System'}`
@@ -139,7 +139,7 @@ async function handleAntiBadwordCommand(sock, chatId, message, match) {
     return sock.sendMessage(chatId, { text: '*Invalid command. Use .antibadword to see usage*' }, { quoted: message } );
 }
 
-async function handleBadwordDetection(sock, chatId, message, userMessage, senderId) {
+async function handleBadwordDetection(sock: any, chatId: string, message: any, userMessage: string, senderId: string) {
     const config = await loadAntibadwordConfig(chatId);
     if (!config.enabled) return;
 
@@ -208,12 +208,12 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
 
     const groupMetadata = await sock.groupMetadata(chatId);
     const botId = sock.user.id.split(':')[0] + '@s.whatsapp.net';
-    const bot = groupMetadata.participants.find(p => p.id === botId);
+    const bot = groupMetadata.participants.find((p: any) => p.id === botId);
     if (!bot?.admin) {
         return;
     }
 
-    const participant = groupMetadata.participants.find(p => p.id === senderId);
+    const participant = groupMetadata.participants.find((p: any) => p.id === senderId);
     if (participant?.admin) {
         return;
     }
@@ -247,7 +247,7 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
             }
             break;
 
-        case 'warn':
+        case 'warn': {
             const warningCount = await incrementWarningCount(chatId, senderId);
             if (warningCount >= 3) {
                 try {
@@ -267,6 +267,7 @@ async function handleBadwordDetection(sock, chatId, message, userMessage, sender
                 });
             }
             break;
+        }
     }
 }
 
@@ -279,5 +280,4 @@ export {
     incrementWarningCount,
     resetWarningCount
 };
-
-
+            
