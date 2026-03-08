@@ -10,8 +10,7 @@ import store from './lightweight_store.js';
 const MONGO_URL = process.env.MONGO_URL;
 const POSTGRES_URL = process.env.POSTGRES_URL;
 const MYSQL_URL = process.env.MYSQL_URL;
-const SQLITE_URL = process.env.DB_URL;
-const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL || SQLITE_URL);
+const HAS_DB = !!(MONGO_URL || POSTGRES_URL || MYSQL_URL);
 
 const dataPath = dataFile('userGroupData.json');
 
@@ -62,7 +61,7 @@ async function loadUserGroupData() {
     }
 }
 
-async function saveUserGroupData(data) {
+async function saveUserGroupData(data: any) {
     try {
         if (HAS_DB) {
             await store.saveSetting('global', 'userGroupData', data);
@@ -80,7 +79,7 @@ async function saveUserGroupData(data) {
     }
 }
 
-async function setAntilink(groupId, type, action) {
+async function setAntilink(groupId: string, type: string, action: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.antilink) data.antilink = {};
@@ -99,7 +98,7 @@ async function setAntilink(groupId, type, action) {
     }
 }
 
-async function getAntilink(groupId, type) {
+async function getAntilink(groupId: string, type: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.antilink || !data.antilink[groupId]) return null;
@@ -111,7 +110,7 @@ async function getAntilink(groupId, type) {
     }
 }
 
-async function removeAntilink(groupId, _type) {
+async function removeAntilink(groupId: string, _type?: string) {
     try {
         const data = await loadUserGroupData();
         if (data.antilink && data.antilink[groupId]) {
@@ -125,7 +124,7 @@ async function removeAntilink(groupId, _type) {
     }
 }
 
-async function setAntitag(groupId, type, action) {
+async function setAntitag(groupId: string, type: string, action: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.antitag) data.antitag = {};
@@ -144,7 +143,7 @@ async function setAntitag(groupId, type, action) {
     }
 }
 
-async function getAntitag(groupId, type) {
+async function getAntitag(groupId: string, type: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.antitag || !data.antitag[groupId]) return null;
@@ -156,7 +155,7 @@ async function getAntitag(groupId, type) {
     }
 }
 
-async function removeAntitag(groupId, _type) {
+async function removeAntitag(groupId: string, _type?: string) {
     try {
         const data = await loadUserGroupData();
         if (data.antitag && data.antitag[groupId]) {
@@ -170,7 +169,7 @@ async function removeAntitag(groupId, _type) {
     }
 }
 
-async function incrementWarningCount(groupId, userId) {
+async function incrementWarningCount(groupId: string, userId: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.warnings) data.warnings = {};
@@ -186,7 +185,7 @@ async function incrementWarningCount(groupId, userId) {
     }
 }
 
-async function resetWarningCount(groupId, userId) {
+async function resetWarningCount(groupId: string, userId: string) {
     try {
         const data = await loadUserGroupData();
         if (data.warnings && data.warnings[groupId] && data.warnings[groupId][userId]) {
@@ -200,7 +199,7 @@ async function resetWarningCount(groupId, userId) {
     }
 }
 
-async function isSudo(userId) {
+async function isSudo(userId: string) {
     try {
         const data = await loadUserGroupData();
         return data.sudo && data.sudo.includes(userId);
@@ -210,7 +209,7 @@ async function isSudo(userId) {
     }
 }
 
-async function addSudo(userJid) {
+async function addSudo(userJid: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.sudo) data.sudo = [];
@@ -225,7 +224,7 @@ async function addSudo(userJid) {
     }
 }
 
-async function removeSudo(userJid) {
+async function removeSudo(userJid: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.sudo) data.sudo = [];
@@ -251,7 +250,7 @@ async function getSudoList() {
     }
 }
 
-async function addWelcome(jid, enabled, message) {
+async function addWelcome(jid: string, enabled: boolean, message?: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.welcome) data.welcome = {};
@@ -270,7 +269,7 @@ async function addWelcome(jid, enabled, message) {
     }
 }
 
-async function delWelcome(jid) {
+async function delWelcome(jid: string) {
     try {
         const data = await loadUserGroupData();
         if (data.welcome && data.welcome[jid]) {
@@ -284,7 +283,7 @@ async function delWelcome(jid) {
     }
 }
 
-async function isWelcomeOn(jid) {
+async function isWelcomeOn(jid: string) {
     try {
         const data = await loadUserGroupData();
         return data.welcome && data.welcome[jid] && data.welcome[jid].enabled;
@@ -294,7 +293,7 @@ async function isWelcomeOn(jid) {
     }
 }
 
-async function addGoodbye(jid, enabled, message) {
+async function addGoodbye(jid: string, enabled: boolean, message?: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.goodbye) data.goodbye = {};
@@ -313,7 +312,7 @@ async function addGoodbye(jid, enabled, message) {
     }
 }
 
-async function delGoodBye(jid) {
+async function delGoodBye(jid: string) {
     try {
         const data = await loadUserGroupData();
         if (data.goodbye && data.goodbye[jid]) {
@@ -327,7 +326,7 @@ async function delGoodBye(jid) {
     }
 }
 
-async function isGoodByeOn(jid) {
+async function isGoodByeOn(jid: string) {
     try {
         const data = await loadUserGroupData();
         return data.goodbye && data.goodbye[jid] && data.goodbye[jid].enabled;
@@ -337,7 +336,7 @@ async function isGoodByeOn(jid) {
     }
 }
 
-async function getWelcome(jid) {
+async function getWelcome(jid: string) {
     try {
         const data = await loadUserGroupData();
         return data.welcome && data.welcome[jid] ? data.welcome[jid].message : null;
@@ -347,7 +346,7 @@ async function getWelcome(jid) {
     }
 }
 
-async function getGoodbye(jid) {
+async function getGoodbye(jid: string) {
     try {
         const data = await loadUserGroupData();
         return data.goodbye && data.goodbye[jid] ? data.goodbye[jid].message : null;
@@ -357,7 +356,7 @@ async function getGoodbye(jid) {
     }
 }
 
-async function setAntiBadword(groupId, type, action) {
+async function setAntiBadword(groupId: string, type: string, action: string) {
     try {
         const data = await loadUserGroupData();
         if (!data.antibadword) data.antibadword = {};
@@ -376,7 +375,7 @@ async function setAntiBadword(groupId, type, action) {
     }
 }
 
-async function getAntiBadword(groupId, type) {
+async function getAntiBadword(groupId: string, type: string) {
     try {
         const data = await loadUserGroupData();
 
@@ -384,16 +383,16 @@ async function getAntiBadword(groupId, type) {
             return null;
         }
 
-        const config = data.antibadword[groupId];
+        const groupConfig = data.antibadword[groupId];
 
-        return type === 'on' ? config : null;
+        return type === 'on' ? groupConfig : null;
     } catch(error: any) {
         console.error('Error getting antibadword:', error);
         return null;
     }
 }
 
-async function removeAntiBadword(groupId, _type) {
+async function removeAntiBadword(groupId: string, _type?: string) {
     try {
         const data = await loadUserGroupData();
         if (data.antibadword && data.antibadword[groupId]) {
@@ -407,7 +406,7 @@ async function removeAntiBadword(groupId, _type) {
     }
 }
 
-async function setChatbot(groupId, enabled) {
+async function setChatbot(groupId: string, enabled: boolean) {
     try {
         const data = await loadUserGroupData();
         if (!data.chatbot) data.chatbot = {};
@@ -424,7 +423,7 @@ async function setChatbot(groupId, enabled) {
     }
 }
 
-async function getChatbot(groupId) {
+async function getChatbot(groupId: string) {
     try {
         const data = await loadUserGroupData();
         return data.chatbot?.[groupId] || null;
@@ -434,7 +433,7 @@ async function getChatbot(groupId) {
     }
 }
 
-async function removeChatbot(groupId) {
+async function removeChatbot(groupId: string) {
     try {
         const data = await loadUserGroupData();
         if (data.chatbot && data.chatbot[groupId]) {
@@ -478,3 +477,4 @@ export {
     loadUserGroupData,
     saveUserGroupData
 };
+            
