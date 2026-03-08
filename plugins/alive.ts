@@ -7,7 +7,7 @@ export default {
   aliases: ['status', 'bot'],
   category: 'general',
   description: 'Check bot status and system info',
-  usage: '${prefix}alive',
+  usage: `${prefix}alive`,
   isPrefixless: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
