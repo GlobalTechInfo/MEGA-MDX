@@ -58,7 +58,7 @@ setInterval(() => {
     }
 }, 30_000);
 
-const phoneNumber: string = (config.pairingNumber || "923051391005") as string;
+const phoneNumber: string = config.pairingNumber || config.ownerNumber || "923051391005";
 
 // Auto-create data directory and default files on startup
 const DATA_DEFAULTS: Record<string, any> = {
@@ -137,7 +137,6 @@ function ensureSessionDirectory(): string {
 function hasValidSession(): boolean {
     try {
         const credsPath = path.join(__dirname, 'session', 'creds.json');
-
         if (!existsSync(credsPath)) return false;
 
         const fileContent = fs.readFileSync(credsPath, 'utf8');
@@ -351,7 +350,7 @@ async function startQasimDev(): Promise<any> {
         QasimDev.ev.on('contacts.update', (update: any[]) => {
             for (const contact of update) {
                 const id = QasimDev.decodeJid(contact.id);
-                if (store && store.contacts) store.contacts[id] = { id, name: contact.notify };
+                if (store && store.contacts) (store.contacts as any)[id] = { id, name: contact.notify };
             }
         });
 
@@ -360,7 +359,7 @@ async function startQasimDev(): Promise<any> {
             withoutContact = QasimDev.withoutContact || withoutContact;
             let v: any;
             if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
-                v = store.contacts[id] || {};
+                v = (store.contacts as any)[id] || {};
                 if (!(v.name || v.subject)) v = QasimDev.groupMetadata(id) || {};
                 resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).number?.international);
             });
@@ -369,7 +368,7 @@ async function startQasimDev(): Promise<any> {
                 name: 'WhatsApp'
             } : id === QasimDev.decodeJid(QasimDev.user.id) ?
                 QasimDev.user :
-                (store.contacts[id] || {});
+                ((store.contacts as any)[id] || {});
             return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).number?.international;
         };
 
@@ -382,10 +381,8 @@ async function startQasimDev(): Promise<any> {
             if (useMobile) throw new Error('Cannot use pairing code with mobile api');
 
             let phoneNumberInput: string;
-            if (config._pairingNumber) {
-                phoneNumberInput = config._pairingNumber;
-            } else if (global.phoneNumber) {
-                phoneNumberInput = config.phoneNumber as string;
+            if (config.pairingNumber) {
+                phoneNumberInput = config.pairingNumber;
             } else if (process.env.PAIRING_NUMBER) {
                 phoneNumberInput = process.env.PAIRING_NUMBER;
             } else if (rl && !rlClosed) {
@@ -404,7 +401,6 @@ async function startQasimDev(): Promise<any> {
                 process.exit(1);
             }
 
-            config._pairingNumber = phoneNumberInput;
             const doPairing = async (num: string, attempt: number = 1): Promise<void> => {
                 try {
                     let code = await QasimDev.requestPairingCode(num);
@@ -487,7 +483,7 @@ async function startQasimDev(): Promise<any> {
 
                 await delay(1999);
                 try { owner = JSON.parse(fs.readFileSync('./data/owner.json', 'utf-8')); } catch (_e: any) {}
-                printLog('info',    `[ ${global.botname || 'MEGA-MD'} ]`);
+                printLog('info',    `[ ${config.botname || 'MEGA-MD'} ]`);
                 printLog('info',    `WA NUMBER  : ${owner[0] || config.ownerNumber || ''}`);
                 printLog('success', `Bot Connected Successfully!`);
                 printLog('info',    `Plugins   : ${commandHandler.commands.size}`);
@@ -502,7 +498,6 @@ async function startQasimDev(): Promise<any> {
 
                 if (statusCode === DisconnectReason.loggedOut || statusCode === 401) {
                     try { rmSync('./session', { recursive: true, force: true }); } catch (_e: any) { /* ignore */ }
-                    global._pairingNumber = null;
                     await delay(3000);
                     startQasimDev();
                     return;
@@ -663,4 +658,3 @@ server.on('error', (error) => {
         });
     }
 });
-
