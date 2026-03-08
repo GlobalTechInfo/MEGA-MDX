@@ -1,5 +1,6 @@
 import type { BotContext } from '../types.js';
 import axios from 'axios';
+import config from '../config.js';
 
 const AI_APIS = [
     (q: string) => `https://mistral.stacktoy.workers.dev/?apikey=Suhail&text=${encodeURIComponent(q)}`,
@@ -27,17 +28,16 @@ export default {
     aliases: ['ai', 'chat', 'ask'],
     category: 'ai',
     description: 'Ask a question to AI',
-    usage: `${prefix}mistral <question>`,
+    usage: `${config.prefix}mistral <question>`,
 
     async handler(sock: any, message: any, args: string[], context: BotContext) {
-        const { chatId, config } = context
-        const prefix = config.prefix
+        const { chatId } = context
         const query = args.join(' ').trim();
 
         if (!query) {
             return sock.sendMessage(
                 chatId,
-                { text: '🤖 *AI Assistant*\n\nUsage: `${prefix}mistral <your question>`\nExample: `${prefix}mistral explain quantum physics`' },
+                { text: '🤖 *AI Assistant*\n\nUsage: `${config.prefix}mistral <your question>`\nExample: `${config.prefix}mistral explain quantum physics`' },
                 { quoted: message }
             );
         }
