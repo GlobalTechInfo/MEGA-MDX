@@ -1,17 +1,17 @@
 import type { BotContext } from '../types.js';
 import { initConfig, saveConfig } from './autoreply.js';
+import config from '../config.js';
 
 export default {
     command: 'addreply',
     aliases: ['newtrigger', 'setreply'],
     category: 'owner',
     description: 'Add an auto-reply trigger',
-    usage: '${prefix}addreply <trigger> | <response>\nFor exact match: ${prefix}addreply exact:<trigger> | <response>\nUse {name} in response to mention sender name',
+    usage: `${config.prefix}addreply <trigger> | <response>\nFor exact match: ${config.prefix}addreply exact:<trigger> | <response>\nUse {name} in response to mention sender name`,
     ownerOnly: true,
 
     async handler(sock: any, message: any, args: any[], context: BotContext) {
-        const { chatId, senderId, channelInfo, config } = context;
-        const prefix = config.prefix;
+        const { chatId, senderId, channelInfo } = context;
 
         const fullText = args.join(' ');
         const pipeIndex = fullText.indexOf('|');
@@ -20,11 +20,11 @@ export default {
             return await sock.sendMessage(chatId, {
                 text: `*➕ ADD AUTO-REPLY*\n\n` +
                       `*Usage:*\n` +
-                      `\`${prefix}addreply <trigger> | <response>\`\n\n` +
+                      `\`${config.prefix}addreply <trigger> | <response>\`\n\n` +
                       `*Examples:*\n` +
-                      `• \`${prefix}addreply hello | Hi there! 👋\`\n` +
-                      `• \`${prefix}addreply exact:good morning | Good morning! ☀️\`\n` +
-                      `• \`${prefix}addreply hi | Hello {name}! How are you?\`\n\n` +
+                      `• \`${config.prefix}addreply hello | Hi there! 👋\`\n` +
+                      `• \`${config.prefix}addreply exact:good morning | Good morning! ☀️\`\n` +
+                      `• \`${config.prefix}addreply hi | Hello {name}! How are you?\`\n\n` +
                       `*Tips:*\n` +
                       `• Use \`exact:\` prefix for full message match\n` +
                       `• Without \`exact:\` it matches if message *contains* trigger\n` +
@@ -38,7 +38,7 @@ export default {
 
         if (!trigger || !response) {
             return await sock.sendMessage(chatId, {
-                text: `❌ Both trigger and response are required.\n\nExample: \`${prefix}addreply hello | Hi there!\``,
+                text: `❌ Both trigger and response are required.\n\nExample: \`${config.prefix}addreply hello | Hi there!\``,
                 ...channelInfo
             }, { quoted: message });
         }
@@ -51,7 +51,7 @@ export default {
 
         if (!trigger) {
             return await sock.sendMessage(chatId, {
-                text: '❌ Trigger cannot be empty after `exact:` prefix.',
+                text: '❌ Trigger cannot be empty after `exact:` prefix',
                 ...channelInfo
             }, { quoted: message });
         }
@@ -61,7 +61,7 @@ export default {
 
         if (exists) {
             return await sock.sendMessage(chatId, {
-                text: `⚠️ A reply for *"${trigger}"* already exists!\n\nUse \`${prefix}delreply ${trigger}\` to remove it first.`,
+                text: `⚠️ A reply for *"${trigger}"* already exists!\n\nUse \`${config.prefix}delreply ${trigger}\` to remove it first.`,
                 ...channelInfo
             }, { quoted: message });
         }
