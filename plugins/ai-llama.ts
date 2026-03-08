@@ -28,7 +28,7 @@ export default {
     description: 'Ask a question to AI',
     usage: '.llama <question>',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const query = args.join(' ').trim();
 

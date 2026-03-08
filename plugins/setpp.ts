@@ -9,7 +9,7 @@ export default {
   category: 'owner',
   description: 'Set or update the bot profile picture (owner only)',
   usage: '.setpp (reply to an image)',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

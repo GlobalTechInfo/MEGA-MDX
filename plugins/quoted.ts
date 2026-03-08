@@ -8,7 +8,7 @@ export default {
     description: 'Generate a quote sticker from text',
     usage: '.quote <text> or reply to a message',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const ctx = message.message?.extendedTextMessage?.contextInfo;
         let text = args.join(' ').trim();

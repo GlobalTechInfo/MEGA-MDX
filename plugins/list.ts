@@ -1,3 +1,4 @@
+import config from '../config.js';
 /*****************************************************************************
  *                                                                           *
  *                     Developed By Qasim Ali                                *
@@ -14,7 +15,6 @@
  *****************************************************************************/
 
 
-import config from '../config.js';
 import commandHandler from '../lib/commandHandler.js';
 import path from 'path';
 import fs from 'fs';

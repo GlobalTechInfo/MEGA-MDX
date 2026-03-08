@@ -9,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload to Catbox.moe (200MB, permanent)',
     usage: '.catbox (reply to media)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

@@ -7,7 +7,7 @@ export default {
     description: 'Enable or disable disappearing messages in chat',
     usage: '.disappear off | .disappear 24h | .disappear 7d | .disappear 90d',
 
-    async handler(sock: any, message: any, args: any[], context: any = {}) {
+    async handler(sock: any, message: any, args: any[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const isGroup = chatId.endsWith('@g.us');

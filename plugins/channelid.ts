@@ -6,7 +6,7 @@ export default {
   description: 'Get the internal JID of a WhatsApp Channel',
   usage: '.channelid <url>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     let url = args[0] || "";

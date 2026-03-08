@@ -9,7 +9,7 @@ export default {
   description: 'Download files from TeraBox',
   usage: '.terabox <terabox link>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));

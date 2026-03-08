@@ -7,7 +7,7 @@ export default {
   description: 'Download image or video from iStock URL',
   usage: '.istock <iStock URL>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0]?.trim();
 

@@ -9,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload media to cloud and get URL',
     usage: '.aupload (reply to image/video/gif/sticker)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

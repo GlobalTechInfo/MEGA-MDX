@@ -59,7 +59,7 @@ export default {
   description: 'Apply audio effects to voice notes',
   usage: '.bass / .nightcore (reply to audio)',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const cmd = message.body || args.join(' ');
     const filter = getFilter(cmd);

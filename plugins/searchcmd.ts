@@ -22,7 +22,7 @@ export default {
   description: 'Find a command by keyword or description',
   usage: '.find [keyword]',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').toLowerCase();
 

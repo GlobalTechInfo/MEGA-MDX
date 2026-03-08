@@ -9,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload to Pomf.lain.la (1GB, permanent)',
     usage: '.pomf (reply to media)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

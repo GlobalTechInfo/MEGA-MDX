@@ -5,7 +5,7 @@ export default {
   category: 'info',
   description: 'Get detailed information about a movie or series from IMDB',
   usage: '.imdb <movie/series title>',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
 

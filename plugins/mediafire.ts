@@ -28,7 +28,7 @@ export default {
   description: 'Download files from MediaFire',
   usage: '.mediafire <url>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId } = context;
     const text = args.join(' ');
 

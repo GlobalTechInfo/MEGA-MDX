@@ -60,7 +60,7 @@ export default {
   description: 'Clear tmp and temp directories',
   usage: '.cleartmp',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const senderId = message.key.participant || message.key.remoteJid;
 

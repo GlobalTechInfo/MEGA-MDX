@@ -60,7 +60,7 @@ export default {
   description: 'Send random anime images',
   usage: '.animes <anime_name>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const input = args[0] ? args[0] : '';
     const typeLower = input.toLowerCase();

@@ -8,7 +8,7 @@ export default {
   description: 'Download a file directly from a URL',
   usage: '.fetch <url>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args[0];
 

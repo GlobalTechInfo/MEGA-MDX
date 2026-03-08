@@ -8,7 +8,7 @@ export default {
   description: 'Waste someone in style!',
   usage: '.wasted @user',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     let userToWaste;
     if (message.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) {

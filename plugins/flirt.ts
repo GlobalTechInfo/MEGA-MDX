@@ -4,7 +4,7 @@ export default {
   category: 'fun',
   description: 'Get a random flirt message',
   usage: '.flirt',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const shizokeys = 'shizo';

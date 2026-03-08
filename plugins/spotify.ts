@@ -16,7 +16,7 @@ export default {
     description: 'Download music from Spotify',
     usage: '.spotify <spotify-url>',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const url = args.join(' ').trim();
 

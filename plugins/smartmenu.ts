@@ -1,5 +1,5 @@
-import CommandHandler from '../lib/commandHandler.js';
 import config from '../config.js';
+import CommandHandler from '../lib/commandHandler.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -58,7 +58,7 @@ export default {
   usage: '.smenu',
   isPrefixless: true,
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

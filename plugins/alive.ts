@@ -1,6 +1,5 @@
 import os from 'os';
 import process from 'process';
-import config from '../config.js';
 
 export default {
   command: 'alive',
@@ -10,8 +9,8 @@ export default {
   usage: '.alive',
   isPrefixless: true,
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
-    const chatId = context.chatId || message.key.remoteJid;
+  async handler(sock: any, message: any, args: any, context: any) {
+    const { chatId, config } = context;
 
     try {
       let uptime = Math.floor(process.uptime());

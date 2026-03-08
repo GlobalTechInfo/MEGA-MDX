@@ -9,7 +9,7 @@ export default {
     category: 'owner',
     description: 'Show bot settings and per-group configurations',
     usage: '.settings',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = message.key.participant || message.key.remoteJid;
 

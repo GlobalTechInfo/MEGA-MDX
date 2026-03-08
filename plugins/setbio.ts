@@ -109,7 +109,7 @@ export default {
   usage: '.setbio <on|off|set|reset>',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const action = args[0]?.toLowerCase();
 

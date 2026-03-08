@@ -11,7 +11,7 @@ export default {
   description: 'Read QR code from an image',
   usage: 'Reply to an image with .readqr',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

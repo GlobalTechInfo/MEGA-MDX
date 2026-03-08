@@ -1,10 +1,10 @@
+import config from '../config.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
-import config from '../config.js';
 
 function run(cmd) {
   return new Promise((resolve, reject) => {

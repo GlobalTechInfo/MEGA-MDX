@@ -1,4 +1,3 @@
-import config from '../config.js';
 
 export default {
   command: 'owner',
@@ -6,8 +5,9 @@ export default {
   category: 'info',
   description: 'Get the contact of the bot owner',
   usage: '.owner',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
+    const config = context.config;
     try {
       const vcard = `
 BEGIN:VCARD

@@ -25,7 +25,7 @@ export default {
   usage: '.inspect [plugin_name]',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, _context: any = {}) {
+  async handler(sock: any, message: any, args: any, _context: any) {
     const chatId = message.key.remoteJid;
 
     const pluginName = args[0];

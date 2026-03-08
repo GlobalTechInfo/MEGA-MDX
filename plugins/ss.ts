@@ -7,7 +7,7 @@ export default {
   description: 'Get a screenshot of a website',
   usage: '.screenshot <url>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     let url = args?.[0]?.trim();
 

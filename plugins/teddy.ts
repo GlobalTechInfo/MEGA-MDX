@@ -8,7 +8,7 @@ export default {
     category: 'fun',
     description: 'Send an animated teddy with cute emojis',
     usage: '.teddy',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 

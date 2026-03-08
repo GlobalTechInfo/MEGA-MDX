@@ -8,7 +8,7 @@ export default {
   description: 'Get trending topics from a country.',
   usage: '.trends <country-name>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

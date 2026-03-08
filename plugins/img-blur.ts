@@ -7,7 +7,7 @@ export default {
   category: 'tools',
   description: 'Apply a blur effect to an image',
   usage: '.blur (reply to an image or send image with caption)',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const quotedMessage = message.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     try {

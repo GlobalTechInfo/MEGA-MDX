@@ -7,7 +7,7 @@ export default {
   description: 'Download video from ShareChat',
   usage: '.sharechat <ShareChat URL>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const url = args?.[0];
 

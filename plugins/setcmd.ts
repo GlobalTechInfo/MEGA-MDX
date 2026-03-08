@@ -68,7 +68,7 @@ export default {
     usage: '.setcmd <text>',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const { chatId, senderId } = context;
 
         if (!message.message?.extendedTextMessage?.contextInfo?.quotedMessage) {

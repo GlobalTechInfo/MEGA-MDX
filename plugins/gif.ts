@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from '../config.js';
 
 export default {
   command: 'gif',
@@ -7,8 +6,9 @@ export default {
   category: 'stickers',
   description: 'Get a GIF based on a search term',
   usage: '.gif <search term>',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
+    const config = context.config;
     const query = args.join(' ');
     if (!query) {
       await sock.sendMessage(chatId, { text: 'Please provide a search term for the GIF.' }, { quoted: message });

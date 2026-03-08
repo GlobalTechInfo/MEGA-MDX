@@ -122,7 +122,7 @@ export default {
     usage: '.tictactoe [room name]',
     groupOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.participant || message.key.remoteJid;
         const text = args.join(' ').trim();

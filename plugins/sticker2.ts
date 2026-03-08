@@ -2,7 +2,6 @@ import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import config from '../config.js';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 
@@ -14,7 +13,7 @@ export default {
   usage: '.sticker2 (reply to image/video or send with caption)',
 
   async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, channelInfo } = context;
+    const { chatId, config, channelInfo } = context;
     const messageToQuote = message;
     let targetMessage = message;
 

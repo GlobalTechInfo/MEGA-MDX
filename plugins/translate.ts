@@ -6,7 +6,7 @@ export default {
   description: 'Translate text to the specified language.',
   usage: '.translate <text> <lang> or reply to a message with .translate <lang>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

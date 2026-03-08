@@ -21,7 +21,7 @@ export default {
   description: 'Convert text to small-capital style',
   usage: '.smallcaps <text> OR reply to a message',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

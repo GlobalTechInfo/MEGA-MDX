@@ -1,3 +1,4 @@
+import config from '../config.js';
 import { igdl } from 'ruhend-scraper';
 import axios from 'axios';
 import { exec } from 'child_process';
@@ -5,7 +6,6 @@ import fs from 'fs';
 import path from 'path';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
-import config from '../config.js';
 
 async function convertBufferToStickerWebp(inputBuffer, isAnimated, cropSquare) {
   const tmpDir = path.join(process.cwd(), 'temp');

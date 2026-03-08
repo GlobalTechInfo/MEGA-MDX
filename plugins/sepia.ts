@@ -11,7 +11,7 @@ export default {
   description: 'Convert an image to sepia',
   usage: 'Reply to an image with .sepia',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

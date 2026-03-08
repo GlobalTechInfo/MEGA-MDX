@@ -1,4 +1,3 @@
-import config from '../config.js';
 import { addSudo, removeSudo, getSudoList } from '../lib/index.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import { cleanJid } from '../lib/isOwner.js';
@@ -27,8 +26,9 @@ export default {
     usage: '.sudo add|del|list <@user|number>',
     strictOwnerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
+        const config = context.config;
         const _senderJid = message.key.participant || message.key.remoteJid;
         const isGroup = chatId.endsWith('@g.us');
 

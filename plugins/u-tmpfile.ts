@@ -9,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload to Tmpfiles.org (temporary)',
     usage: '.tmpfiles (reply to media or caption on media)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

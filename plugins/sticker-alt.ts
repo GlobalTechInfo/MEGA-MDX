@@ -9,7 +9,7 @@ export default {
     category: 'stickers',
     description: 'Convert an image or video into a sticker',
     usage: '.sticker (reply to image/video)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

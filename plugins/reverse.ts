@@ -7,7 +7,7 @@ export default {
   description: 'Reverse any text',
   usage: '.reverse <text>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const textToReverse = args?.join(' ')?.trim();
 

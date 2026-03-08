@@ -8,7 +8,7 @@ export default {
     usage: '.stealth <on|off>',
     ownerOnly: 'true',
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const { chatId } = context;
 
         const action = args[0]?.toLowerCase();

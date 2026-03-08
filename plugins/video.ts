@@ -36,7 +36,7 @@ export default {
     description: 'Download YouTube videos by link or search',
     usage: '.video <youtube link | search query>',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const query = args.join(' ').trim();
 

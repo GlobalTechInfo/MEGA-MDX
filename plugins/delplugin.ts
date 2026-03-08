@@ -8,7 +8,7 @@ export default {
   description: 'Delete a plugin by name (owner only)',
   usage: '.delplugin <plugin_name>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

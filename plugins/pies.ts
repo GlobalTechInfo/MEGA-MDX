@@ -17,7 +17,7 @@ export default {
   category: 'images',
   description: 'Get a pies image from a specific country',
   usage: `.pies <country>\nAvailable countries: ${VALID_COUNTRIES.join(', ')}`,
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const sub = (args[0] || '').toLowerCase();
 

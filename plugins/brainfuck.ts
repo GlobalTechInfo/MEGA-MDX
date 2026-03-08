@@ -5,7 +5,7 @@ export default {
   description: 'Convert text into Brainfuck code',
   usage: '.brainfuck <text> OR reply to a message',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       let text = args?.join(' ') || "";

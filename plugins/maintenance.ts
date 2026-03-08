@@ -26,7 +26,7 @@ export default {
   usage: '.maintenance [minutes / stop]',
   ownerOnly: 'true',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     const input = args[0]?.toLowerCase();

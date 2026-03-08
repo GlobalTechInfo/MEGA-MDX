@@ -34,7 +34,7 @@ export default {
     description: 'Download from MEGA with real-time progress',
     usage: '.mega <mega-url>',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const text = args.join(' ').trim();
 

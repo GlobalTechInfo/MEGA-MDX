@@ -36,7 +36,7 @@ export default {
   category: 'group',
   description: 'Send a playful insult to someone by mentioning them or replying to their message',
   usage: '.insult @username or reply to their message with .insult',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

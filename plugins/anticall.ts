@@ -46,7 +46,7 @@ export default {
   usage: '.anticall <on|off|status>',
   ownerOnly: true,
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const state = await readState();
     const sub = args.join(' ').trim().toLowerCase();

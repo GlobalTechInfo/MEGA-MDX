@@ -6,7 +6,7 @@ export default {
   category: 'info',
   description: 'Get the latest top 5 news headlines from the US',
   usage: '.news',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     try {
       const apiKey = 'dcd720a6f1914e2d9dba9790c188c08c';

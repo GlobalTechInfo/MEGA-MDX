@@ -7,7 +7,7 @@ export default {
     description: 'Clear/delete the current chat',
     usage: '.clearchat',
 
-    async handler(sock: any, message: any, args: any[], context: any = {}) {
+    async handler(sock: any, message: any, args: any[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};
         const isGroup = chatId.endsWith('@g.us');

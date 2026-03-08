@@ -160,7 +160,7 @@ export default {
     description: 'Schedule a message to be sent later in this chat',
     usage: '.schedule <time> <message>\nTime: 10m | 2h | 1h30m | 14:30 | 10:30am',
 
-    async handler(sock: any, message: any, args: any[], context: any = {}) {
+    async handler(sock: any, message: any, args: any[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};

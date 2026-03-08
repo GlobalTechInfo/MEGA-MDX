@@ -23,7 +23,7 @@ export default {
   description: 'Get location info from an IP or Domain',
   usage: '.ip <address/domain>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args[0];
 

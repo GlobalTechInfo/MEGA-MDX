@@ -40,7 +40,7 @@ export default {
     description: 'Generate an AI image based on your prompt',
     usage: '.flux <prompt>',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const imagePrompt = args.join(' ').trim();
 

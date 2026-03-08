@@ -1,8 +1,8 @@
+import config from '../config.js';
 import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import config from '../config.js';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 

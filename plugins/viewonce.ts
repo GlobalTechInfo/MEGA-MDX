@@ -7,7 +7,7 @@ export default {
   description: 'Re-send a view-once image or video.',
   usage: '.viewonce (reply to a view-once media)',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
 
     try {

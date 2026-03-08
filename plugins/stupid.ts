@@ -5,7 +5,7 @@ export default {
     category: 'group',
     description: 'Generate a stupid card for a user',
     usage: '.stupid (reply to user, mention someone, or add text)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const sender = message.key.participant || message.key.remoteJid;
 

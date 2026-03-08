@@ -7,7 +7,7 @@ export default {
   category: 'menu',
   description: 'Style text in different fancy formats',
   usage: '.stext <text>',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ');
     try {

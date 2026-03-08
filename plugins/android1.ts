@@ -9,7 +9,7 @@ export default {
   description: 'Search APKs and download by reply',
   usage: '.apkdl <apk_name>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').trim();
 

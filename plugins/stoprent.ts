@@ -63,7 +63,7 @@ export default {
     usage: '.stoprent [number/all]',
     ownerOnly: 'true',
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const { chatId } = context;
 
         if (!global.conns || global.conns.length === 0) {

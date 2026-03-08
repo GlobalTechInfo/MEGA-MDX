@@ -264,7 +264,7 @@ export default {
     usage: '.mention <on|off> or .setmention (reply to media)',
     ownerOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const onoff = args[0]?.toLowerCase();
 

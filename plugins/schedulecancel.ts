@@ -7,7 +7,7 @@ export default {
     description: 'Cancel a scheduled message by its ID',
     usage: '.schedulecancel <ID>',
 
-    async handler(sock: any, message: any, args: any[], context: any = {}) {
+    async handler(sock: any, message: any, args: any[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const senderId = context.senderId || message.key.remoteJid;
         const channelInfo = context.channelInfo || {};

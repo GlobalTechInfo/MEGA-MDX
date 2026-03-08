@@ -7,7 +7,7 @@ export default {
   description: 'Get details about an NPM package',
   usage: '.npmstalk <package-name>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const { chatId, _usedPrefix, _command } = context;
 
     if (!args[0]) {

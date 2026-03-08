@@ -9,7 +9,7 @@ export default {
     category: 'upload',
     description: 'Upload temporarily (1h/12h/24h/72h)',
     usage: '.litterbox <1h/12h/24h/72h> (reply to media)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

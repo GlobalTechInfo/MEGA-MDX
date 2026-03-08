@@ -42,7 +42,7 @@ export default {
     category: 'info',
     description: 'Identify a song from audio or video',
     usage: '.shazam (reply to audio or video)',
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         try {

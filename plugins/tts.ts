@@ -10,7 +10,7 @@ export default {
     description: 'Convert text to speech and send as an audio message.',
     usage: '.tts <text> [language code]',
 
-    async handler(sock: any, message: any, args: string[], context: any = {}) {
+    async handler(sock: any, message: any, args: string[], context: any) {
         const chatId = context.chatId || message.key.remoteJid;
 
         if (!args.length) {

@@ -5,7 +5,7 @@ export default {
   category: 'info',
   description: 'Get information about a Pokémon',
   usage: '.pokedex <pokemon name>',
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const text = args.join(' ').trim();
     if (!text) {

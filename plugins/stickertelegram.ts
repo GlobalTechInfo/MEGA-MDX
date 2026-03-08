@@ -4,7 +4,6 @@ import path from 'path';
 import webp from 'node-webpmux';
 import crypto from 'crypto';
 import { exec } from 'child_process';
-import config from '../config.js';
 
 export default {
   command: 'tgstk',
@@ -14,7 +13,7 @@ export default {
   usage: '.tgstk <telegram sticker URL>',
 
   async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId, channelInfo } = context;
+    const { chatId, config, channelInfo } = context;
 
     try {
       if (!args[0]) {

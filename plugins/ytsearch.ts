@@ -15,7 +15,6 @@
 
 
 import yts from 'yt-search';
-import config from '../config.js';
 
 export default {
   command: 'ytsearch',
@@ -25,9 +24,9 @@ export default {
   usage: '.yts [query]',
 
   async handler(sock: any, message: any, args: any, context: any) {
-    const { chatId } = context;
+    const { chatId, config } = context;
     const query = args.join(' ');
-    const prefix = config.prefixes[0];
+    const prefix = config.prefix;
 
     if (!query) {
       return sock.sendMessage(chatId, {

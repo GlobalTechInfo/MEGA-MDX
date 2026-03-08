@@ -9,7 +9,7 @@ export default {
     groupOnly: true,
     adminOnly: true,
 
-    async handler(sock: any, message: any, args: any, context: any = {}) {
+    async handler(sock: any, message: any, args: any, context: any) {
         const chatId = context.chatId || message.key.remoteJid;
         const _senderId = context.senderId || message.key.participant || message.key.remoteJid;
         const isBotAdmin = context.isBotAdmin;

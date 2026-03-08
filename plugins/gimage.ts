@@ -7,7 +7,7 @@ export default {
   description: 'Search and send first 4 Google images',
   usage: '.gimage <search query>',
 
-  async handler(sock: any, message: any, args: any, context: any = {}) {
+  async handler(sock: any, message: any, args: any, context: any) {
     const chatId = context.chatId || message.key.remoteJid;
     const query = args?.join(' ').trim();
 
