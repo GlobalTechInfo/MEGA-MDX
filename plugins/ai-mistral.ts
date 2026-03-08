@@ -27,7 +27,7 @@ export default {
     aliases: ['ai', 'chat', 'ask'],
     category: 'ai',
     description: 'Ask a question to AI',
-    usage: '${prefix}mistral <question>',
+    usage: `${prefix}mistral <question>`,
 
     async handler(sock: any, message: any, args: string[], context: BotContext) {
         const { chatId, config } = context
