@@ -351,7 +351,7 @@ export default {
             }, { quoted: message });
         } else {
             await sock.sendMessage(chatId, {
-                text: `❌ *Invalid command*\n\nUse: \`${config.prefix}antidelete on/off\``
+                text: `❌ *Invalid command*\n\nUse: ${config.prefix}antidelete on/off`
             }, { quoted: message });
         }
     },
