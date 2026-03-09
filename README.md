@@ -382,6 +382,7 @@ npm run build && npm start
 [![Heroku](https://img.shields.io/badge/Heroku-430098?style=flat-square&logo=heroku&logoColor=white)](https://heroku.com)
 > [!NOTE]
 > The repo includes `heroku.yml` and `app.json` for Docker-based deployment.
+> Either you can deploy via dashboard or using heroku cli
 
 ```bash
 heroku login
@@ -460,6 +461,7 @@ heroku logs --tail
 [![Fly.io](https://img.shields.io/badge/Fly.io-7B3FE4?style=flat-square&logo=flydotio&logoColor=white)](https://fly.io)
 > [!NOTE]
 > The repo includes `fly.toml` pre-configured (512MB RAM, port 5000, region: US East).
+> Either deploy via dashboard or using cli
 
 ```bash
 curl -L https://fly.io/install.sh | sh
@@ -503,7 +505,8 @@ docker logs -f mega-mdx
 
 ### 🎮 Discord Panels (Pterodactyl)
 > [!IMPORTANT]
-> For Pterodactyl-based hosting panels (Fosshost, Skynode, etc.):
+> For Pterodactyl-based hosting panels (Fosshost, Skynode, Optiklink etc.):
+> Use brave browser or any adguard to avoid ads from hosting panels
 
 1. Create server with a **Node.js 20+ egg**
 2. Set startup command:
@@ -616,6 +619,7 @@ export default {
     ownerOnly: false,      // Owner/sudo only
     groupOnly: false,      // Groups only
     adminOnly: false,      // Group admins only
+    isPrefixless: true,    // Works without prefix too
     cooldown: 5,           // Cooldown in seconds
 
     async handler(sock: any, message: any, args: any[], context: any = {}) {
@@ -628,6 +632,7 @@ export default {
             senderIsOwnerOrSudo, // boolean
             rawText,          // Full message text
             userMessage,      // Lowercase message
+            config,           // Bot configuration 
             channelInfo       // MEGA-MD branding spread
         } = context;
 
