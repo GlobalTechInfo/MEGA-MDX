@@ -1,6 +1,5 @@
 import type { BotContext } from '../types.js';
 import axios from 'axios';
-import config from '../config.js';
 
 const supportedAnimes = [
   'akira','akiyama','anna','asuna','ayuzawa','boruto','chiho','chitoge',
@@ -10,7 +9,7 @@ const supportedAnimes = [
   'sasuke','sakura'
 ];
 
-function pickRandom(arr: any, count = 1) {
+function pickRandom(arr: any[], count = 1) {
   const shuffled = arr.slice().sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
@@ -52,18 +51,18 @@ const animuMenu =
 '• *sasuke*\n' +
 '• *sakura*\n\n' +
 '📌 *Usage:*\n' +
-`${config.prefix}animes <name>\n` +
-`Example: *${config.prefix}animes naruto*`;
+'.animes <name>\n' +
+'Example: *.animes naruto*';
 
 export default {
   command: 'animes',
   aliases: ['animeimg', 'animepic'],
   category: 'menu',
   description: 'Send random anime images',
-  usage: `${config.prefix}animes <anime_name>`,
+  usage: '.animes <anime_name>',
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
-    const chatId = context.chatId;
+    const chatId = context.chatId || message.key.remoteJid;
     const input = args[0] ? args[0] : '';
     const typeLower = input.toLowerCase();
 

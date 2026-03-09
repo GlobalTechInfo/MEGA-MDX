@@ -21,6 +21,7 @@ import { handleLinkDetection } from '../plugins/antilink.js';
 import { handleTagDetection } from '../plugins/antitag.js';
 import { handleMentionDetection } from '../plugins/mention.js';
 import { handleChatbotResponse } from '../plugins/chatbot.js';
+import { handleLocalBotMessage } from '../plugins/localbot.js';
 import { handleTicTacToeMove } from '../plugins/tictactoe.js';
 import { handleAutoReply } from '../plugins/autoreply.js';
 import { handleAntiSpam, invalidateGroupCache } from '../plugins/antispam.js';
@@ -394,7 +395,8 @@ async function handleMessages(sock: any, messageUpdate: any) {
                                      isOwnerOrSudoCheck;
 
                 if (canUseChatbot) {
-                    await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
+                    const handledByLocal = await handleLocalBotMessage(sock, message, chatId, userMessage, senderId, channelInfo);
+                    if (!handledByLocal) await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
                 }
             }
             return;
@@ -411,7 +413,8 @@ async function handleMessages(sock: any, messageUpdate: any) {
                                      isOwnerOrSudoCheck;
 
                 if (canUseChatbot) {
-                    await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
+                    const handledByLocal2 = await handleLocalBotMessage(sock, message, chatId, userMessage, senderId, channelInfo);
+                    if (!handledByLocal2) await handleChatbotResponse(sock, chatId, message, userMessage, senderId);
                 }
             }
             return;

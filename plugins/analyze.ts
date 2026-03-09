@@ -5,7 +5,6 @@ import { promisify } from 'util';
 import { getBin } from '../lib/compile.js';
 import path from 'path';
 import fs from 'fs';
-import config from '../config.js';
 
 const execAsync = promisify(exec);
 const WA_LIMIT = 60000;
@@ -37,7 +36,7 @@ export default {
     aliases: ['textanalyze', 'textanalyser', 'analyse', 'readability'],
     category: 'utility',
     description: 'Deep text analysis: reading level, sentiment, word stats (C++ powered)',
-    usage: `${config.prefix}analyze <text or reply to any message/file>`,
+    usage: '${prefix}analyze <text or reply to any message/file>',
 
     async handler(sock: any, message: any, args: any[], context: BotContext) {
         const { chatId, channelInfo } = context;
@@ -59,7 +58,7 @@ export default {
         if (!textInput && !hasDoc) {
             return await sock.sendMessage(chatId, {
                 text: `📈 *Text Analyzer*\n\n` +
-                      `*Usage:* \`${config.prefix}analyze <paste any text>\`\n\n` +
+                      `*Usage:* \`.analyze <paste any text>\`\n\n` +
                       `*Or reply to:*\n` +
                       `• Any text message\n` +
                       `• A .txt or document file\n\n` +

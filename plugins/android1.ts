@@ -1,28 +1,27 @@
 import type { BotContext } from '../types.js';
 import pkg from 'api-qasim';
-const Qasim = pkg as any;
+const QasimAny = pkg as any;
 import axios from 'axios';
-import config from '../config.js';
 
 export default {
   command: 'apkdl',
   aliases: ['apk', 'an1apk', 'appdl', 'app'],
   category: 'download',
   description: 'Search APKs and download by reply',
-  usage: `${config.prefix}apkdl <apk_name>`,
+  usage: '.apkdl <apk_name>',
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
-    const chatId = context.chatId;
+    const chatId = context.chatId || message.key.remoteJid;
     const query = args.join(' ').trim();
 
     try {
       if (!query) {
-        return await sock.sendMessage(chatId, { text: `*Please provide an APK name.*\nExample: ${config.prefix}apkdl Telegram` }, { quoted: message });
+        return await sock.sendMessage(chatId, { text: '*Please provide an APK name.*\nExample: .apkdl Telegram' }, { quoted: message });
       }
 
       await sock.sendMessage(chatId, { text: '🔎 Searching for APKs...' }, { quoted: message });
 
-      const res = await Qasim.apksearch(query);
+      const res = await QasimAny.apksearch(query);
 
       if (!res?.data || !Array.isArray(res.data) || res.data.length === 0) {
         return await sock.sendMessage(chatId, { text: '❌ No APKs found.' }, { quoted: message });
@@ -34,7 +33,7 @@ export default {
       let caption = `📱 *APK Search Results for:* *${query}*\n\n`;
       caption += `↩️ *Reply with a number to download*\n\n`;
 
-      results.forEach((item: any, i: any) => {
+      results.forEach((item: any, i: number) => {
         caption +=
           `*${i + 1}.* ${item.judul}\n` +
           `👨‍💻 Developer: ${item.dev}\n` +
@@ -49,7 +48,7 @@ export default {
         await sock.sendMessage(chatId, { text: '⏱ APK selection expired. Please search again.' }, { quoted: sentMsg });
       }, 5 * 60 * 1000);
 
-      const listener = async ({ messages }: any) => {
+      const listener = async ({ messages }: { messages: any[] }) => {
         const m = messages[0];
         if (!m?.message || m.key.remoteJid !== chatId) return;
 

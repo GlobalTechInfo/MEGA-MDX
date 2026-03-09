@@ -2,7 +2,6 @@ import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 import isOwnerOrSudo from '../lib/isOwner.js';
 import isAdmin from '../lib/isAdmin.js';
-import config from '../config.js';
 
 async function setAntilink(chatId: string, type: string, action: string) {
     try {
@@ -18,7 +17,7 @@ async function setAntilink(chatId: string, type: string, action: string) {
     }
 }
 
-async function getAntilink(chatId: string, _type?: string) {
+async function getAntilink(chatId: string, _type: string) {
     try {
         const settings = await store.getSetting(chatId, 'antilink');
         return settings || null;
@@ -28,7 +27,7 @@ async function getAntilink(chatId: string, _type?: string) {
     }
 }
 
-async function removeAntilink(chatId: string, _type?: string) {
+async function removeAntilink(chatId: string, _type: string) {
     try {
         await store.saveSetting(chatId, 'antilink', {
             enabled: false,
@@ -134,7 +133,7 @@ export default {
     aliases: ['alink', 'linkblock'],
     category: 'admin',
     description: 'Prevent users from sending links in the group',
-    usage: `${config.prefix}antilink <on|off|set>`,
+    usage: '.antilink <on|off|set>',
     groupOnly: true,
     adminOnly: true,
 
@@ -145,25 +144,21 @@ export default {
         if (!action) {
             const config = await getAntilink(chatId, 'on');
             await sock.sendMessage(chatId, {
-                text: `*🔗 ANTILINK SETUP*
-                
-                *Current Status:* ${config?.enabled ? '✅ Enabled' : '❌ Disabled'}
-                *Current Action:* ${config?.action || 'Not set'}
-                
-                *Commands:*
-                • ${config.prefix}antilink on - Enable antilink
-                • ${config.prefix}antilink off - Disable antilink
-                • ${config.prefix}antilink set delete - Delete link messages
-                • ${config.prefix}antilink set kick - Kick users who send links
-                • ${config.prefix}antilink set warn - Warn users only
-                
-                *Protected Links:*
-                • WhatsApp Groups
-                • WhatsApp Channels
-                • Telegram
-                • All other links
-                
-                *Note:* Admins, Owner, and Sudo users are exempt.`
+                text: `*🔗 ANTILINK SETUP*\n\n` +
+                      `*Current Status:* ${config?.enabled ? '✅ Enabled' : '❌ Disabled'}\n` +
+                      `*Current Action:* ${config?.action || 'Not set'}\n\n` +
+                      `*Commands:*\n` +
+                      `• \`.antilink on\` - Enable antilink\n` +
+                      `• \`.antilink off\` - Disable antilink\n` +
+                      `• \`.antilink set delete\` - Delete link messages\n` +
+                      `• \`.antilink set kick\` - Kick users who send links\n` +
+                      `• \`.antilink set warn\` - Warn users only\n\n` +
+                      `*Protected Links:*\n` +
+                      `• WhatsApp Groups\n` +
+                      `• WhatsApp Channels\n` +
+                      `• Telegram\n` +
+                      `• All other links\n\n` +
+                      `*Note:* Admins, Owner, and Sudo users are exempt.`
             }, { quoted: message });
             return;
         }
@@ -193,7 +188,7 @@ export default {
             case 'set':
                 if (args.length < 2) {
                     await sock.sendMessage(chatId, {
-                        text: `❌ *Please specify an action*\n\nUsage: ${config.prefix}antilink set delete | kick | warn`
+                        text: '❌ *Please specify an action*\n\nUsage: `.antilink set delete | kick | warn`'
                     }, { quoted: message });
                     return;
                 }
@@ -236,7 +231,7 @@ export default {
 
             default:
                 await sock.sendMessage(chatId, {
-                    text: `❌ *Invalid command*\n\nUse ${config.prefix}antilink to see available options.`
+                    text: '❌ *Invalid command*\n\nUse `.antilink` to see available options.'
                 }, { quoted: message });
         }
     },

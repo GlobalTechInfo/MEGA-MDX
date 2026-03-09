@@ -1,7 +1,6 @@
 import type { BotContext } from '../types.js';
 import store from '../lib/lightweight_store.js';
 import fs from 'fs';
-import config from '../config.js';
 
 const MONGO_URL = process.env.MONGO_URL;
 const POSTGRES_URL = process.env.POSTGRES_URL;
@@ -27,7 +26,7 @@ async function readState() {
   }
 }
 
-async function writeState(enabled: any) {
+async function writeState(enabled: boolean) {
   try {
     if (HAS_DB) {
       await store.saveSetting('global', 'anticall', { enabled: !!enabled });
@@ -45,7 +44,7 @@ export default {
   aliases: ['acall', 'callblock'],
   category: 'owner',
   description: 'Enable or disable auto-blocking of incoming calls',
-  usage: `${config.prefix}anticall <on|off|status>`,
+  usage: '.anticall <on|off|status>',
   ownerOnly: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
@@ -57,19 +56,17 @@ export default {
       return await sock.sendMessage(
         chatId,
         {
-          text: `*ANTICALL SETTINGS*
-          
-          📵 Auto-block incoming calls
-          
-          *Usage:*
-          • ${config.prefix}anticall on - Enable
-          • ${config.prefix}anticall off - Disable
-          • ${config.prefix}anticall status - Current status
-          
-          *Current Status:* ${state.enabled ? '✅ ENABLED' : '❌ DISABLED'}
-          *Storage:* ${HAS_DB ? 'Database' : 'File System'}`
+          text: '*ANTICALL SETTINGS*\n\n' +
+                '📵 Auto-block incoming calls\n\n' +
+                '*Usage:*\n' +
+                '• `.anticall on` - Enable\n' +
+                '• `.anticall off` - Disable\n' +
+                '• `.anticall status` - Current status\n\n' +
+                `*Current Status:* ${state.enabled ? '✅ ENABLED' : '❌ DISABLED'}\n` +
+                `*Storage:* ${HAS_DB ? 'Database' : 'File System'}`
         },
-        { quoted: message });
+        { quoted: message }
+      );
     }
     if (sub === 'status') {
       return await sock.sendMessage(

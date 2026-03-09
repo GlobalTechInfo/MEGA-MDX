@@ -1,18 +1,17 @@
 import type { BotContext } from '../types.js';
 import os from 'os';
 import process from 'process';
-import config from '../config.js';
 
 export default {
   command: 'alive',
   aliases: ['status', 'bot'],
   category: 'general',
   description: 'Check bot status and system info',
-  usage: `${config.prefix}alive`,
+  usage: '.alive',
   isPrefixless: true,
 
   async handler(sock: any, message: any, args: any, context: BotContext) {
-    const { chatId } = context;
+    const { chatId, config } = context;
 
     try {
       let uptime = Math.floor(process.uptime());
