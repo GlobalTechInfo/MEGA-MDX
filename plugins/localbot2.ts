@@ -366,7 +366,7 @@ export default {
                       `I'm now listening in this chat.\n` +
                       `Just type anything and I'll respond!\n\n` +
                       `_Fully offline • No API • Instant replies_\n\n` +
-                      `Type \`.localbot off\` to deactivate.`,
+                      `Type \`.localbot2 off\` to deactivate.`,
                 ...channelInfo
             }, { quoted: message });
         }
@@ -374,7 +374,7 @@ export default {
         if (sub === 'off') {
             chatState.delete(chatId);
             return await sock.sendMessage(chatId, {
-                text: `🤖 Local Bot *deactivated*.\nUse \`.localbot on\` to reactivate.`,
+                text: `🤖 Local Bot *deactivated*.\nUse \`.localbot2 on\` to reactivate.`,
                 ...channelInfo
             }, { quoted: message });
         }
@@ -394,14 +394,14 @@ export default {
                 text: `🤖 *MEGA MD Local Bot*\n\n` +
                       `_Zero API • Fully Offline • Instant_\n\n` +
                       `*Chat directly:*\n` +
-                      `\`.localbot hello\`\n` +
-                      `\`.localbot tell me a joke\`\n` +
-                      `\`.localbot motivate me\`\n` +
-                      `\`.localbot what time is it\`\n` +
-                      `\`.localbot 25 * 4\`\n\n` +
+                      `\`.localbot2 hello\`\n` +
+                      `\`.localbot2 tell me a joke\`\n` +
+                      `\`.localbot2 motivate me\`\n` +
+                      `\`.localbot2 what time is it\`\n` +
+                      `\`.localbot2 25 * 4\`\n\n` +
                       `*Auto-reply mode:*\n` +
-                      `\`.localbot on\` — respond to ALL messages in this chat\n` +
-                      `\`.localbot off\` — stop\n\n` +
+                      `\`.localbot2 on\` — respond to ALL messages in this chat\n` +
+                      `\`.localbot2 off\` — stop\n\n` +
                       `*Status:* ${state?.enabled ? '🟢 Active' : '🔴 Inactive'}`,
                 ...channelInfo
             }, { quoted: message });
