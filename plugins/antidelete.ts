@@ -61,8 +61,8 @@ setInterval(cleanTempFolderIfLarge, 60 * 1000);
 async function loadAntideleteConfig() {
     try {
         if (HAS_DB) {
-            const config = await store.getSetting('global', 'antidelete');
-            return config || { enabled: false };
+            const settings = await store.getSetting('global', 'antidelete');
+            return settings || { enabled: false };
         } else {
             if (!fs.existsSync(CONFIG_PATH)) return { enabled: false };
             return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
@@ -72,12 +72,12 @@ async function loadAntideleteConfig() {
     }
 }
 
-async function saveAntideleteConfig(config: any) {
+async function saveAntideleteConfig(settings: any) {
     try {
         if (HAS_DB) {
-            await store.saveSetting('global', 'antidelete', config);
+            await store.saveSetting('global', 'antidelete', settings);
         } else {
-            fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
+            fs.writeFileSync(CONFIG_PATH, JSON.stringify(settings, null, 2));
         }
     } catch(err: any) {
         console.error('Config save error:', err);
@@ -86,8 +86,8 @@ async function saveAntideleteConfig(config: any) {
 
 export async function storeMessage(sock: any, message: any) {
     try {
-        const config = await loadAntideleteConfig();
-        if (!config.enabled) return;
+        const settings = await loadAntideleteConfig();
+        if (!settings.enabled) return;
 
         if (!message.key?.id) return;
 
@@ -203,8 +203,8 @@ export async function storeMessage(sock: any, message: any) {
 
 export async function handleMessageRevocation(sock: any, revocationMessage: any) {
     try {
-        const config = await loadAntideleteConfig();
-        if (!config.enabled) return;
+        const settings = await loadAntideleteConfig();
+        if (!settings.enabled) return;
 
         const messageId = revocationMessage.message.protocolMessage.key.id;
         const deletedBy = revocationMessage.participant || revocationMessage.key.participant || revocationMessage.key.remoteJid;
@@ -307,14 +307,14 @@ export default {
 
     async handler(sock: any, message: any, args: any, context: BotContext) {
         const chatId = context.chatId || message.key.remoteJid;
-        const config = await loadAntideleteConfig();
+        const settings = await loadAntideleteConfig();
         const action = args[0]?.toLowerCase();
 
         if (!action) {
             await sock.sendMessage(chatId, {
                 text: `*🔰 ANTIDELETE SETUP 🔰*
                 
-                *Current Status:* ${config.enabled ? '✅ Enabled' : '❌ Disabled'}
+                *Current Status:* ${settings.enabled ? '✅ Enabled' : '❌ Disabled'}
                 *Storage:* ${HAS_DB ? 'Database' : 'File System'}
                 
                 *Commands:*
@@ -331,8 +331,8 @@ export default {
         }
 
         if (action === 'on') {
-            config.enabled = true;
-            await saveAntideleteConfig(config);
+            settings.enabled = true;
+            await saveAntideleteConfig(settings);
             await sock.sendMessage(chatId, {
                 text: `✅ *Antidelete enabled!*\n\n` +
                       `Storage: ${HAS_DB ? 'Database' : 'File System'}\n\n` +
@@ -343,8 +343,8 @@ export default {
                       `• Send deletion reports to owner`
             }, { quoted: message });
         } else if (action === 'off') {
-            config.enabled = false;
-            await saveAntideleteConfig(config);
+            settings.enabled = false;
+            await saveAntideleteConfig(settings);
             await sock.sendMessage(chatId, {
                 text: `❌ *Antidelete disabled!*\n\n` +
                       `The bot will no longer track deleted messages.`
