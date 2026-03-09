@@ -314,8 +314,8 @@ export default {
             await sock.sendMessage(chatId, {
                 text: `*🔰 ANTIDELETE SETUP 🔰*
                 
-                *Current Status:* ${settings.enabled ? '✅ Enabled' : '❌ Disabled'}
-                *Storage:* ${HAS_DB ? 'Database' : 'File System'}
+                *Current Status:* ${settings.enabled ? '✅ Enabled':'❌ Disabled'}
+                *Storage:* ${HAS_DB ? 'Database':'File System'}
                 
                 *Commands:*
                 • ${config.prefix}antidelete on - Enable
@@ -335,7 +335,7 @@ export default {
             await saveAntideleteConfig(settings);
             await sock.sendMessage(chatId, {
                 text: `✅ *Antidelete enabled!*\n\n` +
-                      `Storage: ${HAS_DB ? 'Database' : 'File System'}\n\n` +
+                      `Storage: ${HAS_DB ? 'Database':'File System'}\n\n` +
                       `The bot will now:\n` +
                       `• Track all messages\n` +
                       `• Monitor deleted messages\n` +
