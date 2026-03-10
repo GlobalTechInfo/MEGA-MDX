@@ -382,8 +382,14 @@ npm run build && npm start
 [![Heroku](https://img.shields.io/badge/Heroku-430098?style=flat-square&logo=heroku&logoColor=white)](https://heroku.com)
 > [!NOTE]
 > The repo includes `heroku.yml` and `app.json` for Docker-based deployment.
+> 
 > Either you can deploy via dashboard or using heroku cli
 
+**One-line Deployer:**
+```bash
+bash <(curl -s https://raw.githubusercontent.com/GlobalTechInfo/MEGA-MDX/main/lib/heroku.sh)
+```
+**Manual:**
 ```bash
 heroku login
 heroku create your-bot-name
@@ -461,8 +467,14 @@ heroku logs --tail
 [![Fly.io](https://img.shields.io/badge/Fly.io-7B3FE4?style=flat-square&logo=flydotio&logoColor=white)](https://fly.io)
 > [!NOTE]
 > The repo includes `fly.toml` pre-configured (512MB RAM, port 5000, region: US East).
+> 
 > Either deploy via dashboard or using cli
 
+**One-line Deployer:**
+```bash
+bash <(curl -s https://raw.githubusercontent.com/GlobalTechInfo/MEGA-MDX/main/lib/fly.sh)
+```
+**Manual:**
 ```bash
 curl -L https://fly.io/install.sh | sh
 fly auth login
