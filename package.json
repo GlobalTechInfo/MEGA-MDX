@@ -98,11 +98,5 @@
   "overrides": {
     "minimatch": "^10.2.1",
     "yargs-parser": "^21.1.1"
-  },
-  "allowScripts": {
-    "protobufjs@7.6.5": true,
-    "better-sqlite3@12.6.2": true,
-    "sharp@0.35.3": true,
-    "@whiskeysockets/baileys@7.0.0-rc14": true
   }
 }
